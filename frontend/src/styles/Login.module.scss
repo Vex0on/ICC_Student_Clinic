@@ -1,0 +1,102 @@
+@use './mixin.scss' as mixin;
+
+.header {
+    text-align: center;
+    font-size: 3rem;
+    padding-top: 2.2rem;
+    color: #515c5c;
+    font-weight: 600;
+}
+
+.box {
+    margin-top: 3.5rem;
+    position: relative;
+
+    .box__label {
+        font-size: 1.5rem;
+        position: absolute;
+        transition: .5s;
+        top: 0;
+        left: 0.5rem;
+        letter-spacing: 1px;
+        cursor: pointer;
+    }
+    
+    .box__input {
+        display: block;
+        border-bottom: 0.1rem solid #c2c2c2;
+        padding: 0.7rem 1rem;
+        width: 16rem;
+
+        &:focus {
+            border-bottom: 0.1rem solid #6d6d6d;
+        }
+
+        &:focus ~ .box__label,
+        &:not(:placeholder-shown) + .box__label {
+            transform: translateY(-1.2rem) translateX(-0.5rem);
+            font-size: 1.25rem;
+        }
+    }
+
+}
+
+.submit {
+    background-color: #515c5c;
+    color: #fff;
+    font-size: 1.4rem;
+    width: 13rem;
+    height: 3.75rem;
+    margin-top: 3.5rem;
+    border-radius: 0.2rem;
+    transition: .5s;
+
+    &:hover {
+        background-color: #404b4b;
+    }
+}
+
+.links {
+    margin-top: 2rem;
+    display: flex;
+    gap: 3.5rem;
+    justify-content: center;
+    padding-bottom: 1rem;
+    min-height: 2.2rem;
+
+    .links__item {
+        text-decoration: none;
+        color: inherit;
+        font-size: 1.1rem;
+
+        &:hover {
+            border-bottom: 0.1rem solid #cecccc;
+        }
+
+        @include mixin.small {
+            font-size:1rem;
+        }
+    }
+}
+
+.cadre {
+    width: 100%;
+    border-top: 0.1rem solid #c2c2c2;
+    text-align: center;
+    margin-top: 0.5rem;
+    padding-top: 1.1rem;
+
+    .cadre__item {
+        text-decoration: none;
+        font-size: 1.75rem;
+        color: #515c5c;
+
+        &:hover {
+            color: #000;
+        }
+    }
+}
+
+.header, .box__label, .links__item, .cadre__item {
+    caret-color: transparent;
+}

@@ -1,0 +1,15 @@
+@use './mixin.scss' as mixin;
+
+.arrow {
+    font-size: 2.2rem;
+    position: absolute;
+    top: 4%;
+    right: 5%;
+    color: #666666;
+    cursor: pointer;
+}
+
+.h1 {
+    font-size: 2.5rem;
+    margin-top: 3rem;
+}
