@@ -1,0 +1,35 @@
+.fieldContainer {
+    position: relative;
+
+    width: 100%;
+}
+
+.primaryInput {
+    font-size: 1.25rem;
+
+    width: 100%;
+    padding: 5px 10px;
+
+    border: none;
+    border-bottom: 2px solid #ccc;
+    outline: none;
+    background-color: transparent;
+}
+
+.placeholder {
+    font-size: 1.25rem;
+
+    position: absolute;
+    top: 0px;
+    left: 0;
+
+    transition: all 0.3s ease;
+
+    color: #aaa;
+}
+
+.focused {
+    font-size: 1.25rem;
+
+    top: -24px;
+}
