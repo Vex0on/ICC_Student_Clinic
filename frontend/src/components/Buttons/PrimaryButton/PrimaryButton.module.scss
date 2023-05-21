@@ -1,0 +1,20 @@
+.button__primary {
+    font-size: 1.5rem;
+    font-weight: 300;
+
+    padding: 0.7rem 3rem;
+
+    cursor: pointer;
+    transition: all 0.5s;
+    letter-spacing: 0.1rem;
+
+    color: #fff;
+    border: none;
+    border-radius: 0.3rem;
+    outline: none;
+    background-color: #515C5C;
+
+    &:hover {
+        background-color: #3f4545;
+    }
+}
