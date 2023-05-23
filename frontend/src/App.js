@@ -5,6 +5,7 @@ import LoginPage from "./pages/LoginPage/LoginPage"
 import SpecialistListPage from "./pages/SpecialistsListPage/SpecialistsListPage"
 import RemindPasswordPage from "./pages/RemindPasswordPage/RemindPasswordPage"
 import UserPanelPage from "./pages/UserPanelPage/UserPanelPage"
+import AdminPanelPage from "./pages/AdminPanelPage/AdminPanelPage"
 
 
 
@@ -17,6 +18,7 @@ function App() {
             <Route path='/lekarze' element={<SpecialistListPage />}/>
             <Route path='/reset-hasla' element={<RemindPasswordPage />}/>
             <Route path='/panel-pacjenta' element={<UserPanelPage />}/>
+            <Route path='/panel-admina' element={<AdminPanelPage />}/>
             <Route path='*' element={<LoginPage />}/>
         </Routes> 
       </Router>
