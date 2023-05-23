@@ -17,7 +17,7 @@ const LoginPage = () => {
 
   return (
     <div className={styles.container}>
-      <Header1 text="Logowanie" />
+      <Header1 text={"Logowanie"} />
 
       <div className={styles.container__primary__fields}>
         <PrimaryField placeholder={"Email"} value={email} setValue={setEmail}/>
@@ -27,8 +27,8 @@ const LoginPage = () => {
       <PrimaryButton text="Zaloguj" onClick={handleAlert} />
 
       <div className={styles.container__secondary__buttons}>
-        <SecondaryButton text="Przypomnij hasło" onClick={handleAlert} />
-        <SecondaryButton text="Zarejestruj się" onClick={handleAlert} />
+        <SecondaryButton text={"Przypomnij hasło"} onClick={handleAlert} />
+        <SecondaryButton text={"Zarejestruj się"} onClick={handleAlert} />
       </div>
 
       <div className={styles.container__links}>

@@ -1,11 +1,11 @@
 import React, { useState } from "react"
-import PrimaryButton from "../components/Buttons/PrimaryButton/PrimaryButton"
-import Header1 from "../components/Headers/Header1/Header1"
-import PrimaryField from "../components/Fields/PrimaryField/PrimaryField"
+import PrimaryButton from "../../components/Buttons/PrimaryButton/PrimaryButton"
+import Header1 from "../../components/Headers/Header1/Header1"
+import PrimaryField from "../../components/Fields/PrimaryField/PrimaryField"
 
 import styles from "./RemindPasswordPage.module.scss"
 
-const RemindPassowrdPage = () =>{
+const RemindPasswordPage = () =>{
     const [email, setEmail] = useState('')
 
     const handleAlert = () =>{
@@ -31,4 +31,4 @@ const RemindPassowrdPage = () =>{
     )
 }
 
-export default RemindPassowrdPage
+export default RemindPasswordPage

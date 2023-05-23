@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import styles from "./SpecialistsList.module.scss";
+import styles from "./SpecialistsListPage.module.scss";
 import Header1 from "../../components/Headers/Header1/Header1";
 import SpecializationButton from "../../components/SpecializationButton/SpecializationButton";
 import { FaStethoscope } from "react-icons/fa";
 import { GiStomach, GiSunglasses, GiNoseFront } from "react-icons/gi";
 
-const SpecialistsList = () => {
+const SpecialistsListPage = () => {
   const [clickedButton, setClickedButton] = useState(null);
 
   const handleButtonClick = (buttonText) => {
@@ -54,4 +54,4 @@ const SpecialistsList = () => {
   );
 };
 
-export default SpecialistsList;
+export default SpecialistsListPage;
