@@ -9,7 +9,6 @@ import AdminPanelPage from "./pages/AdminPanelPage/AdminPanelPage"
 import PatientProfilePage from "./pages/PatientProfilePage/PatientProfilePage"
 
 
-
 function App() {
   return (
     <div className={styles.app}>
