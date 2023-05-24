@@ -3,7 +3,13 @@ from rest_framework.response import Response
 from rest_framework.views import APIView, status
 
 from .models import Student, User
-from .serializers import StudentCreateSerializer, StudentUpdateSerializer, StudentSerializer, UserSerializer, UserUpdateSerializer
+from .serializers import (
+    StudentCreateSerializer,
+    StudentSerializer,
+    StudentUpdateSerializer,
+    UserSerializer,
+    UserUpdateSerializer,
+)
 
 
 class UserList(APIView):
@@ -65,7 +71,7 @@ class UserDetail(APIView):
                 {"message": "HTTP_404_NOT_FOUND"},
                 status=status.HTTP_404_NOT_FOUND,
             )
-        
+
     def delete(self, request, pk):
         try:
             user = User.objects.get(id=pk)
@@ -140,7 +146,7 @@ class StudentDetail(APIView):
                 {"message": "HTTP_404_NOT_FOUND"},
                 status=status.HTTP_404_NOT_FOUND,
             )
-        
+
     def delete(self, request, pk):
         try:
             student = Student.objects.get(id=pk)
