@@ -234,6 +234,84 @@ class StudentDetail(APIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
 
+
+# Reception
+
+
+class ReceptionList(APIView):
+    def get(self, request):
+        receptions = Reception.objects.all()
+        serializer = ReceptionSerializer(receptions, many=True)
+
+        return Response(
+            serializer.data,
+            status=status.HTTP_200_OK,
+        )
+
+    def post(self, request):
+        serializer = ReceptionCreateSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED,
+            )
+        return Response(
+            serializer.errors,
+            status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        )
+
+
+class ReceptionDetail(APIView):
+    def get(self, request, pk):
+        try:
+            reception = Reception.objects.get(id=pk)
+            serializer = ReceptionSerializer(reception, many=False)
+            return Response(
+                serializer.data,
+                status=status.HTTP_200_OK,
+            )
+        except Reception.DoesNotExist:
+            return Response(
+                {"message": "HTTP_404_NOT_FOUND"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+    def put(self, request, pk):
+        try:
+            reception = Reception.objects.get(id=pk)
+            serializer = ReceptionUpdateSerializer(instance=reception, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(
+                    serializer.data,
+                    status=status.HTTP_200_OK,
+                )
+            else:
+                return Response(
+                    serializer.errors,
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                )
+        except Reception.DoesNotExist:
+            return Response(
+                {"message": "HTTP_404_NOT_FOUND"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+    def delete(self, request, pk):
+        try:
+            reception = Reception.objects.get(id=pk)
+            reception.delete()
+            return Response(
+                {"message": "Reception deleted successfully"},
+                status=status.HTTP_204_NO_CONTENT,
+            )
+        except Reception.DoesNotExist:
+            return Response(
+                {"message": "HTTP_404_NOT_FOUND"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
 # Doctor
 
 
@@ -387,7 +465,6 @@ class MedicationDetail(APIView):
                 {"message": "HTTP_404_NOT_FOUND"},
                 status=status.HTTP_404_NOT_FOUND,
             )
-
 
 # Visit
 

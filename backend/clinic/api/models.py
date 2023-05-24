@@ -34,6 +34,19 @@ class Student(models.Model):
         return f"{self.id} {self.first_name} {self.last_name} {self.index_number}"
 
 
+class Reception(models.Model):
+    first_name = models.CharField(max_length=45, null=False)
+    last_name = models.CharField(max_length=45, null=False)
+    date_of_birth = models.DateField()
+    pesel = models.CharField(max_length=11, null=False, unique=True)
+    phone_number = models.CharField(max_length=9, null=False, unique=True)
+    address = models.CharField(max_length=95, null=False)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.id} {self.first_name} {self.last_name}"
+
+
 class Doctor(models.Model):
     first_name = models.CharField(max_length=45, null=False)
     last_name = models.CharField(max_length=45, null=False)

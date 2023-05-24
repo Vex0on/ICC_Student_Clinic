@@ -2,7 +2,6 @@ from .validators import *
 from django.db import transaction
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-
 from .models import *
 
 
@@ -229,4 +228,8 @@ class VisitUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Visit
+
+class ReceptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reception
         fields = "__all__"
