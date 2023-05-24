@@ -10,7 +10,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ["username"]
 
     def __str__(self):
-        return self.email
+        return f"{self.id} {self.email}"
 
 
 class Student(models.Model):
@@ -24,4 +24,4 @@ class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name} {self.index_number}"
+        return f"{self.id} {self.first_name} {self.last_name} {self.index_number}"
