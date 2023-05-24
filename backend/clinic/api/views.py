@@ -2,8 +2,8 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView, status
 
-from .models import Student, User
-from .serializers import StudentCreateSerializer, StudentUpdateSerializer, StudentSerializer, UserSerializer, UserUpdateSerializer
+from .models import Student, User, Reception
+from .serializers import StudentCreateSerializer, StudentUpdateSerializer, StudentSerializer, UserSerializer, UserUpdateSerializer, ReceptionSerializer
 
 
 class UserList(APIView):
@@ -150,6 +150,33 @@ class StudentDetail(APIView):
                 status=status.HTTP_204_NO_CONTENT,
             )
         except Student.DoesNotExist:
+            return Response(
+                {"message": "HTTP_404_NOT_FOUND"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+
+class ReceptionList(APIView):
+    def get(self, request):
+        receptionists = Reception.objects.all()
+        serializer = ReceptionSerializer(receptionists, many=True)
+
+        return Response(
+            serializer.data,
+            status=status.HTTP_200_OK,
+        )
+
+
+class ReceptionDetail(APIView):
+    def get(self, request, pk):
+        try:
+            reception = Reception.objects.get(id=pk)
+            serializer = ReceptionSerializer(reception, many=False)
+            return Response(
+                serializer.data,
+                status=status.HTTP_200_OK,
+            )
+        except Reception.DoesNotExist:
             return Response(
                 {"message": "HTTP_404_NOT_FOUND"},
                 status=status.HTTP_404_NOT_FOUND,
