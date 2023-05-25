@@ -2,9 +2,12 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
+def user_profile_picture_path(instance, filename):
+    return f"user-profile-pictures/user_{instance.id}/{filename}"
 class User(AbstractUser):
     email = models.CharField(max_length=45, null=False, unique=True)
     password = models.CharField(max_length=45, null=False)
+    profile_picture = models.ImageField(upload_to=user_profile_picture_path, null=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]

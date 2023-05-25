@@ -26,6 +26,7 @@ class UserUpdateSerializer(serializers.ModelSerializer):
     email = serializers.CharField(required=False)
     password = serializers.CharField(required=False)
     username = serializers.CharField(required=False)
+    profile_picture = serializers.ImageField(required=False)
 
     class Meta:
         model = User
@@ -33,7 +34,8 @@ class UserUpdateSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         instance.email = validated_data.get("email", instance.email)
-        instance.username = validated_data.get("email", instance.username)
+        instance.username = validated_data.get("username", instance.username)
+        instance.profile_picture = validated_data.get("profile_picture", instance.profile_picture)
 
         password = validated_data.get("password")
         if password:
