@@ -1,7 +1,22 @@
 from django.db import transaction
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-from .models import Student, User
+from .models import *
+
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        if user.is_superuser:
+            token["is_superuser"] = True
+        else:
+            token["is_superuser"] = False
+
+
+        return token
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -84,4 +99,104 @@ class StudentUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student
+        fields = "__all__"
+
+
+class DoctorCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Doctor
+        fields = "__all__"
+
+    def create(self, validated_data):
+        user_data = validated_data.pop("user")
+
+        with transaction.atomic():
+            user_serializer = UserSerializer(data=user_data)
+            if user_serializer.is_valid():
+                user = user_serializer.save()
+
+            doctor = Doctor.objects.create(user=user, **validated_data)
+
+        return doctor
+
+
+class DoctorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Doctor
+        fields = "__all__"
+
+
+class DoctorUpdateSerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField(required=False)
+    last_name = serializers.CharField(required=False)
+    date_of_birth = serializers.DateField(required=False)
+    pesel = serializers.CharField(required=False)
+    phone_number = serializers.CharField(required=False)
+    address = serializers.CharField(required=False)
+    specialization = serializers.CharField(required=False)
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
+
+    class Meta:
+        model = Doctor
+        fields = "__all__"
+
+
+class MedicationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Medication
+        fields = "__all__"
+
+
+class MedicationUpdateSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(required=False)
+
+    class Meta:
+        model = Medication
+        fields = "__all__"
+
+
+class UseMedicationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UseMedication
+        fields = "__all__"
+
+
+class UseMedicationUpdateSerializer(serializers.ModelSerializer):
+    date_of_use = serializers.DateField(required=False)
+    medication = serializers.PrimaryKeyRelatedField(read_only=True)
+
+    class Meta:
+        model = UseMedication
+        fields = "__all__"
+
+
+class PrescriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Prescription
+        fields = "__all__"
+
+
+class PrescriptionUpdateSerializer(serializers.ModelSerializer):
+    description = serializers.CharField(required=False)
+    useMedication = serializers.PrimaryKeyRelatedField(read_only=True)
+
+    class Meta:
+        model = Prescription
+        fields = "__all__"
+
+
+class VisitSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Visit
+        fields = "__all__"
+
+
+class VisitUpdateSerializer(serializers.ModelSerializer):
+    date_of_visit = serializers.DateTimeField(required=False)
+    doctor = serializers.PrimaryKeyRelatedField(read_only=True)
+    student = serializers.PrimaryKeyRelatedField(read_only=True)
+    prescription = serializers.PrimaryKeyRelatedField(read_only=True)
+
+    class Meta:
+        model = Visit
         fields = "__all__"
