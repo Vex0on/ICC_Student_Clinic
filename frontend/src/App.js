@@ -8,6 +8,7 @@ import UserPanelPage from "./pages/UserPanelPage/UserPanelPage"
 import AdminPanelPage from "./pages/AdminPanelPage/AdminPanelPage"
 import PatientProfilePage from "./pages/PatientProfilePage/PatientProfilePage"
 import ListPatientPage from "./pages/ListPatientPage/ListPatientPage"
+import ListDoctorPage from "./pages/ListDoctorPage/ListDoctorPage"
 
 
 
@@ -24,6 +25,7 @@ function App() {
             <Route path='/panel-admina' element={<AdminPanelPage />}/>
             <Route path='/profil-pacjenta' element={<PatientProfilePage />}/>
             <Route path='/lista-pacjentow' element={<ListPatientPage />}/>
+            <Route path='/lista-lekarzy' element={<ListDoctorPage />}/>
 =======
             <Route path='*' element={<LoginPage />}/>
         </Routes> 
