@@ -77,7 +77,6 @@ class StudentUpdateSerializer(serializers.ModelSerializer):
     pesel = serializers.CharField(required=False)
     phone_number = serializers.CharField(required=False)
     address = serializers.CharField(required=False)
-    index_number = serializers.CharField(required=False)
     user = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
@@ -86,6 +85,40 @@ class StudentUpdateSerializer(serializers.ModelSerializer):
 
 
 class ReceptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reception
+        fields = "__all__"
+
+
+class ReceptionCreateSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
+    class Meta:
+        model = Reception
+        exclude = ("user",)
+
+    def create(self, validated_data):
+        user_data = validated_data.pop("user")
+
+        with transaction.atomic():
+            user_serializer = UserSerializer(data=user_data)
+            if user_serializer.is_valid():
+                user = user_serializer.save()
+
+            reception = Reception.objects.create(user=user, **validated_data)
+
+        return reception
+
+
+class ReceptionUpdateSerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField(required=False)
+    last_name = serializers.CharField(required=False)
+    date_of_birth = serializers.DateField(required=False)
+    pesel = serializers.CharField(required=False)
+    phone_number = serializers.CharField(required=False)
+    address = serializers.CharField(required=False)
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
+
     class Meta:
         model = Reception
         fields = "__all__"

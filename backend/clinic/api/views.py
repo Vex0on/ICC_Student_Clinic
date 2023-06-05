@@ -3,7 +3,16 @@ from rest_framework.response import Response
 from rest_framework.views import APIView, status
 
 from .models import Student, User, Reception
-from .serializers import StudentCreateSerializer, StudentUpdateSerializer, StudentSerializer, UserSerializer, UserUpdateSerializer, ReceptionSerializer
+from .serializers import (
+    StudentCreateSerializer,
+    StudentUpdateSerializer,
+    StudentSerializer,
+    UserSerializer,
+    UserUpdateSerializer,
+    ReceptionSerializer,
+    ReceptionCreateSerializer,
+    ReceptionUpdateSerializer,
+)
 
 
 class UserList(APIView):
@@ -65,7 +74,7 @@ class UserDetail(APIView):
                 {"message": "HTTP_404_NOT_FOUND"},
                 status=status.HTTP_404_NOT_FOUND,
             )
-        
+
     def delete(self, request, pk):
         try:
             user = User.objects.get(id=pk)
@@ -140,7 +149,7 @@ class StudentDetail(APIView):
                 {"message": "HTTP_404_NOT_FOUND"},
                 status=status.HTTP_404_NOT_FOUND,
             )
-        
+
     def delete(self, request, pk):
         try:
             student = Student.objects.get(id=pk)
@@ -158,12 +167,25 @@ class StudentDetail(APIView):
 
 class ReceptionList(APIView):
     def get(self, request):
-        receptionists = Reception.objects.all()
-        serializer = ReceptionSerializer(receptionists, many=True)
+        receptions = Reception.objects.all()
+        serializer = ReceptionSerializer(receptions, many=True)
 
         return Response(
             serializer.data,
             status=status.HTTP_200_OK,
+        )
+
+    def post(self, request):
+        serializer = ReceptionCreateSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED,
+            )
+        return Response(
+            serializer.errors,
+            status=status.HTTP_422_UNPROCESSABLE_ENTITY,
         )
 
 
@@ -175,6 +197,41 @@ class ReceptionDetail(APIView):
             return Response(
                 serializer.data,
                 status=status.HTTP_200_OK,
+            )
+        except Reception.DoesNotExist:
+            return Response(
+                {"message": "HTTP_404_NOT_FOUND"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+    def put(self, request, pk):
+        try:
+            reception = Reception.objects.get(id=pk)
+            serializer = ReceptionUpdateSerializer(instance=reception, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(
+                    serializer.data,
+                    status=status.HTTP_200_OK,
+                )
+            else:
+                return Response(
+                    serializer.errors,
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                )
+        except Reception.DoesNotExist:
+            return Response(
+                {"message": "HTTP_404_NOT_FOUND"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+    def delete(self, request, pk):
+        try:
+            reception = Reception.objects.get(id=pk)
+            reception.delete()
+            return Response(
+                {"message": "student deleted successfully"},
+                status=status.HTTP_204_NO_CONTENT,
             )
         except Reception.DoesNotExist:
             return Response(
