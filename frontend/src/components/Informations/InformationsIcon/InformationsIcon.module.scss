@@ -1,12 +1,13 @@
 .container__informations {
     display: flex;
-    align-items: center;
+    gap: 0.5rem;
 }
 
 .icon {
-
+    font-size: 2rem;
 }
 
 .text {
-    
+    font-size: 1.6rem;
+    width: 230px;
 }
