@@ -7,7 +7,9 @@ import InformationsIcon from "../../components/Informations/InformationsIcon/Inf
 
 import ProfileImage from "../../utills/images/profileimage.jpeg"
 
-import { AiOutlineHeart } from "react-icons/ai"
+import { AiOutlineHeart, AiOutlineCalendar } from "react-icons/ai"
+import { LuMapPin } from "react-icons/lu"
+import { BsTelephone } from "react-icons/bs"
 
 const PatientProfilePage = () => {
 
@@ -15,13 +17,16 @@ const PatientProfilePage = () => {
         <div className={styles.container}>
             <Header1 text={"Profil pacjenta"} />
 
-            <div>
+            <div className={styles.container__data}>
                 <div>
                     <Avatar text={"Krzysztof Nowak"} imageSrc={ProfileImage} />
                 </div>
 
-                <div>
+                <div className={styles.container__icons}>
                     <InformationsIcon text={"00231468933"} icon={<AiOutlineHeart />} />
+                    <InformationsIcon text={"14.03.2000"} icon={<AiOutlineCalendar />} />
+                    <InformationsIcon text={"Juliana Tuwima 26 10-088 Olsztyn"} icon={<LuMapPin />} />
+                    <InformationsIcon text={"600 676 454"} icon={<BsTelephone />} />
                 </div>
             </div>
 
