@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.utils import timezone
+from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
 from rest_framework.views import APIView, status
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -23,6 +25,40 @@ class StudentRegister(APIView):
                 return Response(student_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class Login(APIView):
+    def post(self, request):
+        email = request.data.get("email")
+        password = request.data.get("password")
+
+        user = User.objects.filter(email=email).first()
+
+        if user is None:
+            raise AuthenticationFailed("User not found.")
+
+        if not user.check_password(password):
+            raise AuthenticationFailed("Incorrect password.")
+
+        if not user.is_active:
+            raise AuthenticationFailed("Confirm your email.")
+
+        user.last_login = timezone.now()
+        user.save(update_fields=["last_login"])
+
+        custom_token = MyTokenObtainPairSerializer.get_token(user)
+        response = Response(
+            {"access": str(custom_token.access_token)},
+            status=status.HTTP_200_OK,
+        )
+        response.set_cookie(
+            key="refresh",
+            value=str(custom_token),
+            httponly=True,
+            samesite="Lax",
+        )
+
+        return response
 
 
 class AccessToken(APIView):
