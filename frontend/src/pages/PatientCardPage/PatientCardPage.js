@@ -25,7 +25,7 @@ const PatientCardPage = () => {
                         </div>
                     </div>
 
-                    <div>
+                    <div className={styles.avatar}>
                         <Avatar text={""} imageSrc={ProfileImage} />
                     </div>
                 </div>
@@ -35,23 +35,23 @@ const PatientCardPage = () => {
                         <h2>Lista wizyt</h2>
 
                         <div>
-                            <table>
-                                <tr>
-                                    <th>Data</th>
-                                    <th>Godz.</th>
-                                    <th>Imię i Nazwisko</th>
+                            <table className={styles.body__table}>
+                                <tr className={styles.table__tr}>
+                                    <th className={styles.table__th}>Data</th>
+                                    <th className={styles.table__th}>Godz.</th>
+                                    <th className={styles.table__th}>Imię i Nazwisko</th>
                                 </tr>
 
-                                <tr>
-                                    <td>02.05.2022</td>
-                                    <td>9:45</td>
-                                    <td>Karolina Rewt</td>
+                                <tr className={styles.table__tr}>
+                                    <td className={styles.table__td}>02.05.2022</td>
+                                    <td className={styles.table__td}>9:45</td>
+                                    <td className={styles.table__td}>Karolina Rewt</td>
                                 </tr>
 
-                                <tr>
-                                    <td>02.05.2022</td>
-                                    <td>9:45</td>
-                                    <td>Karolina Rewt</td>
+                                <tr className={styles.table__tr}>
+                                    <td className={styles.table__td}>02.05.2022</td>
+                                    <td className={styles.table__td}>9:45</td>
+                                    <td className={styles.table__td}>Karolina Rewt</td>
                                 </tr>
                             </table>
                         </div>
@@ -61,18 +61,19 @@ const PatientCardPage = () => {
                         <h2>Lista leków</h2>
 
                         <div>
-                            <table>
-                                <tr>
-                                    <td>Acodin</td>
+                            <table className={`${styles.body__table__medicines} ${styles.body__table}`}>
+                                <tr className={styles.table__tr}>
+                                    <th className={styles.table__th}>Nazwa </th>
                                 </tr>
 
-                                <tr>
-                                    <td>Iburapid</td>
+                                <tr className={styles.table__tr}>
+                                    <td className={styles.table__td}>Acodin</td>
                                 </tr>
 
-                                <tr>
-                                    <td>Trehanol</td>
+                                <tr className={styles.table__tr}>
+                                    <td className={styles.table__td}>Iburapid</td>
                                 </tr>
+
                             </table>
                         </div>
                     </div>
@@ -81,7 +82,7 @@ const PatientCardPage = () => {
                 <div className={styles.container__data__footer}>
                     <h2>Zalecenia</h2>
 
-                    <div>
+                    <div className={styles.footer__data}>
                         <p>
                             Aktywność fizyczna 3 razy w tygodniu
                         </p>

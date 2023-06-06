@@ -29,7 +29,6 @@ function App() {
             <Route path='/lista-lekarzy' element={<ListDoctorPage />}/>
             <Route path='/rejestracja' element={<RegisterPage />} />
             <Route path='/regulamin' element={<TermsPage />} />
-=======
             <Route path='/karta-pacjenta' element={<PatientCardPage />}/>
             <Route path='*' element={<LoginPage />}/>
         </Routes> 
