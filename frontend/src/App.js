@@ -9,7 +9,8 @@ import AdminPanelPage from "./pages/AdminPanelPage/AdminPanelPage"
 import PatientProfilePage from "./pages/PatientProfilePage/PatientProfilePage"
 import ListPatientPage from "./pages/ListPatientPage/ListPatientPage"
 import ListDoctorPage from "./pages/ListDoctorPage/ListDoctorPage"
-
+import RegisterPage from "./pages/RegisterPage/RegisterPage"
+import TermsPage from "./pages/TermsPage/TermsPage"
 
 function App() {
   return (
@@ -24,6 +25,8 @@ function App() {
             <Route path='/profil-pacjenta' element={<PatientProfilePage />}/>
             <Route path='/lista-pacjentow' element={<ListPatientPage />}/>
             <Route path='/lista-lekarzy' element={<ListDoctorPage />}/>
+            <Route path='/rejestracja' element={<RegisterPage />} />
+            <Route path='/regulamin' element={<TermsPage />} />
 =======
             <Route path='*' element={<LoginPage />}/>
         </Routes> 
