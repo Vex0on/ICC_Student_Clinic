@@ -1,0 +1,96 @@
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    min-height: 650px;
+    padding: 0.5rem 3rem;
+
+    background-color: #fff;
+
+    gap: 1rem;
+}
+
+.container__data {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+}
+
+.container__data__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .data {
+        border: 4px solid #555;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 1.3rem 2rem;
+        border-radius: 1rem;
+        margin-bottom: 2rem;
+
+        h2 {
+            margin: 0;
+            padding: 0;
+        }
+    }
+
+    .avatar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+    }
+}
+
+.container__data__body {
+    display: flex;
+    justify-content: space-between;
+
+    .body__table {
+        background-color: #ccc;
+        border-collapse: collapse;
+        .table__th, .table__td {
+            padding: 0.5rem;
+        }
+
+        .table__tr {
+            border-bottom: 1px solid #333;
+        }
+
+        .table__th {
+            text-align: start;
+            background-color: #333;
+            color: white;
+            border: 1px solid #000;
+        }
+
+        .table__td {
+            background-color: #fff;
+            border: 1px solid #333;
+        }
+    }
+
+    .body__table__medicines {
+        min-width: 200px;
+        background-color: #ccc;
+        border-collapse: collapse;
+    }
+}
+
+.container__data__footer {
+
+    .footer__data {
+        border: 4px solid #555;
+        padding: 1rem 1rem;
+        min-height: 60px;
+
+        p {
+            margin: 0;
+            padding: 0;
+        }
+    }
+}

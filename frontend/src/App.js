@@ -12,6 +12,7 @@ import ListDoctorPage from "./pages/ListDoctorPage/ListDoctorPage"
 import RegisterPage from "./pages/RegisterPage/RegisterPage"
 import TermsPage from "./pages/TermsPage/TermsPage"
 import PatientCardPage from "./pages/PatientCardPage/PatientCardPage"
+import DoctorCardPage from "./pages/DoctorCardPage/DoctorCardPage"
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
             <Route path='/rejestracja' element={<RegisterPage />} />
             <Route path='/regulamin' element={<TermsPage />} />
             <Route path='/karta-pacjenta' element={<PatientCardPage />}/>
+            <Route path='/karta-doktora' element={<DoctorCardPage />}/>
             <Route path='*' element={<LoginPage />}/>
         </Routes> 
       </Router>
