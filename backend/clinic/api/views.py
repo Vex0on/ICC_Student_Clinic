@@ -8,23 +8,17 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .models import *
 from .serializers import *
 
+# Register, login
+
 
 class StudentRegister(APIView):
     def post(self, request):
-        email = request.data.get("email")
-        password = request.data.get("password")
-        user_serializer = UserSerializer(data={"email": email, "password": password})
-        if user_serializer.is_valid():
-            user = user_serializer.save()
-            request.data["user"] = user.id
-            student_serializer = StudentSerializer(data=request.data)
-            if student_serializer.is_valid():
-                student_serializer.save()
-                return Response({"message": "HTTP_200_OK"}, status=status.HTTP_200_OK)
-            else:
-                return Response(student_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        student_serializer = StudentCreateSerializer(data=request.data)
+        if student_serializer.is_valid():
+            student_serializer.save()
+            return Response({"message": "HTTP_200_OK"}, status=status.HTTP_200_OK)
         else:
-            return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(student_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class Login(APIView):
@@ -60,6 +54,8 @@ class Login(APIView):
 
         return response
 
+# JWT
+
 
 class AccessToken(APIView):
     def get(self, request):
@@ -83,6 +79,8 @@ class AccessToken(APIView):
             {"message": "HTTP_400_BAD_REQUEST"},
             status=status.HTTP_400_BAD_REQUEST,
         )
+
+# User
 
 
 class UserList(APIView):
@@ -159,6 +157,8 @@ class UserDetail(APIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
 
+# Student
+
 
 class StudentList(APIView):
     def get(self, request):
@@ -233,6 +233,8 @@ class StudentDetail(APIView):
                 {"message": "HTTP_404_NOT_FOUND"},
                 status=status.HTTP_404_NOT_FOUND,
             )
+
+# Doctor
 
 
 class DoctorList(APIView):
@@ -309,6 +311,8 @@ class DoctorDetail(APIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
 
+# Medication
+
 
 class MedicationList(APIView):
     def get(self, request):
@@ -383,6 +387,8 @@ class MedicationDetail(APIView):
                 {"message": "HTTP_404_NOT_FOUND"},
                 status=status.HTTP_404_NOT_FOUND,
             )
+
+# UseMedication
 
 
 class UseMedicationList(APIView):
@@ -459,6 +465,8 @@ class UseMedicationDetail(APIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
 
+# Prescription
+
 
 class PrescriptionList(APIView):
     def get(self, request):
@@ -534,6 +542,8 @@ class PrescriptionDetail(APIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
 
+# Visit
+
 
 class VisitList(APIView):
     def get(self, request):
@@ -608,3 +618,14 @@ class VisitDetail(APIView):
                 {"message": "HTTP_404_NOT_FOUND"},
                 status=status.HTTP_404_NOT_FOUND,
             )
+
+
+class VisitListDoctor(APIView):
+    def get(self, request, doctor_id):
+        try:
+            visits = Visit.objects.filter(doctor=doctor_id)
+            serializer = VisitSerializer(visits, many=True)
+            return Response({"data": serializer.data}, status=status.HTTP_200_OK)
+
+        except Visit.DoesNotExist:
+            return Response({}, status=status.HTTP_404_NOT_FOUND)

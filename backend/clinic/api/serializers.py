@@ -1,3 +1,4 @@
+from .validators import *
 from django.db import transaction
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -15,7 +16,6 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         else:
             token["is_superuser"] = False
 
-
         return token
 
 
@@ -25,6 +25,22 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = "__all__"
+
+    email = serializers.EmailField(
+        validators=[validate_email],
+        required=False
+    )
+
+    password = serializers.CharField(
+        validators=[validate_password],
+        write_only=True,
+        required=False,
+    )
+
+    profile_picture = serializers.ImageField(
+        validators=[validate_image],
+        required=False,
+    )
 
     def create(self, validated_data):
         user = User.objects.create(
@@ -37,6 +53,35 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
+class StudentCreateSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
+    class Meta:
+        model = Student
+        fields = "__all__"
+
+    phone_number = serializers.CharField(validators=[validate_phone_number],
+                                         required=False,)
+
+    index_number = serializers.CharField(validators=[validate_index_number],
+                                         required=False,)
+
+    pesel = serializers.CharField(validators=[validate_pesel],
+                                  required=False,)
+
+    def create(self, validated_data):
+        user_data = validated_data.pop("user")
+
+        with transaction.atomic():
+            user_serializer = UserSerializer(data=user_data)
+            if user_serializer.is_valid():
+                user = user_serializer.save()
+
+            student = Student.objects.create(user=user, **validated_data)
+
+        return student
+
+
 class UserUpdateSerializer(serializers.ModelSerializer):
     email = serializers.CharField(required=False)
     password = serializers.CharField(required=False)
@@ -46,6 +91,16 @@ class UserUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = "__all__"
+
+    email = serializers.EmailField(
+        validators=[validate_email],
+        required=False
+    )
+
+    profile_picture = serializers.ImageField(
+        validators=[validate_image],
+        required=False,
+    )
 
     def update(self, instance, validated_data):
         instance.email = validated_data.get("email", instance.email)
@@ -59,26 +114,6 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance
-
-
-class StudentCreateSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-
-    class Meta:
-        model = Student
-        fields = "__all__"
-
-    def create(self, validated_data):
-        user_data = validated_data.pop("user")
-
-        with transaction.atomic():
-            user_serializer = UserSerializer(data=user_data)
-            if user_serializer.is_valid():
-                user = user_serializer.save()
-
-            student = Student.objects.create(user=user, **validated_data)
-
-        return student
 
 
 class StudentSerializer(serializers.ModelSerializer):
@@ -101,6 +136,15 @@ class StudentUpdateSerializer(serializers.ModelSerializer):
         model = Student
         fields = "__all__"
 
+    phone_number = serializers.CharField(validators=[validate_phone_number],
+                                         required=False,)
+
+    index_number = serializers.CharField(validators=[validate_index_number],
+                                         required=False,)
+
+    pesel = serializers.CharField(validators=[validate_pesel],
+                                  required=False,)
+
 
 class DoctorCreateSerializer(serializers.ModelSerializer):
     class Meta:
@@ -118,6 +162,12 @@ class DoctorCreateSerializer(serializers.ModelSerializer):
             doctor = Doctor.objects.create(user=user, **validated_data)
 
         return doctor
+
+    phone_number = serializers.CharField(validators=[validate_phone_number],
+                                         required=False,)
+
+    pesel = serializers.CharField(validators=[validate_pesel],
+                                  required=False,)
 
 
 class DoctorSerializer(serializers.ModelSerializer):
@@ -139,6 +189,13 @@ class DoctorUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Doctor
         fields = "__all__"
+
+
+    phone_number = serializers.CharField(validators=[validate_phone_number],
+                                         required=False,)
+
+    pesel = serializers.CharField(validators=[validate_pesel],
+                                  required=False,)
 
 
 class MedicationSerializer(serializers.ModelSerializer):

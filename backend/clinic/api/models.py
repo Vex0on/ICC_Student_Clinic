@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
 
 
 def user_profile_picture_path(instance, filename):
@@ -7,7 +9,7 @@ def user_profile_picture_path(instance, filename):
 
 
 class User(AbstractUser):
-    email = models.CharField(max_length=45, null=False, unique=True)
+    email = models.EmailField(null=False, unique=True)
     password = models.CharField(max_length=45, null=False)
     profile_picture = models.ImageField(upload_to=user_profile_picture_path, null=True)
 
@@ -54,7 +56,7 @@ class Medication(models.Model):
 
 
 class UseMedication(models.Model):
-    date_of_use = models.DateField()
+    date_of_use = models.DateField(null=True, blank=True)
     medication = models.OneToOneField(Medication, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
@@ -63,7 +65,7 @@ class UseMedication(models.Model):
 
 class Prescription(models.Model):
     description = models.TextField()
-    useMedication = models.ForeignKey(UseMedication, on_delete=models.CASCADE)
+    useMedications = models.ManyToManyField(UseMedication, blank=True)
 
     def __str__(self):
         return f"{self.id} {self.description}"
