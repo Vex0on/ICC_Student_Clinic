@@ -11,6 +11,8 @@ import ListPatientPage from "./pages/ListPatientPage/ListPatientPage"
 import ListDoctorPage from "./pages/ListDoctorPage/ListDoctorPage"
 import RegisterPage from "./pages/RegisterPage/RegisterPage"
 import TermsPage from "./pages/TermsPage/TermsPage"
+import PatientCardPage from "./pages/PatientCardPage/PatientCardPage"
+
 
 function App() {
   return (
@@ -28,6 +30,7 @@ function App() {
             <Route path='/rejestracja' element={<RegisterPage />} />
             <Route path='/regulamin' element={<TermsPage />} />
 =======
+            <Route path='/karta-pacjenta' element={<PatientCardPage />}/>
             <Route path='*' element={<LoginPage />}/>
         </Routes> 
       </Router>

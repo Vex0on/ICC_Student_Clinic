@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    min-height: 650px;
+    padding: 0.5rem 3rem;
+
+    background-color: #fff;
+
+    gap: 1rem;
+}
+
+.container__data {
+    display: flex;
+    flex-direction: column;
+}
+
+.container__data__header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.container__data__body {
+    display: flex;
+    justify-content: space-between;
+}
