@@ -25,6 +25,8 @@ function App() {
         <Routes>
             <Route path='/' element={<LoginPage />}/>
             <Route path='/lekarze' element={<SpecialistListPage />}/>
+            <Route path='/rejestracja' element={<RegisterPage />}/>
+            <Route path='/regulamin' element={<TermsPage />}/>
             <Route path='/reset-hasla' element={<RemindPasswordPage />}/>
             <Route path='/panel-pacjenta' element={<UserPanelPage />}/>
             <Route path='/panel-admina' element={<AdminPanelPage />}/>
