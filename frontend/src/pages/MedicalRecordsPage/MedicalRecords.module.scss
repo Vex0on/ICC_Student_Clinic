@@ -13,6 +13,10 @@
     background-color: #fff;
 
     gap: 1rem;
+
+    h2 {
+        font-size: 1.5rem; 
+    }
 }
 
 .container__header {
@@ -71,10 +75,11 @@
         border-top: 1px solid #333;
         border-left: 1px solid #333;
         border-right: 1px solid #333;
+        margin-top: 1rem;
     }
 
     .container__list__second {
-        margin-top: 1.7rem;
+        margin-top: 2.6rem;
     }
 
     .container__data {

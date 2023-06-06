@@ -13,6 +13,8 @@ import RegisterPage from "./pages/RegisterPage/RegisterPage"
 import TermsPage from "./pages/TermsPage/TermsPage"
 import PatientCardPage from "./pages/PatientCardPage/PatientCardPage"
 import DoctorCardPage from "./pages/DoctorCardPage/DoctorCardPage"
+import MedicalRecordsPage from "./pages/MedicalRecordsPage/MedicalRecordsPage"
+import ACSpecialistPage from "./pages/ACSpecialistPage/ACSpecialistPage"
 
 
 function App() {
@@ -31,6 +33,7 @@ function App() {
             <Route path='/karta-pacjenta' element={<PatientCardPage />}/>
             <Route path='/karta-doktora' element={<DoctorCardPage />}/>
             <Route path='/dokumentacja-medyczna' element={<MedicalRecordsPage />}/>
+            <Route path='/po-wyborze-specjalisty' element={<ACSpecialistPage />}/>
             <Route path='*' element={<LoginPage />}/>
         </Routes> 
       </Router>
