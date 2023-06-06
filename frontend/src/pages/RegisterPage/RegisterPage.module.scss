@@ -1,0 +1,35 @@
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 1rem 2rem;
+
+    background-color: #fff;
+
+    gap: 1rem;
+}
+
+.container__primary__fields {
+    display: flex;
+    flex-direction: row;
+
+    margin: 1.5rem 0 0.5rem 0;
+
+    gap: 3rem;
+}
+
+.link {
+    font-size: 1.1rem;
+    text-decoration: none;
+    color: #515C5C;
+    font-weight: bold;
+    margin-left: .5rem;
+}
+
+.arrowLeft {
+    font-size: 3rem;
+    width: 100%;
+    color: #515C5C;
+}

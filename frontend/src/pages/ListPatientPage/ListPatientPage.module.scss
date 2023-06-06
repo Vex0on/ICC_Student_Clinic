@@ -1,0 +1,30 @@
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    min-height: 650px;
+    padding: 0.5rem 3rem;
+
+    background-color: #fff;
+
+    gap: 1rem;
+}
+
+.container__data {
+    display: flex;
+    overflow-y: scroll;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    width: 100%;
+    max-width: 800px;
+    max-height: 500px;
+    margin-top: 1.5rem;
+}
+
+.container__data > * {
+    flex-basis: calc(50% - 1rem);
+
+    margin-bottom: 1rem;
+}
