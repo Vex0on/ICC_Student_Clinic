@@ -55,27 +55,26 @@ class Medication(models.Model):
         return self.name
 
 
-class UseMedication(models.Model):
-    date_of_use = models.DateField(null=True, blank=True)
-    medication = models.OneToOneField(Medication, on_delete=models.SET_NULL, null=True)
-
-    def __str__(self):
-        return f"{self.id} {self.medication.name} {self.date_of_use}"
-
-
-class Prescription(models.Model):
-    description = models.TextField()
-    useMedications = models.ManyToManyField(UseMedication, blank=True)
-
-    def __str__(self):
-        return f"{self.id} {self.description}"
-
-
 class Visit(models.Model):
     date_of_visit = models.DateTimeField()
     doctor = models.ForeignKey(Doctor, on_delete=models.SET_NULL, null=True)
     student = models.ForeignKey(Student, on_delete=models.SET_NULL, null=True)
-    prescription = models.OneToOneField(Prescription, on_delete=models.CASCADE)
+    description = models.TextField()
+    medication = models.ManyToManyField(Medication)
+    is_active = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.id} {self.doctor} {self.student} {self.prescription}"
+        return f"{self.id} {self.date_of_visit}"
+
+
+class Documentation(models.Model):
+    student = models.OneToOneField(Student, on_delete=models.SET_NULL, null=True)
+    doctor = models.ForeignKey(Doctor, on_delete=models.SET_NULL, null=True)
+    current_health = models.TextField()
+    sickness_history = models.TextField()
+    treatment_plan = models.TextField()
+    medication_list = models.TextField()
+    medical_examination = models.TextField()
+
+    def __str__(self):
+        return f"{self.id} {self.student} {self.doctor}"

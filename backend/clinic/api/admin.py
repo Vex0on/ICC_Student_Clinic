@@ -23,16 +23,11 @@ class Medication(admin.ModelAdmin):
     list_display = ["id", "name"]
 
 
-@admin.register(UseMedication)
-class UseMedication(admin.ModelAdmin):
-    list_display = ["id", "date_of_use"]
-
-
-@admin.register(Prescription)
-class Prescription(admin.ModelAdmin):
-    list_display = ["id"]
-
-
 @admin.register(Visit)
 class Visit(admin.ModelAdmin):
     list_display = ["id", "date_of_visit"]
+
+
+@admin.register(Documentation)
+class Documentation(admin.ModelAdmin):
+    list_display = ["id"]

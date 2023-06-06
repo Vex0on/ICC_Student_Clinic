@@ -212,37 +212,9 @@ class MedicationUpdateSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class UseMedicationSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UseMedication
-        fields = "__all__"
-
-
-class UseMedicationUpdateSerializer(serializers.ModelSerializer):
-    date_of_use = serializers.DateField(required=False)
-    medication = serializers.PrimaryKeyRelatedField(read_only=True)
-
-    class Meta:
-        model = UseMedication
-        fields = "__all__"
-
-
-class PrescriptionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Prescription
-        fields = "__all__"
-
-
-class PrescriptionUpdateSerializer(serializers.ModelSerializer):
-    description = serializers.CharField(required=False)
-    useMedication = serializers.PrimaryKeyRelatedField(read_only=True)
-
-    class Meta:
-        model = Prescription
-        fields = "__all__"
-
-
 class VisitSerializer(serializers.ModelSerializer):
+    medication = MedicationSerializer(many=True)
+
     class Meta:
         model = Visit
         fields = "__all__"
@@ -252,7 +224,8 @@ class VisitUpdateSerializer(serializers.ModelSerializer):
     date_of_visit = serializers.DateTimeField(required=False)
     doctor = serializers.PrimaryKeyRelatedField(read_only=True)
     student = serializers.PrimaryKeyRelatedField(read_only=True)
-    prescription = serializers.PrimaryKeyRelatedField(read_only=True)
+    description = serializers.CharField(required=False)
+    medications = serializers.PrimaryKeyRelatedField(many=True, queryset=Medication.objects.all())
 
     class Meta:
         model = Visit
