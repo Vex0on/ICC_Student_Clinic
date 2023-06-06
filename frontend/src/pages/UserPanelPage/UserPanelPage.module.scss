@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 0.5rem 3rem;
+
+    background-color: #fff;
+
+    gap: 1rem;
+}
+
+.container__header {
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 1rem 0;
+}
+
+.container__tiles {
+    display: flex;
+
+    margin: 1rem 0;
+
+    gap: 1rem;
+}
+
+.container__button {
+    width: 100%;
+    padding: 1rem 0;
+
+    text-align: end;
+}

@@ -1,0 +1,21 @@
+.container__avatar {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .image {
+        width: 200px;
+        height: auto;
+        border-radius: 0.4rem;
+    }
+
+    .text {
+        text-align: center;
+        font-size: 1.6rem;
+        letter-spacing: 1px;
+        color: #515C5C;
+        margin-top: 0.5rem;
+    }
+}
