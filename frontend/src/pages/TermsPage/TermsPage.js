@@ -7,31 +7,53 @@ const TermsPage = () => {
   return (
     <div className={styles.container}>
       <Header1 text={"Regulamin"} />
-      <p>
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's standard dummy text ever
-        since the 1500s, when an unknown printer took a galley of type and
-        scrambled it to make a type specimen book. It has survived not only five
-        centuries, but also the leap into electronic typesetting, remaining
-        essentially unchanged. It was popularised in the 1960s with the release
-        of Letraset sheets containing Lorem Ipsum passages, and more recently
-        with desktop publishing software like Aldus PageMaker including versions
-        of Lorem Ipsum.
-      </p>
-      <p>
-        Contrary to popular belief, Lorem Ipsum is not simply random text. It
-        has roots in a piece of classical Latin literature from 45 BC, making it
-        over 2000 years old. Richard McClintock, a Latin professor at
-        Hampden-Sydney College in Virginia, looked up one of the more obscure
-        Latin words, consectetur, from a Lorem Ipsum passage, and going through
-        the cites of the word in classical literature, discovered the
-        undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33
-        of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by
-        Cicero, written in 45 BC. This book is a treatise on the theory of
-        ethics, very popular during the Renaissance. The first line of Lorem
-        Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section
-        1.10.32.
-      </p>
+      <ol>
+        <li>Cel kliniki lekarskiej dla studentów:</li>
+        <ul>
+          <li>Zapewnienie studentom praktycznego doświadczenia w zakresie opieki zdrowotnej.</li>
+          <li>Umożliwienie studentom obserwacji i udziału w procesie diagnozowania, leczenia i opieki nad pacjentami.</li>
+          <li>Wspieranie rozwoju umiejętności klinicznych, komunikacyjnych i etycznych studentów.</li>
+        </ul>
+
+        <li>Zasady ogólne:</li>
+        <ul>
+          <li>Klinika lekarska dla studentów działa zgodnie z obowiązującymi przepisami prawa i standardami medycznymi.</li>
+          <li>Uczestnictwo w pracy kliniki lekarskiej jest dobrowolne i oparte na zasadach równości i szacunku.</li>
+          <li>Studenci są zobowiązani do przestrzegania poufności informacji o pacjentach i zachowania profesjonalizmu.</li>
+          <li>Klinika lekarska może odmówić udziału studentowi bez podania przyczyny.</li>
+        </ul>
+        
+        <li>Zgłaszanie pacjentów:</li>
+        <ul>
+          <li>Pacjenci zgłaszają się do kliniki lekarskiej na zasadzie dobrowolności i wyrażają zgodę na udział studentów w opiece medycznej.</li>
+          <li>Pacjenci mają prawo do odmowy uczestnictwa studentów w swojej opiece.</li>
+          <li>Dane pacjentów muszą być poufne i mogą być wykorzystywane jedynie w celach edukacyjnych, z zachowaniem pełnej anonimowości.</li>
+        </ul>
+
+        <li>Obowiązki studentów:</li>
+        <ul>
+          <li>Studenci muszą posiadać aktualną identyfikację studencką oraz podlegać nadzorowi odpowiedniego personelu medycznego.</li>
+          <li> Studenci są zobowiązani do regularnego uczestnictwa w zajęciach praktycznych, wykładach i innych aktywnościach edukacyjnych związanych z kliniką lekarską.</li>
+          <li>Studenci muszą zachować szacunek wobec pacjentów, personelu medycznego i innych studentów.</li>
+          <li>Studenci są odpowiedzialni za utrzymanie czystości i porządku w miejscach pracy oraz przestrzeganie zasad higieny.</li>
+        </ul>
+
+        <li>Nadzór i odpowiedzialność:</li>
+        <ul>
+          <li>Klinika lekarska ma odpowiedni personel medyczny, który nadzoruje pracę studentów i udziela im wsparcia.</li>
+          <li>Personel medyczny ponosi odpowiedzialność za bezpieczeństwo pacjentów i studentów oraz zapewnienie wysokiej jakości opieki zdrowotnej.</li>
+          <li>Studenci muszą stosować się do instrukcji personelu medycznego i zgłaszać wszelkie wątpliwości lub sytuacje wymagające interwencji.</li>
+        </ul>
+
+        <li>Postanowienia końcowe:</li>
+        <ul>
+          <li>Klinika lekarska dla studentów zastrzega sobie prawo do wprowadzania zmian w regulaminie.</li>
+          <li>Student zobowiązany jest do zapoznania się z regulaminem i przestrzegania jego postanowień.</li>
+          <li>Złamanie regulaminu może prowadzić do dyscyplinarnych konsekwencji, w tym wykluczenia z udziału w klinice lekarskiej.</li>
+        </ul>
+      </ol>
+
+      <p>Zapoznanie się z powyższym regulaminem jest obowiązkiem studenta i konieczne przed rozpoczęciem udziału w klinice lekarskiej dla studentów.</p>
     </div>
   );
 };
