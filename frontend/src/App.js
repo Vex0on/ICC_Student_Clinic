@@ -37,7 +37,7 @@ function App() {
             <Route path='/karta-doktora' element={<DoctorCardPage />}/>
             <Route path='/dokumentacja-medyczna' element={<MedicalRecordsPage />}/>
             <Route path='/po-wyborze-specjalisty' element={<ACSpecialistPage />}/>
-            <Route path='/specjalista-szczegoly' element={<SpecialistDetailsPage />}/>
+            <Route path='/specjalista-szczegoly/:id' element={<SpecialistDetailsPage />}/>
             <Route path='*' element={<LoginPage />}/>
         </Routes> 
       </Router>

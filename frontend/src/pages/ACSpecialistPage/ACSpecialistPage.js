@@ -21,6 +21,10 @@ const ACSpecialistPage = () => {
         fetchSpecialistData();
     }, [])
 
+    const handleSpecialistClick = (id) => {
+        navigate(`/specjalista-szczegoly/${id}`);
+      };
+
     const fetchSpecialistData = async () => {
         try {
             const response = await axios.get(`http://localhost:8000/api/doctors/${buttonText}/`);
@@ -41,6 +45,7 @@ const ACSpecialistPage = () => {
                         key={specialist.id}
                         text={`Dr. ${specialist.first_name} ${specialist.last_name}`}
                         imageSrc={specialist.user?.profile_picture ? `http://localhost:8000/api/${specialist.user.profile_picture}` : ProfileImage}
+                        onClick={() => handleSpecialistClick(specialist.id)}
                         />
                     ))}
             </div>

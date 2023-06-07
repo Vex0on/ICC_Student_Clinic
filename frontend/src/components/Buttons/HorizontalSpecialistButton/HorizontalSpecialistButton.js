@@ -5,7 +5,7 @@ import { BsArrowRight } from "react-icons/bs"
 
 const HorizontalSpecialistButton = ({text, imageSrc, onClick}) => {
     return(
-        <div className={styles.button}>
+        <div className={styles.button} onClick={onClick}>
             <div>
                 <img src={imageSrc} alt="Zdjecie" className={styles.image} />
             </div>
