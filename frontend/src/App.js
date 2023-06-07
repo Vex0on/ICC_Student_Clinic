@@ -16,6 +16,7 @@ import DoctorCardPage from "./pages/DoctorCardPage/DoctorCardPage"
 import MedicalRecordsPage from "./pages/MedicalRecordsPage/MedicalRecordsPage"
 import ACSpecialistPage from "./pages/ACSpecialistPage/ACSpecialistPage"
 import SpecialistDetailsPage from "./pages/SpecialistDetailsPage/SpecialistDetailsPage"
+import DoctorCalendar from './pages/DoctorCalendar/DoctorCalendar'
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
             <Route path='/dokumentacja-medyczna' element={<MedicalRecordsPage />}/>
             <Route path='/po-wyborze-specjalisty' element={<ACSpecialistPage />}/>
             <Route path='/specjalista-szczegoly' element={<SpecialistDetailsPage />}/>
+            <Route path='/kalendarz-lekarza' element={<DoctorCalendar />}/>
             <Route path='*' element={<LoginPage />}/>
         </Routes> 
       </Router>
