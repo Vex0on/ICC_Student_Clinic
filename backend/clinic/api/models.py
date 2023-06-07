@@ -55,6 +55,8 @@ class Doctor(models.Model):
     phone_number = models.CharField(max_length=9, null=False, unique=True)
     address = models.CharField(max_length=95, null=False)
     specialization = models.CharField(max_length=20, null=False)
+    years_of_experience = models.SmallIntegerField(null=False)
+    oder_specializations = models.TextField(null=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):

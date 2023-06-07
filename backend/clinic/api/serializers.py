@@ -55,7 +55,7 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create(
             email=validated_data.get("email"),
-            username=validated_data.get("email"),
+            username=validated_data.get("email").split("@")[0]
         )
         user.set_password(validated_data.get("password"))
         user.save()
@@ -162,6 +162,7 @@ class StudentUpdateSerializer(serializers.ModelSerializer):
 
 
 class DoctorCreateSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
     class Meta:
         model = Doctor
         fields = "__all__"
@@ -201,6 +202,8 @@ class DoctorUpdateSerializer(serializers.ModelSerializer):
     phone_number = serializers.CharField(required=False)
     address = serializers.CharField(required=False)
     specialization = serializers.CharField(required=False)
+    years_of_experience = serializers.IntegerField(required=False)
+    oder_specializations = serializers.CharField(required=False)
     user = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
