@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react"
 import styles from "./SpecialistDetailsPage.module.scss"
 import Header1 from "../../components/Headers/Header1/Header1"
 
-import ProfileImage from "../../utills/images/profileimage.jpeg"
+import ProfileImage from "../../utills/images/Avatar.jpg"
 
 import axios from "axios";
 
-const SpecialistDetailsPage = ({doctor_id=10}) => {
+const SpecialistDetailsPage = ({doctor_id = 2}) => {
 
     const [specialistData, setSpecialistData] = useState({
         specialization: "",
@@ -14,6 +14,7 @@ const SpecialistDetailsPage = ({doctor_id=10}) => {
         last_name: "",
         years_of_experience: "",
         oder_specializations: "",
+        user: [],
     })
 
     useEffect(() => {
@@ -22,7 +23,7 @@ const SpecialistDetailsPage = ({doctor_id=10}) => {
 
     const fetchSpecialistData = async () => {
         try {
-            const response = await axios.get(`http://localhost:8000/api/doctors/${doctor_id}`);
+            const response = await axios.get(`http://localhost:8000/api/doctors/${doctor_id}/`);
             setSpecialistData(response.data);
             console.log(response.data)
         } catch (error) {
@@ -36,7 +37,7 @@ const SpecialistDetailsPage = ({doctor_id=10}) => {
 
             <div className={styles.container__main}>
                 <div className={styles.container__header}>
-                    <img src={ProfileImage} alt="Zdjecie" className={styles.image} />
+                    <img src={specialistData.user.profile_picture ? `http://localhost:8000/api/${specialistData.user.profile_picture}` : ProfileImage} alt="Zdjecie" className={styles.image} />
                     <p className={styles.name}>dr {specialistData.first_name} {specialistData.last_name}</p>
                 </div>
 
@@ -44,7 +45,7 @@ const SpecialistDetailsPage = ({doctor_id=10}) => {
                     <p className={styles.text}>
                         <strong>Doświadczenie:</strong> {specialistData.years_of_experience} lat <br />
                         <strong>Dodatkowe specjalizacje:</strong> <br />
-                        {specialistData.oder_specializations}
+                        {specialistData.oder_specializations ? specialistData.oder_specializations : "Brak"}
                     </p>
                 </div>
             </div>
