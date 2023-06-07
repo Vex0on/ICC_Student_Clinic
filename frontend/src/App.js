@@ -20,7 +20,6 @@ function App() {
             <Route path='/panel-pacjenta' element={<UserPanelPage />}/>
             <Route path='/panel-admina' element={<AdminPanelPage />}/>
             <Route path='/profil-pacjenta' element={<PatientProfilePage />}/>
-=======
             <Route path='*' element={<LoginPage />}/>
         </Routes> 
       </Router>
