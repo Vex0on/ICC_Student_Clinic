@@ -3,6 +3,22 @@ from django.db import transaction
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .models import *
+import datetime
+
+
+def calculate_birth_date(pesel):
+    year = int(pesel[0:2])
+    month = int(pesel[2:4])
+    day = int(pesel[4:6])
+
+    if 0 < month < 13:
+        year += 1900
+    elif 20 < month < 33:
+        year += 2000
+        month -= 20
+
+    birth_date = datetime.date(year, month, day)
+    return birth_date
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -10,10 +26,12 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
 
-        if user.is_superuser:
-            token["is_superuser"] = True
+        if hasattr(user, 'doctor'):
+            token['role'] = 'doctor'
+        elif hasattr(user, 'reception'):
+            token['role'] = 'reception'
         else:
-            token["is_superuser"] = False
+            token['role'] = 'student'
 
         return token
 
@@ -64,6 +82,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class StudentCreateSerializer(serializers.ModelSerializer):
+    date_of_birth = serializers.DateField(required=False)
     user = UserSerializer()
 
     def __init__(self, *args, **kwargs):
@@ -91,6 +110,11 @@ class StudentCreateSerializer(serializers.ModelSerializer):
             user_serializer = UserSerializer(data=user_data)
             if user_serializer.is_valid():
                 user = user_serializer.save()
+
+            pesel = validated_data.get("pesel")
+            if pesel:
+                birth_date = calculate_birth_date(pesel)
+                validated_data["date_of_birth"] = birth_date
 
             student = Student.objects.create(user=user, **validated_data)
 
@@ -163,7 +187,7 @@ class StudentUpdateSerializer(serializers.ModelSerializer):
 
 class DoctorCreateSerializer(serializers.ModelSerializer):
     user = UserSerializer()
-    oder_specializations = serializers.CharField(allow_blank=True)
+    other_specializations = serializers.CharField(allow_blank=True)
     class Meta:
         model = Doctor
         fields = "__all__"
@@ -204,7 +228,7 @@ class DoctorUpdateSerializer(serializers.ModelSerializer):
     address = serializers.CharField(required=False)
     specialization = serializers.CharField(required=False)
     years_of_experience = serializers.IntegerField(required=False)
-    oder_specializations = serializers.CharField(required=False)
+    other_specializations = serializers.CharField(required=False)
     user = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:

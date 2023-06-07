@@ -28,6 +28,10 @@ def validate_password(password):
 
 
 def validate_email(email):
+
+    if "@" not in email:
+        raise serializers.ValidationError("Zly email")
+
     if any(letter.isupper() for letter in email):
         raise serializers.ValidationError("Email nie moze zawierac duzych liter")
 
@@ -50,7 +54,11 @@ def validate_image(image):
 
 
 def validate_pesel(pesel):
-    if not pesel.isdigit() or len(pesel) != 11:
+
+    if not pesel.isdigit():
+        raise ValidationError("Number PESEL nie moze miec liter")
+
+    if pesel.isdigit() and len(pesel) != 11:
         raise ValidationError("Numer PESEL powinien zawierac 11 znakow")
 
     weights = [1, 3, 7, 9, 1, 3, 7, 9, 1, 3]
