@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-
+import { Link } from "react-router-dom";
 import styles from "./LoginPage.module.scss"
 
 import PrimaryButton from "../../components/Buttons/PrimaryButton/PrimaryButton"
@@ -11,10 +11,6 @@ const LoginPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleAlert = () => {
-    alert("Klik")
-  }
-
   return (
     <div className={styles.container}>
       <Header1 text={"Logowanie"} />
@@ -24,11 +20,15 @@ const LoginPage = () => {
         <PrimaryField placeholder={"Hasło"} value={password} setValue={setPassword}/>
       </div>
 
-      <PrimaryButton text="Zaloguj" onClick={handleAlert} />
+      <PrimaryButton text="Zaloguj"/>
 
       <div className={styles.container__secondary__buttons}>
-        <SecondaryButton text={"Przypomnij hasło"} onClick={handleAlert} />
-        <SecondaryButton text={"Zarejestruj się"} onClick={handleAlert} />
+        <Link to="/reset-hasla">
+          <SecondaryButton text={"Przypomnij hasło"}/>
+        </Link>
+        <Link to="/rejestracja">
+          <SecondaryButton text={"Zarejestruj się"}/>
+        </Link>
       </div>
 
       <div className={styles.container__links}>

@@ -18,8 +18,18 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         return token
 
 
+class UserProfilePictureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["profile_picture"]
+
+
 class UserSerializer(serializers.ModelSerializer):
     username = serializers.CharField(required=False)
+
+    def __init__(self, *args, **kwargs):
+        super(UserSerializer, self).__init__(*args, **kwargs)
+        self.error_messages["required"] = "Wypelnij to pole"
 
     class Meta:
         model = User
@@ -54,6 +64,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 class StudentCreateSerializer(serializers.ModelSerializer):
     user = UserSerializer()
+
+    def __init__(self, *args, **kwargs):
+        super(StudentCreateSerializer, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].error_messages["required"] = "Wypelnij to pole"
 
     class Meta:
         model = Student
@@ -116,6 +131,7 @@ class UserUpdateSerializer(serializers.ModelSerializer):
 
 
 class StudentSerializer(serializers.ModelSerializer):
+    user = UserProfilePictureSerializer()
     class Meta:
         model = Student
         fields = "__all__"
@@ -169,6 +185,8 @@ class DoctorCreateSerializer(serializers.ModelSerializer):
 
 
 class DoctorSerializer(serializers.ModelSerializer):
+    user = UserProfilePictureSerializer()
+
     class Meta:
         model = Doctor
         fields = "__all__"

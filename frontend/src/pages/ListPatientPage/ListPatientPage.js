@@ -1,42 +1,41 @@
-import React, { useState } from "react"
-
+import React, { useState, useEffect } from "react"
+import axios from "axios"
 import styles from "./ListPatientPage.module.scss"
 
 import Header1 from "../../components/Headers/Header1/Header1"
 
-import ProfileImage from "../../utills/images/profileimage.jpeg"
+import ProfileImage from "../../utills/images/Avatar.jpg"
 import AvatarRow from "../../components/AvatarRow/AvatarRow"
 
-const patients = [
-  { name: "Krzysztof Nowak", avatar: ProfileImage },
-  { name: "Jan Kowalski", avatar: ProfileImage },
-  { name: "Anna Zielinska", avatar: ProfileImage },
-  { name: "Tomasz Dąbrowski", avatar: ProfileImage },
-  { name: "Joanna Nowak", avatar: ProfileImage },
-  { name: "Piotr Wójcik", avatar: ProfileImage },
-  { name: "Krzysztof Nowak", avatar: ProfileImage },
-  { name: "Jan Kowalski", avatar: ProfileImage },
-  { name: "Anna Zielinska", avatar: ProfileImage },
-  { name: "Tomasz Dąbrowski", avatar: ProfileImage },
-  { name: "Joanna Nowak", avatar: ProfileImage },
-  { name: "Krzysztof Nowak", avatar: ProfileImage },
-  { name: "Jan Kowalski", avatar: ProfileImage },
-  { name: "Anna Zielinska", avatar: ProfileImage },
-  { name: "Tomasz Dąbrowski", avatar: ProfileImage },
-  { name: "Joanna Nowak", avatar: ProfileImage },
-]
 
 const ListPatientPage = () => {
+  const [patients, setPatients] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/students/")
+      .then(response => {
+        setPatients(response.data);
+      })
+      .catch(error => {
+        console.error("Error fetching students:", error);
+      });
+  }, []);
+
   return (
     <div className={styles.container}>
-        <Header1 text={"Lista pacjentów"} />
-        <div className={styles.container__data}>
-          {patients.map(patient => (
-            <AvatarRow text={patient.name} imageSrc={patient.avatar} key={patient.name} />
-          ))}
-        </div>
+      <Header1 text={"Lista pacjentow"} />
+      <div className={styles.container__data}>
+        {patients.map(patient => (
+          <AvatarRow
+            text={`${patient.first_name} ${patient.last_name}`}
+            imageSrc={patient.user.profile_picture ? `http://localhost:8000/api${patient.user.profile_picture}` : ProfileImage}
+            key={patient.id}
+          />
+        ))}
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default ListPatientPage
