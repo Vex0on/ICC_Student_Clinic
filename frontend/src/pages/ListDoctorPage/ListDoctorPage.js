@@ -4,7 +4,7 @@ import styles from "./ListDoctorPage.module.scss"
 
 import Header1 from "../../components/Headers/Header1/Header1"
 
-import ProfileImage from "../../utills/images/profileimage.jpeg"
+import ProfileImage from "../../utills/images/Avatar.jpg"
 import AvatarRow from "../../components/AvatarRow/AvatarRow"
 
 const ListDoctorPage = () => {
