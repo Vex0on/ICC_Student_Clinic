@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styles from './PrimaryField.module.scss'
 
-const PrimaryField = ({ type, placeholder, value, setValue, error }) => {
+const PrimaryField = ({ type, placeholder, value, setValue, error, maxLength }) => {
   const [isFocused, setIsFocused] = useState(false)
   const [hasValue, setHasValue] = useState(false)
 
@@ -15,7 +15,10 @@ const PrimaryField = ({ type, placeholder, value, setValue, error }) => {
   }
 
   const handleChange = (e) => {
-    setValue(e.target.value)
+    const inputValue = e.target.value;
+    if (!maxLength || inputValue.length <= maxLength) {
+      setValue(inputValue);
+    }
   }
 
   return (
@@ -27,6 +30,7 @@ const PrimaryField = ({ type, placeholder, value, setValue, error }) => {
         onBlur={handleBlur}
         value={value}
         onChange={handleChange}
+        maxLength={maxLength || undefined}
       />
       <label
         className={`${styles.placeholder} ${

@@ -29,7 +29,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     def __init__(self, *args, **kwargs):
         super(UserSerializer, self).__init__(*args, **kwargs)
-        self.error_messages["required"] = "Wypelnij to pole"
+        for field in self.fields:
+            self.fields[field].error_messages["blank"] = "To pole nie moze byc puste"
 
     class Meta:
         model = User
@@ -68,7 +69,7 @@ class StudentCreateSerializer(serializers.ModelSerializer):
     def __init__(self, *args, **kwargs):
         super(StudentCreateSerializer, self).__init__(*args, **kwargs)
         for field in self.fields:
-            self.fields[field].error_messages["required"] = "Wypelnij to pole"
+            self.fields[field].error_messages["blank"] = "To pole nie moze byc puste"
 
     class Meta:
         model = Student

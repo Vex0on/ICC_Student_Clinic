@@ -24,54 +24,6 @@ const RegisterPage = () => {
   const [formErrors, setFormErrors] = useState({});
 
   const handleClick = async () => {
-    // Sprawdzenie czy wszystkie pola są wypełnione
-    const errors = {};
-
-    if (!email) {
-      errors.email = "Wpisz adres e-mail";
-    }
-
-    if (!password) {
-      errors.password = "Wpisz hasło";
-    }
-
-    if (!passwordConfirmation) {
-      errors.passwordConfirmation = "Wpisz potwierdzenie hasła";
-    }
-
-    if (!indexNumber) {
-      errors.indexNumber = "Wpisz numer indeksu";
-    }
-
-    if (!firstName) {
-      errors.firstName = "Wpisz imię";
-    }
-
-    if (!lastName) {
-      errors.lastName = "Wpisz nazwisko";
-    }
-
-    if (!dateOfBirth) {
-      errors.dateOfBirth = "Wpisz datę urodzenia";
-    }
-
-    if (!pesel) {
-      errors.pesel = "Wpisz numer PESEL";
-    }
-
-    if (!phoneNumber) {
-      errors.phoneNumber = "Wpisz numer telefonu";
-    }
-
-    if (!city) {
-      errors.city = "Wpisz miasto";
-    }
-
-    if (Object.keys(errors).length > 0) {
-      setFormErrors(errors);
-      return;
-    }
-
     setFormErrors({});
 
     const data = {
@@ -88,26 +40,28 @@ const RegisterPage = () => {
       },
     };
 
-try {
-  const response = await axios.post("http://localhost:8000/api/register/", data, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/register/",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      if (response.ok) {
-        // Rejestracja pomyślna
+      if (response.status === 201) {
         setRegistrationStatus("Rejestracja pomyślna");
       } else {
-        // Obsługa błędów zwróconych przez API
-        if (response.data) {
-          setFormErrors(response.data);
-        } else {
-          setRegistrationStatus("Wystąpił błąd podczas rejestracji");
-        }
+        setRegistrationStatus("Wystąpił błąd podczas rejestracji");
       }
     } catch (error) {
-      console.error("Wystąpił błąd", error);
+      if (error.response && error.response.data) {
+        setFormErrors(error.response.data);
+      } else {
+        console.log(error);
+      }
       setRegistrationStatus("Wystąpił błąd podczas rejestracji");
     }
   };
@@ -121,20 +75,21 @@ try {
       </div>
       <Header1 text={"Rejestracja"} />
       <Header2 text={"Dane logowania"} />
-
+      {registrationStatus && <div>{registrationStatus}</div>}
+      
       <div className={styles.container__primary__fields}>
         <PrimaryField
           placeholder={"Email"}
           value={email}
           setValue={setEmail}
-          error={formErrors.email}
+          error={formErrors.user?.email?.[0]}
         />
         <PrimaryField
           placeholder={"Powtórz hasło"}
           type="password"
           value={passwordConfirmation}
           setValue={setPasswordConfirmation}
-          error={formErrors.passwordConfirmation}
+          error={formErrors.passwordConfirmation?.[0]}
         />
       </div>
       <div className={styles.container__primary__fields}>
@@ -143,13 +98,14 @@ try {
           type="password"
           value={password}
           setValue={setPassword}
-          error={formErrors.password}
+          error={formErrors.user?.password?.[0]}
         />
         <PrimaryField
           placeholder={"Numer indeksu"}
           value={indexNumber}
           setValue={setIndexNumber}
-          error={formErrors.indexNumber}
+          error={formErrors.index_number?.[0]}
+          maxLength={6}
         />
       </div>
       <Header2 text={"Dane kontaktowe"} />
@@ -158,13 +114,13 @@ try {
           placeholder={"Imię"}
           value={firstName}
           setValue={setFirstName}
-          error={formErrors.firstName}
+          error={formErrors.first_name?.[0]}
         />
         <PrimaryField
           placeholder={"Nazwisko"}
           value={lastName}
           setValue={setLastName}
-          error={formErrors.lastName}
+          error={formErrors.last_name?.[0]}
         />
       </div>
       <div className={styles.container__primary__fields}>
@@ -172,13 +128,14 @@ try {
           placeholder={"Data urodzenia"}
           value={dateOfBirth}
           setValue={setDateOfBirth}
-          error={formErrors.dateOfBirth}
+          error={formErrors.date_of_birth?.[0]}
         />
         <PrimaryField
           placeholder={"Pesel"}
           value={pesel}
           setValue={setPesel}
-          error={formErrors.pesel}
+          error={formErrors.pesel?.[0]}
+          maxLength={11}
         />
       </div>
       <div className={styles.container__primary__fields}>
@@ -186,19 +143,18 @@ try {
           placeholder={"Numer telefonu"}
           value={phoneNumber}
           setValue={setPhoneNumber}
-          error={formErrors.phoneNumber}
+          error={formErrors.phone_number?.[0]}
         />
         <PrimaryField
           placeholder={"Miasto"}
           value={city}
           setValue={setCity}
-          error={formErrors.city}
+          error={formErrors.address?.[0]}
         />
       </div>
 
       <TermsAgreement />
       <PrimaryButton text="Zarejestruj" onClick={handleClick} />
-
       <span>
         Masz już konto?{" "}
         <Link className={styles.link} to="/">
