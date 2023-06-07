@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
 from rest_framework.views import APIView, status
@@ -22,6 +23,7 @@ class StudentRegister(APIView):
 
 
 class Login(APIView):
+    @csrf_exempt
     def post(self, request):
         email = request.data.get("email")
         password = request.data.get("password")
