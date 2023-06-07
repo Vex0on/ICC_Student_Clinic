@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react"
 import styles from "./SpecialistDetailsPage.module.scss"
 import Header1 from "../../components/Headers/Header1/Header1"
+import { useParams } from "react-router-dom";
 
 import ProfileImage from "../../utills/images/Avatar.jpg"
 
 import axios from "axios";
 
-const SpecialistDetailsPage = ({doctor_id = 2}) => {
-
+const SpecialistDetailsPage = () => {
+    const { id } = useParams();
     const [specialistData, setSpecialistData] = useState({
         specialization: "",
         first_name: "",
@@ -18,12 +19,12 @@ const SpecialistDetailsPage = ({doctor_id = 2}) => {
     })
 
     useEffect(() => {
-        fetchSpecialistData();
-    }, [])
+        fetchSpecialistData(id);
+      }, []);
 
-    const fetchSpecialistData = async () => {
+    const fetchSpecialistData = async (id) => {
         try {
-            const response = await axios.get(`http://localhost:8000/api/doctors/${doctor_id}/`);
+            const response = await axios.get(`http://localhost:8000/api/doctors/${id}/`);
             setSpecialistData(response.data);
             console.log(response.data)
         } catch (error) {
@@ -45,7 +46,7 @@ const SpecialistDetailsPage = ({doctor_id = 2}) => {
                     <p className={styles.text}>
                         <strong>Doświadczenie:</strong> {specialistData.years_of_experience} lat <br />
                         <strong>Dodatkowe specjalizacje:</strong> <br />
-                        {specialistData.oder_specializations ? specialistData.oder_specializations : "Brak"}
+                        {specialistData.other_specializations ? specialistData.other_specializations : "Brak"}
                     </p>
                 </div>
             </div>

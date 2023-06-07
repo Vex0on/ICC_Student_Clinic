@@ -4,12 +4,13 @@ import Header1 from "../../components/Headers/Header1/Header1";
 import SpecializationButton from "../../components/SpecializationButton/SpecializationButton";
 import { FaStethoscope } from "react-icons/fa";
 import { GiStomach, GiSunglasses, GiNoseFront } from "react-icons/gi";
+import { useNavigate } from "react-router-dom";
 
 const SpecialistsListPage = () => {
-  const [clickedButton, setClickedButton] = useState(null);
+  const navigate = useNavigate();
 
   const handleButtonClick = (buttonText) => {
-    setClickedButton(buttonText);
+    navigate("/po-wyborze-specjalisty", { state: { buttonText } })
   };
 
   return (
@@ -23,33 +24,27 @@ const SpecialistsListPage = () => {
           <SpecializationButton
             text="Internista"
             icon={FaStethoscope}
-            onClick={handleButtonClick}
+            onClick={() => handleButtonClick("internista")}
           />
           <SpecializationButton
             text="Gastrolog"
             icon={GiStomach}
-            onClick={handleButtonClick}
+            onClick={() => handleButtonClick("gastrolog")}
           />
         </div>
         <div className={styles.buttonContainer}>
           <SpecializationButton
             text="Okulista"
             icon={GiSunglasses}
-            onClick={handleButtonClick}
+            onClick={() => handleButtonClick("okulista")}
           />
           <SpecializationButton
             text="Pulmonolog"
             icon={GiNoseFront}
-            onClick={handleButtonClick}
+            onClick={() => handleButtonClick("pulmonolog")}
           />
         </div>
       </section>
-
-      {clickedButton && (
-        <p className={styles.notification}>
-          Kliknąłeś buttona "{clickedButton}", brawo!
-        </p>
-      )}
     </div>
   );
 };

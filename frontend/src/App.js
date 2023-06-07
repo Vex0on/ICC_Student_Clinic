@@ -40,6 +40,7 @@ function App() {
             <Route path='/po-wyborze-specjalisty' element={<ACSpecialistPage />}/>
             <Route path='/specjalista-szczegoly' element={<SpecialistDetailsPage />}/>
             <Route path='/kalendarz-lekarza' element={<DoctorCalendar />}/>
+            <Route path='/specjalista-szczegoly/:id' element={<SpecialistDetailsPage />}/>
             <Route path='*' element={<LoginPage />}/>
         </Routes> 
       </Router>

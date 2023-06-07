@@ -62,7 +62,6 @@ const RegisterPage = () => {
       } else {
         console.log(error);
       }
-      setRegistrationStatus("Wystąpił błąd podczas rejestracji");
     }
   };
 
@@ -125,21 +124,6 @@ const RegisterPage = () => {
       </div>
       <div className={styles.container__primary__fields}>
         <PrimaryField
-          placeholder={"Data urodzenia"}
-          value={dateOfBirth}
-          setValue={setDateOfBirth}
-          error={formErrors.date_of_birth?.[0]}
-        />
-        <PrimaryField
-          placeholder={"Pesel"}
-          value={pesel}
-          setValue={setPesel}
-          error={formErrors.pesel?.[0]}
-          maxLength={11}
-        />
-      </div>
-      <div className={styles.container__primary__fields}>
-        <PrimaryField
           placeholder={"Numer telefonu"}
           value={phoneNumber}
           setValue={setPhoneNumber}
@@ -150,6 +134,15 @@ const RegisterPage = () => {
           value={city}
           setValue={setCity}
           error={formErrors.address?.[0]}
+        />
+      </div>
+      <div className={styles.container__primary__fields}>
+        <PrimaryField
+          placeholder={"Pesel"}
+          value={pesel}
+          setValue={setPesel}
+          error={formErrors.pesel?.[0]}
+          maxLength={11}
         />
       </div>
 
