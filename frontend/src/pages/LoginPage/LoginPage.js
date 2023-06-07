@@ -25,7 +25,7 @@ const LoginPage = () => {
   const submitLogin = (e) => {
       e.preventDefault()
       if(email !== "" || password !== ""){
-          axios.post('http://127.0.0.1:8000/api/login', { email, password }, { withCredentials: true })
+          axios.post('http://127.0.0.1:8000/api/login/', { email, password }, { withCredentials: true })
               .then(response => {
                   const token  =  response.data.access
                   console.log(response)
