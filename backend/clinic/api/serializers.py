@@ -26,12 +26,12 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
 
-        if hasattr(user, 'doctor'):
-            token['role'] = 'doctor'
-        elif hasattr(user, 'reception'):
-            token['role'] = 'reception'
+        if hasattr(user, "doctor"):
+            token["role"] = "doctor"
+        elif hasattr(user, "reception"):
+            token["role"] = "reception"
         else:
-            token['role'] = 'student'
+            token["role"] = "student"
 
         return token
 
