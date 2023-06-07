@@ -163,6 +163,7 @@ class StudentUpdateSerializer(serializers.ModelSerializer):
 
 class DoctorCreateSerializer(serializers.ModelSerializer):
     user = UserSerializer()
+    oder_specializations = serializers.CharField(allow_blank=True)
     class Meta:
         model = Doctor
         fields = "__all__"
