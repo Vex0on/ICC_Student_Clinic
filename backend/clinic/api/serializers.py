@@ -258,7 +258,10 @@ class MedicationUpdateSerializer(serializers.ModelSerializer):
 
 
 class VisitSerializer(serializers.ModelSerializer):
-    medication = MedicationSerializer(many=True)
+    medication = serializers.CharField(allow_blank=True, allow_null=True, required=False)
+    description = serializers.CharField(allow_blank=True, allow_null=True, required=False)
+    doctor = DoctorSerializer()
+    student = StudentSerializer()
 
     class Meta:
         model = Visit
@@ -266,14 +269,16 @@ class VisitSerializer(serializers.ModelSerializer):
 
 
 class VisitUpdateSerializer(serializers.ModelSerializer):
-    date_of_visit = serializers.DateTimeField(required=False)
+    date = serializers.DateField(required=False)
+    time = serializers.TimeField(required=False)
     doctor = serializers.PrimaryKeyRelatedField(read_only=True)
     student = serializers.PrimaryKeyRelatedField(read_only=True)
     description = serializers.CharField(required=False)
-    medications = serializers.PrimaryKeyRelatedField(many=True, queryset=Medication.objects.all())
+    medication = serializers.CharField(allow_blank=True, allow_null=True)
 
     class Meta:
         model = Visit
+
 
 class ReceptionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -312,4 +317,10 @@ class ReceptionUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Reception
+        fields = "__all__"
+
+
+class DocumentationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Documentation
         fields = "__all__"
