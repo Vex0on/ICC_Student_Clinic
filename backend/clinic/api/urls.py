@@ -13,6 +13,7 @@ urlpatterns = [
     path("students/<int:pk>/", StudentDetail.as_view(), name="student"),
     path("doctors/", DoctorList.as_view(), name="doctors"),
     path("doctors/<int:pk>/", DoctorDetail.as_view(), name="doctor"),
+    path("doctors/<str:specialization>/", SpecializationFilter.as_view(), name="doctor-specialization"),
     path("receptionists/", ReceptionList.as_view(), name="receptionists"),
     path("reception/<int:pk>", ReceptionDetail.as_view(), name="reception"),
     path("medications/", MedicationList.as_view(), name="medications"),

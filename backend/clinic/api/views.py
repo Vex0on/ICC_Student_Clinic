@@ -389,6 +389,22 @@ class DoctorDetail(APIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
 
+class SpecializationFilter(APIView):
+    def get(self, request, specialization):
+        try:
+            doctors = Doctor.objects.filter(specialization=specialization)
+            serializer = DoctorSerializer(doctors, many=True)
+
+            return Response(
+                serializer.data,
+                status=status.HTTP_200_OK,
+            )
+        except Doctor.DoesNotExist:
+            return Response(
+                {"message": "HTTP_404_NOT_FOUND"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
 # Medication
 
 
