@@ -1,4 +1,7 @@
-import React from "react"
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+
 import styles from "./DoctorCalendar.module.scss"
 
 import Calendar from "../../components/Calendar/Calendar"
@@ -7,48 +10,62 @@ import { AiOutlinePrinter } from "react-icons/ai"
 import ArrowNavigate from "../../components/ArrowNavigate/ArrowNavigate"
 
 const DoctorCardPage = () => {
-  const data = [
-    {
-      doctor: {
-        name: "dr Jan Nowak"
-      },
-      visits: [
-        {
-          "date": "2023-06-10",
-          "appointments": [
-            { "time": "09:00", "person": "Jan Kowalski" },
-            { "time": "09:40", "person": "Anna Nowak" },
-            { "time": "11:00", "person": "Piotr Nowak" },
-            { "time": "12:20", "person": "Maria Kowalska" },
-            { "time": "14:20", "person": "Krzysztof Kowalski" },
-            { "time": "15:40", "person": "Anna Zielińska" },
-          ]
-        },
-        {
-          "date": "2023-07-10",
-          "appointments": [
-            { "time": "09:00", "person": "Jan Kowalski" },
-            { "time": "09:40", "person": "Karol" },
-            { "time": "11:00", "person": "Król" },
-            { "time": "11:40", "person": "Karolina" },
-            { "time": "12:20", "person": "Maria Kowalska" },
-            { "time": "14:20", "person": "Krzysztof Kowalski" },
-            { "time": "15:40", "person": "Anna Zielińska" },
-          ]
-        }
-      ]
-    }
-  ];
+  
+  const { id } = useParams(); 
+  const [doctorData, setDoctorData] = useState(null); 
 
-  return(
+  useEffect(() => {
+    axios.get(`http://127.0.0.1:8000/api/visits/doctor/${id}/`)
+      .then(response => {
+        const processedData = processResponseData(response.data.data); 
+        setDoctorData(processedData);
+      })
+      .catch(err => {
+        console.error('Error fetching doctor data', err);
+      });
+  }, [id]);
+
+  function processResponseData(data) {
+    const visitsByDate = data.reduce((acc, visit) => {
+      const time = visit.time.slice(0, 5);
+
+      if (!acc[visit.date]) {
+        acc[visit.date] = [{
+          time,
+          person: `${visit.student.first_name} ${visit.student.last_name}`
+        }];
+      } else {
+        acc[visit.date].push({
+          time,
+          person: `${visit.student.first_name} ${visit.student.last_name}`
+        });
+      }
+
+      return acc;
+    }, {});
+
+    const processedData = Object.entries(visitsByDate).map(([date, appointments]) => ({ date, appointments }));
+
+    return {
+      doctor: {
+        name: `dr ${data[0].doctor.first_name} ${data[0].doctor.last_name}`
+      },
+      visits: processedData
+    };
+  }
+
+  return (
     <div className={styles.container}>
       <ArrowNavigate linkTo={"/panel-admina"} />
       <Header1 text={"Kalendarz wizyt"} />
-      <p className={styles.name}>dr Alan Popowicz</p>
-      <Calendar data={data[0].visits} />
-      <AiOutlinePrinter className={styles.icon}/>
+      
+      {doctorData && <p className={styles.name}>{doctorData.doctor.name}</p>}
+      
+      {doctorData && <Calendar data={doctorData.visits} />}
+
+      <AiOutlinePrinter className={styles.icon} />
     </div>
-  )
+  );
 }
 
 export default DoctorCardPage;
