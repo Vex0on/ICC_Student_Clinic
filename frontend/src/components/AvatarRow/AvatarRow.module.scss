@@ -1,0 +1,23 @@
+.container__avatar {
+    display: flex;
+    align-items: end;
+
+    gap: 0.5rem;
+
+    .image {
+        width: 100px;
+        height: auto;
+
+        border-radius: 0.4rem;
+    }
+
+    .text {
+        font-size: 1.6rem;
+
+        text-align: center;
+        text-decoration: underline;
+        letter-spacing: 1px;
+
+        color: #515C5C;
+    }
+}

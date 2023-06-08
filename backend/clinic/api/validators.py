@@ -28,6 +28,10 @@ def validate_password(password):
 
 
 def validate_email(email):
+
+    if "@" not in email:
+        raise serializers.ValidationError("Zly email")
+
     if any(letter.isupper() for letter in email):
         raise serializers.ValidationError("Email nie moze zawierac duzych liter")
 
@@ -50,7 +54,11 @@ def validate_image(image):
 
 
 def validate_pesel(pesel):
-    if not pesel.isdigit() or len(pesel) != 11:
+
+    if not pesel.isdigit():
+        raise ValidationError("Numer PESEL nie moze miec liter")
+
+    if pesel.isdigit() and len(pesel) != 11:
         raise ValidationError("Numer PESEL powinien zawierac 11 znakow")
 
     weights = [1, 3, 7, 9, 1, 3, 7, 9, 1, 3]
@@ -86,3 +94,15 @@ def validate_phone_number(phone_number):
         raise serializers.ValidationError("Numer telefonu jest aktualnie używany")
 
     return phone_number
+
+
+def validate_first_name(first_name):
+    for i in first_name:
+        if i.isdigit():
+            raise serializers.ValidationError("Imie nie moze miec cyfr")
+
+
+def validate_last_name(last_name):
+    for i in last_name:
+        if i.isdigit():
+            raise serializers.ValidationError("Nazwisko nie moze miec cyfr")

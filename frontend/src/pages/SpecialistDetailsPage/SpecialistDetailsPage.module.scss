@@ -1,0 +1,44 @@
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    min-height: 650px;
+    min-width: 600px;
+    padding: 0.5rem 3rem;
+    position: relative;
+
+    background-color: #fff;
+
+    gap: 1rem;
+}
+
+.container__header {
+    margin-top: 1rem;
+    display: flex;
+    width: 350px;
+    align-items: center;
+    gap: 1rem;
+    border: 1px solid #ccc;
+    padding: 1rem 1.5rem;
+
+    .image {
+        width: 100px;
+        height: auto;
+    }
+
+    .name {
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+}
+
+.container__footer {
+    border: 1px solid #ccc;
+    padding: 0.3rem 1rem;
+    
+    .text {
+        font-size: 1.25rem;
+    }
+}
+

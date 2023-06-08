@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path
 from .views import *
 
@@ -11,11 +13,15 @@ urlpatterns = [
     path("students/<int:pk>/", StudentDetail.as_view(), name="student"),
     path("doctors/", DoctorList.as_view(), name="doctors"),
     path("doctors/<int:pk>/", DoctorDetail.as_view(), name="doctor"),
-    path("receptionists/", ReceptionList.as_view(), name="receptionists"),
-    path("reception/<int:pk>", ReceptionDetail.as_view(), name="reception"),
+    path("doctors/<str:specialization>/", SpecializationFilter.as_view(), name="doctor-specialization"),
+    path("receptions/", ReceptionList.as_view(), name="receptionists"),
+    path("receptions/<int:pk>/", ReceptionDetail.as_view(), name="reception"),
     path("medications/", MedicationList.as_view(), name="medications"),
     path("medications/<int:pk>/", MedicationDetail.as_view(), name="medication"),
     path("visits/", VisitList.as_view(), name="visits"),
     path("visits/<int:pk>/", VisitDetail.as_view(), name="visit"),
-    path("visits/doctor/<int:doctor_id>/", VisitListDoctor.as_view(), name="visits-doctor")
-]
+    path("visits/doctor/<int:doctor_id>/", VisitListDoctor.as_view(), name="visits-doctor"),
+    path("documentations/", DocumentationList.as_view(), name="documentations"),
+    path("documentations/<int:pk>/", DocumentationDetail.as_view(), name="documentation"),
+    path("book-visit/", BookVisitAPIView.as_view(), name="book-visit")
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

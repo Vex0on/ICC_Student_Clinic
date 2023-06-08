@@ -4,16 +4,20 @@ import Header1 from "../../components/Headers/Header1/Header1";
 import SpecializationButton from "../../components/SpecializationButton/SpecializationButton";
 import { FaStethoscope } from "react-icons/fa";
 import { GiStomach, GiSunglasses, GiNoseFront } from "react-icons/gi";
+import { useNavigate } from "react-router-dom";
+import ArrowNavigate from "../../components/ArrowNavigate/ArrowNavigate";
 
 const SpecialistsListPage = () => {
-  const [clickedButton, setClickedButton] = useState(null);
+  const navigate = useNavigate();
 
   const handleButtonClick = (buttonText) => {
-    setClickedButton(buttonText);
+    navigate("/po-wyborze-specjalisty", { state: { buttonText } })
   };
 
   return (
     <div className={styles.container}>
+
+      <ArrowNavigate linkTo={"/panel-pacjenta"} />
       <div className={styles.headerContainer}>
         <Header1 text="Nasi specjaliści" />
       </div>
@@ -23,33 +27,27 @@ const SpecialistsListPage = () => {
           <SpecializationButton
             text="Internista"
             icon={FaStethoscope}
-            onClick={handleButtonClick}
+            onClick={() => handleButtonClick("Internista")}
           />
           <SpecializationButton
             text="Gastrolog"
             icon={GiStomach}
-            onClick={handleButtonClick}
+            onClick={() => handleButtonClick("Gastrolog")}
           />
         </div>
         <div className={styles.buttonContainer}>
           <SpecializationButton
             text="Okulista"
             icon={GiSunglasses}
-            onClick={handleButtonClick}
+            onClick={() => handleButtonClick("Okulista")}
           />
           <SpecializationButton
             text="Pulmonolog"
             icon={GiNoseFront}
-            onClick={handleButtonClick}
+            onClick={() => handleButtonClick("Pulmonolog")}
           />
         </div>
       </section>
-
-      {clickedButton && (
-        <p className={styles.notification}>
-          Kliknąłeś buttona "{clickedButton}", brawo!
-        </p>
-      )}
     </div>
   );
 };

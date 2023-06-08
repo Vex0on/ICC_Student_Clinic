@@ -1,20 +1,23 @@
 import React from "react"
 import styles from "./HorizontalIconButton.module.scss"
+import { Link } from "react-router-dom"
 
-const HorizontalIconButton = ({text, icon, onClick}) => {
+const HorizontalIconButton = ({text, icon, onClick, linkTo}) => {
 
     return(
-        <div className={styles.button}>
-            <div className={styles.container__icon}>
-                {icon}
-            </div>
+        <Link to={linkTo}>
+            <div className={styles.button}>
+                <div className={styles.container__icon}>
+                    {icon}
+                </div>
 
-            <div className={styles.container__text}>
-                <p className={styles.text}>
-                    {text}
-                </p>
+                <div className={styles.container__text}>
+                    <p className={styles.text}>
+                        {text}
+                    </p>
+                </div>
             </div>
-        </div>
+        </Link>
     )
 }
 

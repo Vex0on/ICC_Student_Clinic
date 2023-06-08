@@ -3,10 +3,24 @@
     align-items: center;
     flex-direction: column;
     justify-content: center;
+    position: relative;
 
     padding: 0.5rem 3rem;
 
     background-color: #fff;
 
     gap: 1rem;
+}
+
+.container__data {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 3rem;
+}
+
+.container__icons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-top: 1rem;
 }

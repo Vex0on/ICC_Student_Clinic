@@ -9,9 +9,9 @@ const InformationsIcon = ({ text, icon }) => {
             {icon}
         </div>
         
-        <p className={styles.text}>
+        <div className={styles.text}>
             {text}
-        </p>
+        </div>
     </div>
   )
 }
