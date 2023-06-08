@@ -47,7 +47,7 @@ const UserPanelPage = () => {
 
         <div className={styles.container__tiles}>
             <HorizontalImageButton text={"Zarejestruj wizytę"} icon={<AiOutlineCalendar />} linkTo={"/kalendarz-wizyt"} imageSrc={Handshake} OnClick={null}/>
-            <HorizontalImageButton text={"Dokumentacja medyczna"} icon={<AiOutlineCopy />} linkTo={"/dokumentacja-medyczna"} imageSrc={Consultation} OnClick={null}/>
+            <HorizontalImageButton text={"Dokumentacja medyczna"} icon={<AiOutlineCopy />} linkTo={`/dokumentacja-medyczna/${id}`} imageSrc={Consultation} OnClick={null}/>
             <HorizontalImageButton text={"Profil pacjenta"} icon={<AiOutlineUser />} linkTo={`/profil-pacjenta/${id}`} imageSrc={Pressure} OnClick={null}/>
         </div>
 

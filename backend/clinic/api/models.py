@@ -85,7 +85,6 @@ class Visit(models.Model):
 
 class Documentation(models.Model):
     student = models.OneToOneField(Student, on_delete=models.SET_NULL, null=True)
-    doctor = models.ForeignKey(Doctor, on_delete=models.SET_NULL, null=True)
     current_health = models.TextField()
     sickness_history = models.TextField()
     treatment_plan = models.TextField()
@@ -93,5 +92,5 @@ class Documentation(models.Model):
     medical_examination = models.TextField()
 
     def __str__(self):
-        return f"{self.id} {self.student} {self.doctor}"
+        return f"{self.id} {self.student}"
 
