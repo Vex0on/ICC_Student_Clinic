@@ -1,0 +1,67 @@
+.calendar {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 4rem;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    background-color: #333;
+    width: 70%;
+    border: 6px solid #333;
+    padding: 1rem 0.5rem;
+
+    .button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 1rem;
+        width: 3.5rem;
+        height: 2.5rem;
+        border: none;
+        cursor: pointer;
+    }
+
+    .date {
+        color: #ccc;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .icon {
+        font-size: 2rem;
+    }
+
+}
+
+.body {
+    padding: 0 0.5rem;
+    width: 70%;
+    border: 6px solid #333;
+    height: 380px;
+    overflow-y: scroll;
+
+    .data {
+        font-size: 1.4rem;
+        margin-left: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .time {
+        padding: 0.3rem;
+        width: 60px;
+    }
+
+    .person {
+        padding: 0.3rem;
+        margin-left: 1rem;
+    }
+}

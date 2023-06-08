@@ -16,6 +16,7 @@ import DoctorCardPage from "./pages/DoctorCardPage/DoctorCardPage"
 import MedicalRecordsPage from "./pages/MedicalRecordsPage/MedicalRecordsPage"
 import ACSpecialistPage from "./pages/ACSpecialistPage/ACSpecialistPage"
 import SpecialistDetailsPage from "./pages/SpecialistDetailsPage/SpecialistDetailsPage"
+import DoctorCalendar from './pages/DoctorCalendar/DoctorCalendar'
 
 
 function App() {
@@ -28,15 +29,17 @@ function App() {
             <Route path='/rejestracja' element={<RegisterPage />}/>
             <Route path='/regulamin' element={<TermsPage />}/>
             <Route path='/reset-hasla' element={<RemindPasswordPage />}/>
-            <Route path='/panel-pacjenta' element={<UserPanelPage />}/>
+            <Route path='/panel-pacjenta/:id' element={<UserPanelPage />}/>
             <Route path='/panel-admina' element={<AdminPanelPage />}/>
-            <Route path='/profil-pacjenta' element={<PatientProfilePage />}/>
+            <Route path='/profil-pacjenta/:id' element={<PatientProfilePage />}/>
             <Route path='/lista-pacjentow' element={<ListPatientPage />}/>
             <Route path='/lista-lekarzy' element={<ListDoctorPage />}/>
             <Route path='/karta-pacjenta' element={<PatientCardPage />}/>
             <Route path='/karta-doktora' element={<DoctorCardPage />}/>
             <Route path='/dokumentacja-medyczna' element={<MedicalRecordsPage />}/>
             <Route path='/po-wyborze-specjalisty' element={<ACSpecialistPage />}/>
+            <Route path='/specjalista-szczegoly' element={<SpecialistDetailsPage />}/>
+            <Route path='/kalendarz-lekarza' element={<DoctorCalendar />}/>
             <Route path='/specjalista-szczegoly/:id' element={<SpecialistDetailsPage />}/>
             <Route path='*' element={<LoginPage />}/>
         </Routes> 

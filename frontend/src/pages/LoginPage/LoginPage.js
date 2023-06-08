@@ -6,6 +6,7 @@ import PrimaryButton from "../../components/Buttons/PrimaryButton/PrimaryButton"
 import SecondaryButton from "../../components/Buttons/SecondaryButton/SecondaryButton"
 import Header1 from "../../components/Headers/Header1/Header1"
 import PrimaryField from "../../components/Fields/PrimaryField/PrimaryField"
+import checkRoleAndRedirectPanel from "../../utills/JWT/checkRoleAndRedirectPanel";
 
 const LoginPage = () => {
   const [email, setEmail] = useState('')
@@ -25,7 +26,7 @@ const LoginPage = () => {
   const submitLogin = (e) => {
       e.preventDefault()
       if(email !== "" || password !== ""){
-          axios.post('http://127.0.0.1:8000/api/login', { email, password }, { withCredentials: true })
+          axios.post('http://127.0.0.1:8000/api/login/', { email, password }, { withCredentials: true })
               .then(response => {
                   const token  =  response.data.access
                   console.log(response)
@@ -33,7 +34,7 @@ const LoginPage = () => {
               
                   setAuthToken(token)
 
-                  navigate('/')
+                  checkRoleAndRedirectPanel()
               })
               .catch(err => {
                   setInformationLogin('Nieprawidłowe dane logowania')

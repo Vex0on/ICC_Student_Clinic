@@ -24,24 +24,24 @@ const SpecialistsListPage = () => {
           <SpecializationButton
             text="Internista"
             icon={FaStethoscope}
-            onClick={() => handleButtonClick("internista")}
+            onClick={() => handleButtonClick("Internista")}
           />
           <SpecializationButton
             text="Gastrolog"
             icon={GiStomach}
-            onClick={() => handleButtonClick("gastrolog")}
+            onClick={() => handleButtonClick("Gastrolog")}
           />
         </div>
         <div className={styles.buttonContainer}>
           <SpecializationButton
             text="Okulista"
             icon={GiSunglasses}
-            onClick={() => handleButtonClick("okulista")}
+            onClick={() => handleButtonClick("Okulista")}
           />
           <SpecializationButton
             text="Pulmonolog"
             icon={GiNoseFront}
-            onClick={() => handleButtonClick("pulmonolog")}
+            onClick={() => handleButtonClick("Pulmonolog")}
           />
         </div>
       </section>

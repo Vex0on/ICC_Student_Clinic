@@ -4,7 +4,7 @@ import styles from "./HorizontalImageButton.module.scss"
 const HorizontalImageButton = ({text, icon, imageSrc, onClick}) => {
 
     return(
-        <div className={styles.button}>
+        <div className={styles.button} onClick={onClick}>
             <div className={styles.container__image}>
                 <img src={imageSrc} alt="Zdjecie" className={styles.image} />
             </div>

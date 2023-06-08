@@ -71,11 +71,12 @@ class Medication(models.Model):
 
 
 class Visit(models.Model):
-    date_of_visit = models.DateTimeField()
+    date = models.DateField()
+    time = models.TimeField()
     doctor = models.ForeignKey(Doctor, on_delete=models.SET_NULL, null=True)
     student = models.ForeignKey(Student, on_delete=models.SET_NULL, null=True)
     description = models.TextField()
-    medication = models.ManyToManyField(Medication)
+    medication = models.CharField(max_length=100)
     is_active = models.BooleanField(default=False)
 
     def __str__(self):

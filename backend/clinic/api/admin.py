@@ -25,7 +25,7 @@ class Medication(admin.ModelAdmin):
 
 @admin.register(Visit)
 class Visit(admin.ModelAdmin):
-    list_display = ["id", "date_of_visit"]
+    list_display = ["id", "date", "time"]
 
 
 @admin.register(Documentation)
