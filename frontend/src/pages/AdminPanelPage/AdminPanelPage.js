@@ -1,7 +1,7 @@
 import React from "react"
 import styles from "./AdminPanelPage.module.scss"
 
-import { AiOutlineTeam , AiOutlineCalendar, AiOutlineCopy } from "react-icons/ai"
+import { AiOutlineTeam , AiOutlineCalendar, AiOutlineCopy, AiOutlineCheck } from "react-icons/ai"
 
 import HorizontalIconButton from "../../components/Buttons/HorizontalIconButton copy/HorizontalIconButton"
 import Header1 from "../../components/Headers/Header1/Header1"
@@ -19,6 +19,7 @@ const AdminPanelPage = () => {
                 <HorizontalIconButton text={"Kalendarz wizyt"} icon={<AiOutlineCalendar />} OnClick={null}/>
                 <HorizontalIconButton text={"Lista lekarzy"} icon={<AiOutlineTeam/>} OnClick={null}/>
                 <HorizontalIconButton text={"Lista pacjentów"} icon={<AiOutlineCopy />} OnClick={null}/>
+                <HorizontalIconButton text={"Zatwierdzanie wizyt"} icon={<AiOutlineCheck />} OnClick={null}/>
             </div>
 
             <div className={styles.container__button}>
