@@ -33,6 +33,7 @@ function App() {
             <Route path='/regulamin' element={<TermsPage />}/>
             <Route path='/reset-hasla' element={<RemindPasswordPage />}/>
             <Route path='/panel-pacjenta/:id' element={<UserPanelPage />}/>
+            <Route path='/panel-pacjenta/' element={<UserPanelPage />}/>
             <Route path='/panel-admina' element={<AdminPanelPage />}/>
             <Route path='/panel-admina/:id' element={<AdminPanelPage />}/>
             <Route path='/profil-pacjenta/:id' element={<PatientProfilePage />}/>
