@@ -10,6 +10,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .models import *
 from .serializers import *
 
+
 # Register, login
 
 
@@ -645,3 +646,33 @@ class DocumentationDetail(APIView):
                 {"message": "HTTP_404_NOT_FOUND"},
                 status=status.HTTP_404_NOT_FOUND,
             )
+
+
+class BookVisitAPIView(APIView):
+    def post(self, request):
+        data = request.data
+        student_id = data.get('student_id')
+        doctor_id = data.get('doctor_id')
+        date = data.get('date')
+        time = data.get('time')
+
+        visit_exists = Visit.objects.filter(date=date, time=time).exists()
+        if visit_exists:
+            return Response(
+                {"message": "Ten termin jest już zajęty"}
+            )
+
+        visit_data = {
+            'student': student_id,
+            'doctor': doctor_id,
+            'date': date,
+            'time': time,
+        }
+
+        serializer = VisitSerializer(data=visit_data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                {"message": "Wizyta zarejestrowana"}, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

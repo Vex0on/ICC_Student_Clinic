@@ -23,4 +23,5 @@ urlpatterns = [
     path("visits/doctor/<int:doctor_id>/", VisitListDoctor.as_view(), name="visits-doctor"),
     path("documentations/", DocumentationList.as_view(), name="documentations"),
     path("documentations/<int:pk>/", DocumentationDetail.as_view(), name="documentation")
+    path("book-visit/", BookVisitAPIView.as_view(), name="book-visit")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
