@@ -646,8 +646,6 @@ class DocumentationDetail(APIView):
                 {"message": "HTTP_404_NOT_FOUND"},
                 status=status.HTTP_404_NOT_FOUND,
             )
-<<<<<<< HEAD
-=======
 
 
 class BookVisitAPIView(APIView):
@@ -678,4 +676,3 @@ class BookVisitAPIView(APIView):
                 {"message": "Wizyta zarejestrowana"}, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
->>>>>>> 3cb4a3705c1958f9e0c5e1384bc884c360ec7c73

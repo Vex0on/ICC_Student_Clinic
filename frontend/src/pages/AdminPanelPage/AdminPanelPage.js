@@ -10,10 +10,6 @@ import HorizontalIconButton from "../../components/Buttons/HorizontalIconButton/
 import Header1 from "../../components/Headers/Header1/Header1";
 import TertiaryButton from "../../components/Buttons/TertiaryButton/TertiaryButton";
 
-import HorizontalIconButton from "../../components/Buttons/HorizontalIconButton/HorizontalIconButton"
-import Header1 from "../../components/Headers/Header1/Header1"
-import TertiaryButton from "../../components/Buttons/TertiaryButton/TertiaryButton"
-
 const AdminPanelPage = () => {
   const [userData, setUserData] = useState(null);
   const { id } = useParams();
