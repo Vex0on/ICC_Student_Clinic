@@ -17,22 +17,51 @@ import ArrowNavigate from "../../components/ArrowNavigate/ArrowNavigate"
 const PatientProfilePage = () => {
   const [patientData, setPatientData] = useState(null);
   const { id } = useParams();
+  const [editingPhoneNumber, setEditingPhoneNumber] = useState(false);
+  const [newPhoneNumber, setNewPhoneNumber] = useState("");
+  const [originalPhoneNumber, setOriginalPhoneNumber] = useState("");
 
   useEffect(() => {
-    const fetchPatientData = async () => {
-      checkToken();
-      try {
-        const response = await axios.get(
-          `http://127.0.0.1:8000/api/students/${id}/`
-        );
-        setPatientData(response.data);
-      } catch (error) {
-        console.log("Wystąpił błąd podczas pobierania danych pacjenta", error);
-      }
-    };
-
     fetchPatientData();
-  }, [id]);
+  }, []);
+
+  const fetchPatientData = async () => {
+    checkToken();
+    try {
+      const response = await axios.get(`http://localhost:8000/api/students/${id}/`);
+      setPatientData(response.data);
+    } catch (error) {
+      console.log("Wystąpił błąd podczas pobierania danych pacjenta", error);
+    }
+  };
+
+  const handlePhoneNumberEdit = () => {
+    setEditingPhoneNumber(true);
+    setNewPhoneNumber(patientData.phone_number);
+    setOriginalPhoneNumber(patientData.phone_number);
+  };
+
+  const handlePhoneNumberSave = async () => {
+    checkToken();
+    try {
+      const response = await axios.put(
+        `http://localhost:8000/api/students/${id}/`,
+        { phone_number: newPhoneNumber }
+      );
+
+      console.log(response.data);
+
+      setEditingPhoneNumber(false);
+      fetchPatientData();
+    } catch (error) {
+      console.log("Wystąpił błąd podczas aktualizacji numeru telefonu", error);
+    }
+  };
+
+  const handlePhoneNumberCancel = () => {
+    setEditingPhoneNumber(false);
+    setNewPhoneNumber(originalPhoneNumber);
+  };
 
   if (!patientData) {
     return <div>Loading...</div>;
@@ -63,11 +92,29 @@ const PatientProfilePage = () => {
             text={patientData.date_of_birth}
             icon={<AiOutlineCalendar />}
           />
-          <InformationsIcon text={patientData.address} icon={<LuMapPin />} />
-          <InformationsIcon
-            text={patientData.phone_number}
-            icon={<BsTelephone />}
+          <InformationsIcon 
+            text={patientData.address} 
+            icon={<LuMapPin />} 
           />
+          {editingPhoneNumber ? (
+          <div>
+            <input
+              type="text"
+              value={newPhoneNumber}
+              onChange={(e) => setNewPhoneNumber(e.target.value)}
+            />
+            <button onClick={handlePhoneNumberSave}>Zapisz</button>
+            <button onClick={handlePhoneNumberCancel}>Anuluj</button>
+          </div>
+        ) : (
+          <div>
+            <InformationsIcon
+              text={patientData.phone_number}
+              icon={<BsTelephone />}
+            />
+            <button onClick={handlePhoneNumberEdit}>Edytuj numer telefonu</button>
+          </div>
+        )}
         </div>
       </div>
     </div>
