@@ -671,8 +671,25 @@ class BookVisitAPIView(APIView):
 
         serializer = BookedVisitSerializer(data=visit_data)
         if serializer.is_valid():
-            serializer.save()
+            visit = serializer.save()
+            visit.is_active = False
+            visit.save()
             return Response(
                 {"message": "Wizyta zarejestrowana"}, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ApproveVisitAPIView(APIView):
+    def post(self,  pk):
+        try:
+            visit = Visit.objects.get(id=pk)
+            visit.is_active = True
+            visit.save()
+            return Response(
+                {"message": "Wizyta zatwierdzona"}, status=status.HTTP_200_OK)
+        except Visit.DoesNotExist:
+            return Response(
+                {"message": "HTTP_404_NOT_FOUND"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
