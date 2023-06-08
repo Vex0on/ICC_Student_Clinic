@@ -1,50 +1,41 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import styles from "./ApprovingVisitPage.module.scss"
+import axios from "axios"
 
 import Header1 from "../../components/Headers/Header1/Header1"
 import ArrowNavigate from "../../components/ArrowNavigate/ArrowNavigate"
 
 const ApprovingVisitPage = () => {
-    const [visits, setVisits] = useState([
-        {
-            id: 1,
-            date: "2023-06-07",
-            time: "10:20",
-            patient: "Jan Kowalski",
-            doctor: "dr Janina Hask"
-        },
-        {
-            id: 2,
-            date: "2023-06-08",
-            time: "9:00",
-            patient: "Anna Nowak",
-            doctor: "dr Janina Hask"
-        },
-        {
-            id: 3,
-            date: "2023-06-08",
-            time: "9:00",
-            patient: "Anna Nowak",
-            doctor: "dr Janina Hask"
-        },
-        {
-            id: 4,
-            date: "2023-06-08",
-            time: "9:00",
-            patient: "Anna Nowak",
-            doctor: "dr Janina Hask"
-        },
-        {
-            id: 5,
-            date: "2023-06-08",
-            time: "9:00",
-            patient: "Anna Nowak",
-            doctor: "dr Janina Hask"
-        }
-    ])
+    const [visits, setVisits] = useState([])
+
+    useEffect(() => {
+        axios.get('http://127.0.0.1:8000/api/visits/')
+            .then(res => {
+                const visitsData = res.data
+                    .filter(visit => !visit.is_active)
+                    .map(visit => ({
+                        id: visit.id,
+                        date: visit.date,
+                        time: visit.time.split(':')[0] + ':' + visit.time.split(':')[1],
+                        patient: `${visit.student.first_name} ${visit.student.last_name}`,
+                        doctor: `dr ${visit.doctor.first_name} ${visit.doctor.last_name}`
+                    }));
+
+                setVisits(visitsData);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }, []);
 
     const handleAccept = (id) => {
-        console.log(`Visit with id: ${id} was accepted`);
+        axios.put(`http://127.0.0.1:8000/api/approve-visit/${id}`)
+            .then(res => {
+                setVisits(visits.filter(visit => visit.id !== id));
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }
 
     const handleReject = (id) => {

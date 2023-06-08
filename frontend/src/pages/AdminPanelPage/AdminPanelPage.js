@@ -22,12 +22,7 @@ const AdminPanelPage = () => {
         const token = localStorage.getItem("token");
         const { role } = JSON.parse(atob(token.split(".")[1]));
 
-            <div className={styles.container__tiles}>
-                <HorizontalIconButton text={"Kalendarz wizyt"} icon={<AiOutlineCalendar />} linkTo={"/kalendarz-lekarza"} OnClick={null}/>
-                <HorizontalIconButton text={"Lista lekarzy"} icon={<AiOutlineTeam/>} linkTo={"/lista-lekarzy"} OnClick={null}/>
-                <HorizontalIconButton text={"Lista pacjentów"} icon={<AiOutlineCopy />} linkTo={"/lista-pacjentow"} OnClick={null}/>
-                <HorizontalIconButton text={"Zatwierdzanie wizyt"} icon={<AiOutlineCheck />} linkTo={"/zatwierdzanie-wizyt"} OnClick={null}/>
-            </div>
+
         let response;
         if (role === "doctor") {
           response = await axios.get(`http://127.0.0.1:8000/api/doctors/${id}/`);
@@ -57,11 +52,12 @@ const AdminPanelPage = () => {
         <Header1 text={"Panel admina"} />
       </div>
 
-      <div className={styles.container__tiles}>
-        <HorizontalIconButton text={"Kalendarz wizyt"} icon={<AiOutlineCalendar />} OnClick={null} />
-        <HorizontalIconButton text={"Lista lekarzy"} icon={<AiOutlineTeam />} OnClick={() => handleProfileClick("/lista-lekarzy")} />
-        <HorizontalIconButton text={"Lista pacjentów"} icon={<AiOutlineCopy />} OnClick={() => handleProfileClick("/lista-pacjentow")} />
-      </div>
+          <div className={styles.container__tiles}>
+              <HorizontalIconButton text={"Kalendarz wizyt"} icon={<AiOutlineCalendar />} linkTo={"/kalendarz-lekarza"} OnClick={null}/>
+              <HorizontalIconButton text={"Lista lekarzy"} icon={<AiOutlineTeam/>} linkTo={"/lista-lekarzy"} OnClick={null}/>
+              <HorizontalIconButton text={"Lista pacjentów"} icon={<AiOutlineCopy />} linkTo={"/lista-pacjentow"} OnClick={null}/>
+              <HorizontalIconButton text={"Zatwierdzanie wizyt"} icon={<AiOutlineCheck />} linkTo={"/zatwierdzanie-wizyt"} OnClick={null}/>
+          </div>
 
       <div className={styles.container__button}>
         <TertiaryButton text={"Wyloguj się"} onClick={null} />
