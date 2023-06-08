@@ -6,7 +6,7 @@ import { AiOutlineTeam , AiOutlineCalendar, AiOutlineCopy, AiOutlineCheck } from
 import styles from "./AdminPanelPage.module.scss";
 import checkToken from "../../utills/JWT/checkToken";
 
-import HorizontalIconButton from "../../components/Buttons/HorizontalIconButton copy/HorizontalIconButton";
+import HorizontalIconButton from "../../components/Buttons/HorizontalIconButton/HorizontalIconButton";
 import Header1 from "../../components/Headers/Header1/Header1";
 import TertiaryButton from "../../components/Buttons/TertiaryButton/TertiaryButton";
 
