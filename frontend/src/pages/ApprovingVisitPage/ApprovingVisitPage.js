@@ -29,7 +29,7 @@ const ApprovingVisitPage = () => {
     }, []);
 
     const handleAccept = (id) => {
-        axios.put(`http://127.0.0.1:8000/api/approve-visit/${id}`)
+        axios.post(`http://127.0.0.1:8000/api/approve-visit/${id}/`)
             .then(res => {
                 setVisits(visits.filter(visit => visit.id !== id));
             })
@@ -39,7 +39,13 @@ const ApprovingVisitPage = () => {
     }
 
     const handleReject = (id) => {
-        console.log(`Visit with id: ${id} was rejected`);
+        axios.delete(`http://127.0.0.1:8000/api/reject-visit/${id}/`)
+            .then(res => {
+                setVisits(visits.filter(visit => visit.id !== id));
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }
 
     return(
@@ -76,3 +82,4 @@ const ApprovingVisitPage = () => {
 }
 
 export default ApprovingVisitPage
+ 

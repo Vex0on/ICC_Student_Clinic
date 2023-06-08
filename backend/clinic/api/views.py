@@ -1,6 +1,7 @@
 from django.db.models import Q
 from django.shortcuts import render
 from django.utils import timezone
+from datetime import datetime
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
@@ -689,6 +690,34 @@ class ApproveVisitAPIView(APIView):
             visit.save()
             return Response(
                 {"message": "Wizyta zatwierdzona"}, status=status.HTTP_200_OK)
+        except Visit.DoesNotExist:
+            return Response(
+                {"message": "HTTP_404_NOT_FOUND"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+
+class RejectVisitApiView(APIView):
+    def delete(self, request, pk):
+        try:
+            visit = Visit.objects.get(id=pk)
+
+            if visit.is_active:
+                return Response(
+                    {"message": "Nie można usunąć aktywnej wizyty"}, status=status.HTTP_400_BAD_REQUEST)
+
+            current_time = timezone.now()
+            print(current_time)
+            time_diff = visit.date - current_time.date()
+
+            if time_diff.days <= 1 and visit.time.hour - current_time.hour <= 24:
+                return Response(
+                    {"message": "Nie można usunąć wizyty na 24h przed umówionym czasem"}, status=status.HTTP_400_BAD_REQUEST)
+
+            visit.delete()
+            return Response(
+                {"message": "Wizyta odrzucona"}, status=status.HTTP_204_NO_CONTENT)
+
         except Visit.DoesNotExist:
             return Response(
                 {"message": "HTTP_404_NOT_FOUND"},

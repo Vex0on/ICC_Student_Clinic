@@ -24,5 +24,6 @@ urlpatterns = [
     path("documentations/", DocumentationList.as_view(), name="documentations"),
     path("documentations/<int:student_id>/", DocumentationDetail.as_view(), name="documentation"),
     path("book-visit/", BookVisitAPIView.as_view(), name="book-visit"),
-    path("approve-visit/<int:pk>/", ApproveVisitAPIView.as_view(), name="approve-visit")
+    path("approve-visit/<int:pk>/", ApproveVisitAPIView.as_view(), name="approve-visit"),
+    path("reject-visit/<int:pk>/", RejectVisitApiView.as_view(), name="reject-visit")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
