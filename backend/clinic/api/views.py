@@ -18,7 +18,8 @@ class StudentRegister(APIView):
     def post(self, request):
         student_serializer = StudentCreateSerializer(data=request.data)
         if student_serializer.is_valid():
-            student_serializer.save()
+            student = student_serializer.save()
+            documentation = Documentation.objects.create(student=student)
             return Response({"message": "HTTP_200_OK"}, status=status.HTTP_200_OK)
         else:
             return Response(
@@ -612,9 +613,9 @@ class DocumentationList(APIView):
 
 
 class DocumentationDetail(APIView):
-    def get(self, request, pk):
+    def get(self, request, student_id):
         try:
-            documentation = Documentation.objects.get(id=pk)
+            documentation = Documentation.objects.get(student=student_id)
             serializer = DocumentationGetSerializer(documentation, many=False)
             return Response(
                 serializer.data,
@@ -626,9 +627,9 @@ class DocumentationDetail(APIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
 
-    def put(self, request, pk):
+    def put(self, request, student_id):
         try:
-            documentation = Documentation.objects.get(id=pk)
+            documentation = Documentation.objects.get(student=student_id)
             serializer = DocumentationSerializer(instance=documentation, data=request.data)
             if serializer.is_valid():
                 serializer.save()

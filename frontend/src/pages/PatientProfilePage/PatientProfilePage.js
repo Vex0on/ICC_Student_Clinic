@@ -41,7 +41,7 @@ const PatientProfilePage = () => {
   return (
     <div className={styles.container}>
       <Header1 text={"Profil pacjenta"} />
-      <ArrowNavigate linkTo={"/panel-pacjenta"} />
+      <ArrowNavigate linkTo={`/panel-pacjenta/${id}`} />
       <div className={styles.container__data}>
         <div>
           <Avatar

@@ -200,14 +200,11 @@ class StudentUpdateSerializer(serializers.ModelSerializer):
 
 
 class StudentNameSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Student
-        fields = ["first_name", "last_name"]
+    user = UserProfilePictureSerializer()
 
-class StudentNameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
-        fields = ["first_name", "last_name"]
+        fields = ["first_name", "last_name", "user"]
 
 
 class DoctorCreateSerializer(serializers.ModelSerializer):
