@@ -7,6 +7,7 @@ import ArrowNavigate from "../../components/ArrowNavigate/ArrowNavigate"
 
 const ApprovingVisitPage = () => {
     const [visits, setVisits] = useState([])
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         axios.get('http://127.0.0.1:8000/api/visits/')
@@ -39,14 +40,19 @@ const ApprovingVisitPage = () => {
     }
 
     const handleReject = (id) => {
-        axios.delete(`http://127.0.0.1:8000/api/reject-visit/${id}/`)
-            .then(res => {
-                setVisits(visits.filter(visit => visit.id !== id));
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }
+        axios
+          .delete(`http://127.0.0.1:8000/api/reject-visit/${id}/`)
+          .then(res => {
+            setVisits(visits.filter(visit => visit.id !== id));
+          })
+          .catch(error => {
+            if (error.response && error.response.status === 400) {
+              setError('Nie można odrzucić wizyty w ciągu 24h przed umówionym czasem.');
+            } else {
+              console.log('Wystąpił inny błąd:', error.message);
+            }
+          });
+      }
 
     return(
         <div className={styles.container}>
@@ -77,6 +83,7 @@ const ApprovingVisitPage = () => {
                     ))}
                 </tbody>
             </table>
+            {error && <div className={styles.error}>{error}</div>}
         </div>
     )
 }
