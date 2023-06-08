@@ -43,7 +43,7 @@ function App() {
             <Route path='/po-wyborze-specjalisty' element={<ACSpecialistPage />}/>
             <Route path='/kalendarz-lekarza' element={<DoctorCalendar />}/>
             <Route path='/specjalista-szczegoly/:id' element={<SpecialistDetailsPage />}/>
-            <Route path='/kalendarz-wizyt' element={<VisitCalendarPage />}/>
+            <Route path='/kalendarz-wizyt/:id' element={<VisitCalendarPage />}/>
             <Route path='/zatwierdzanie-wizyt' element={<ApprovingVisitPage />}/>
             <Route path='*' element={<LoginPage />}/>
         </Routes> 
