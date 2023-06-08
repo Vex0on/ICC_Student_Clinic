@@ -60,7 +60,7 @@ const AdminPanelPage = () => {
           </div>
 
       <div className={styles.container__button}>
-        <TertiaryButton text={"Wyloguj się"} onClick={null} />
+        <TertiaryButton text={"Wyloguj się"} onClick={() => {localStorage.removeItem("token"); navigate("/")}} />
       </div>
     </div>
   );
