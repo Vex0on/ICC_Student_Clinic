@@ -28,10 +28,13 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         if hasattr(user, "doctor"):
             token["role"] = "doctor"
+            token["id"] = user.doctor.id
         elif hasattr(user, "reception"):
             token["role"] = "reception"
+            token["id"] = user.reception.id
         else:
             token["role"] = "student"
+            token["id"] = user.student.id
 
         return token
 

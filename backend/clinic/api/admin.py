@@ -31,3 +31,8 @@ class Visit(admin.ModelAdmin):
 @admin.register(Documentation)
 class Documentation(admin.ModelAdmin):
     list_display = ["id"]
+
+
+@admin.register(Reception)
+class Reception(admin.ModelAdmin):
+    list_display = ["id"]

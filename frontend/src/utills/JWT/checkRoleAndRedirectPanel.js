@@ -8,25 +8,26 @@ const checkRoleAndRedirectPanel = () => {
     try {
       const decoded = jwt_decode(token);
       const userRole = decoded.role;
-      const userId = decoded.user_id;
+      const userId = decoded.id;
 
       if (userRole === "student") {
         window.location.href = `/panel-pacjenta/${userId}`
         console.log("pacjent")
       } else if (userRole === "doctor"){
-        //window.location.href = "/panel-admina"
+        window.location.href = `/panel-admina/${userId}`
         console.log("doktor")
       }
       else if (userRole === "reception"){
-        //window.location.href = "/panel-admina"
+        window.location.href = `/panel-admina/${userId}`
         console.log("recepcja")
       }
     } catch (error) {
       console.log('Błąd dekodowania tokenu JWT:', error);
-      //window.location.href = "";
+      window.location.href = "";
     }
   } else {
-    //window.location.href = "localhost:3000";
+    console.log("cos jest nie tak");
+    // window.location.href = "";
   }
 };
 
