@@ -56,7 +56,7 @@ def validate_image(image):
 def validate_pesel(pesel):
 
     if not pesel.isdigit():
-        raise ValidationError("Number PESEL nie moze miec liter")
+        raise ValidationError("Numer PESEL nie moze miec liter")
 
     if pesel.isdigit() and len(pesel) != 11:
         raise ValidationError("Numer PESEL powinien zawierac 11 znakow")
@@ -94,3 +94,15 @@ def validate_phone_number(phone_number):
         raise serializers.ValidationError("Numer telefonu jest aktualnie używany")
 
     return phone_number
+
+
+def validate_first_name(first_name):
+    for i in first_name:
+        if i.isdigit():
+            raise serializers.ValidationError("Imie nie moze miec cyfr")
+
+
+def validate_last_name(last_name):
+    for i in last_name:
+        if i.isdigit():
+            raise serializers.ValidationError("Nazwisko nie moze miec cyfr")
