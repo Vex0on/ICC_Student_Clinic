@@ -20,6 +20,12 @@ const PatientProfilePage = () => {
   const [editingPhoneNumber, setEditingPhoneNumber] = useState(false);
   const [newPhoneNumber, setNewPhoneNumber] = useState("");
   const [originalPhoneNumber, setOriginalPhoneNumber] = useState("");
+  const [editingAllergies, setEditingAllergies] = useState(false);
+  const [newAllergies, setNewAllergies] = useState("");
+  const [originalAllergies, setOriginalAllergies] = useState("");
+  const [editingMedications, setEditingMedications] = useState(false);
+const [newMedications, setNewMedications] = useState("");
+const [originalMedications, setOriginalMedications] = useState("");
 
   useEffect(() => {
     fetchPatientData();
@@ -62,6 +68,63 @@ const PatientProfilePage = () => {
     setEditingPhoneNumber(false);
     setNewPhoneNumber(originalPhoneNumber);
   };
+
+  const handleAllergiesEdit = () => {
+    setEditingAllergies(true);
+    setNewAllergies(patientData.allergies);
+    setOriginalAllergies(patientData.allergies);
+  };
+
+  const handleAllergiesSave = async () => {
+    checkToken();
+    try {
+      const response = await axios.put(
+        `http://localhost:8000/api/students/${id}/`,
+        { allergies: newAllergies }
+      );
+
+      console.log(response.data);
+
+      setEditingAllergies(false);
+      fetchPatientData();
+    } catch (error) {
+      console.log("Wystąpił błąd podczas aktualizacji alergii", error);
+    }
+  };
+
+  const handleAllergiesCancel = () => {
+    setEditingAllergies(false);
+    setNewAllergies(originalAllergies);
+  };
+
+  const handleMedicationsEdit = () => {
+    setEditingMedications(true);
+    setNewMedications(patientData.medications_taken);
+    setOriginalMedications(patientData.medications_taken);
+  };
+
+  const handleMedicationsSave = async () => {
+    checkToken();
+    try {
+      const response = await axios.put(
+        `http://localhost:8000/api/students/${id}/`,
+        { medications_taken: newMedications }
+      );
+  
+      console.log(response.data);
+  
+      setEditingMedications(false);
+      fetchPatientData();
+    } catch (error) {
+      console.log("Wystąpił błąd podczas aktualizacji przyjmowanych leków", error);
+    }
+  };
+
+  const handleMedicationsCancel = () => {
+    setEditingMedications(false);
+    setNewMedications(originalMedications);
+  };
+
 
   if (!patientData) {
     return <div>Loading...</div>;
@@ -115,6 +178,44 @@ const PatientProfilePage = () => {
             <button onClick={handlePhoneNumberEdit}>Edytuj numer telefonu</button>
           </div>
         )}
+
+          {editingAllergies ? (
+            <div>
+              <input
+                type="text"
+                value={newAllergies}
+                onChange={(e) => setNewAllergies(e.target.value)}
+              />
+              <button onClick={handleAllergiesSave}>Zapisz</button>
+              <button onClick={handleAllergiesCancel}>Anuluj</button>
+            </div>
+          ) : (
+            <div>
+              <InformationsIcon
+                text={patientData.allergies || "-"}
+              />
+              <button onClick={handleAllergiesEdit}>Edytuj alergie</button>
+            </div>
+          )}
+
+          {editingMedications ? (
+            <div>
+              <input
+                type="text"
+                value={newMedications}
+                onChange={(e) => setNewMedications(e.target.value)}
+              />
+              <button onClick={handleMedicationsSave}>Zapisz</button>
+              <button onClick={handleMedicationsCancel}>Anuluj</button>
+            </div>
+          ) : (
+            <div>
+              <InformationsIcon
+                text={patientData.medications_taken || "-"}
+              />
+              <button onClick={handleMedicationsEdit}>Edytuj leki</button>
+            </div>
+          )}
         </div>
       </div>
     </div>
