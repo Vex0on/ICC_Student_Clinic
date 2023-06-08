@@ -4,6 +4,7 @@ import styles from "./DoctorCalendar.module.scss"
 import Calendar from "../../components/Calendar/Calendar"
 import Header1 from "../../components/Headers/Header1/Header1"
 import { AiOutlinePrinter } from "react-icons/ai"
+import ArrowNavigate from "../../components/ArrowNavigate/ArrowNavigate"
 
 const DoctorCardPage = () => {
   const data = [
@@ -41,6 +42,7 @@ const DoctorCardPage = () => {
 
   return(
     <div className={styles.container}>
+      <ArrowNavigate linkTo={"/panel-admina"} />
       <Header1 text={"Kalendarz wizyt"} />
       <p className={styles.name}>dr Alan Popowicz</p>
       <Calendar data={data[0].visits} />

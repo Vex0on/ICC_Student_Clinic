@@ -27,6 +27,7 @@ const UserPanelPage = () => {
       }
     };
 
+
     fetchUserData();
   }, []);
 
@@ -44,11 +45,11 @@ const UserPanelPage = () => {
         <Header1 text={`${userData.first_name} ${userData.last_name}`} />
       </div>
 
-      <div className={styles.container__tiles}>
-        <HorizontalImageButton text="Zarejestruj wizytę" icon={<AiOutlineCalendar />} imageSrc={Handshake} onClick={null} />
-        <HorizontalImageButton text="Dokumentacja medyczna" icon={<AiOutlineCopy />} imageSrc={Consultation} onClick={null} />
-        <HorizontalImageButton text="Profil pacjenta" icon={<AiOutlineUser />} imageSrc={Pressure} onClick={() => handleProfileClick(`/profil-pacjenta/${id}`)} />
-      </div>
+        <div className={styles.container__tiles}>
+            <HorizontalImageButton text={"Zarejestruj wizytę"} icon={<AiOutlineCalendar />} linkTo={"/kalendarz-wizyt"} imageSrc={Handshake} OnClick={null}/>
+            <HorizontalImageButton text={"Dokumentacja medyczna"} icon={<AiOutlineCopy />} linkTo={"/dokumentacja-medyczna"} imageSrc={Consultation} OnClick={null}/>
+            <HorizontalImageButton text={"Profil pacjenta"} icon={<AiOutlineUser />} linkTo={`/profil-pacjenta/${id}`} imageSrc={Pressure} OnClick={null}/>
+        </div>
 
       <div className={styles.container__button}>
         <TertiaryButton text="Wyloguj się" onClick={null} />

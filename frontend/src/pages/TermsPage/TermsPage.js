@@ -3,9 +3,12 @@ import Header1 from "../../components/Headers/Header1/Header1";
 
 import styles from "./TermsPage.module.scss"
 
+import ArrowNavigate from "../../components/ArrowNavigate/ArrowNavigate";
+
 const TermsPage = () => {
   return (
     <div className={styles.container}>
+      <ArrowNavigate linkTo={"/rejestracja"} />
       <Header1 text={"Regulamin"} />
       <ol>
         <li>Cel kliniki lekarskiej dla studentów:</li>

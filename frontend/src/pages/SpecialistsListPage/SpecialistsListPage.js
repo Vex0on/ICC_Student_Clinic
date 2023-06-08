@@ -5,6 +5,7 @@ import SpecializationButton from "../../components/SpecializationButton/Speciali
 import { FaStethoscope } from "react-icons/fa";
 import { GiStomach, GiSunglasses, GiNoseFront } from "react-icons/gi";
 import { useNavigate } from "react-router-dom";
+import ArrowNavigate from "../../components/ArrowNavigate/ArrowNavigate";
 
 const SpecialistsListPage = () => {
   const navigate = useNavigate();
@@ -15,6 +16,8 @@ const SpecialistsListPage = () => {
 
   return (
     <div className={styles.container}>
+
+      <ArrowNavigate linkTo={"/panel-pacjenta"} />
       <div className={styles.headerContainer}>
         <Header1 text="Nasi specjaliści" />
       </div>

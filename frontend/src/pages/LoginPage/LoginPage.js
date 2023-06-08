@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./LoginPage.module.scss"
 import axios from "axios";
@@ -13,8 +13,6 @@ const LoginPage = () => {
   const [password, setPassword] = useState('')
   const [informationLogin, setInformationLogin] = useState('')
 
-  const navigate = useNavigate()
-
   const setAuthToken = (token) => {
       if (token) {
           axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
@@ -22,6 +20,10 @@ const LoginPage = () => {
       else
           delete axios.defaults.headers.common["Authorization"]
    }
+
+   useEffect(() => {
+    checkRoleAndRedirectPanel();
+  }, []);
 
   const submitLogin = (e) => {
       e.preventDefault()

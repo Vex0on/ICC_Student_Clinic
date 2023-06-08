@@ -5,12 +5,13 @@ import Header1 from "../../components/Headers/Header1/Header1"
 import Avatar from "../../components/Avatar/Avatar"
 
 import ProfileImage from "../../utills/images/profileimage.jpeg"
-
+import ArrowNavigate from "../../components/ArrowNavigate/ArrowNavigate"
 
 const DoctorCardPage = () => {
 
     return(
         <div className={styles.container}>
+            <ArrowNavigate linkTo={"/lista-lekarzy"} />
             <Header1 text={"Karta lekarza"} />
             
             <div className={styles.container__data}>
