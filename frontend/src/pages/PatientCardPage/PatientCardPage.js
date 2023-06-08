@@ -1,17 +1,19 @@
 import React from "react"
 import styles from "./PatientCardPage.module.scss"
-
 import Header1 from "../../components/Headers/Header1/Header1"
 import Avatar from "../../components/Avatar/Avatar"
-
+import { useParams } from "react-router-dom"
 import ProfileImage from "../../utills/images/profileimage.jpeg"
+import { Link } from "react-router-dom"
 import ArrowNavigate from "../../components/ArrowNavigate/ArrowNavigate"
 
 const PatientCardPage = () => {
 
+    const {id} = useParams();
+
     return(
         <div className={styles.container}>
-            <ArrowNavigate linkTo={"/panel-pacjenta"} />
+            <ArrowNavigate linkTo={"/lista-pacjentow"} />
             <Header1 text={"Karta pacjenta"} />
             
             <div className={styles.container__data}>
@@ -89,6 +91,10 @@ const PatientCardPage = () => {
                         </p>
                     </div>
                 </div>
+
+                <Link to={`/dokumentacja-medyczna/${id}`}>
+                    <h3>Dokumentacja medyczna</h3>
+                </Link>
             </div>
         </div>
     )

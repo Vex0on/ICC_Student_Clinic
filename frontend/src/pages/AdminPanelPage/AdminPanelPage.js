@@ -53,10 +53,10 @@ const AdminPanelPage = () => {
       </div>
 
           <div className={styles.container__tiles}>
-              <HorizontalIconButton text={"Kalendarz wizyt"} icon={<AiOutlineCalendar />} linkTo={"/kalendarz-lekarza"} OnClick={null}/>
-              <HorizontalIconButton text={"Lista lekarzy"} icon={<AiOutlineTeam/>} linkTo={"/lista-lekarzy"} OnClick={null}/>
-              <HorizontalIconButton text={"Lista pacjentów"} icon={<AiOutlineCopy />} linkTo={"/lista-pacjentow"} OnClick={null}/>
-              <HorizontalIconButton text={"Zatwierdzanie wizyt"} icon={<AiOutlineCheck />} linkTo={"/zatwierdzanie-wizyt"} OnClick={null}/>
+              <HorizontalIconButton text={"Kalendarz wizyt"} icon={<AiOutlineCalendar />} linkTo={`/kalendarz-lekarza-wybor`} OnClick={null}/>
+              <HorizontalIconButton text={"Lista lekarzy"} icon={<AiOutlineTeam/>} linkTo={`/lista-lekarzy`} OnClick={null}/>
+              <HorizontalIconButton text={"Lista pacjentów"} icon={<AiOutlineCopy />} linkTo={`/lista-pacjentow`} OnClick={null}/>
+              <HorizontalIconButton text={"Zatwierdzanie wizyt"} icon={<AiOutlineCheck />} linkTo={`/zatwierdzanie-wizyt`} OnClick={null}/>
           </div>
 
       <div className={styles.container__button}>

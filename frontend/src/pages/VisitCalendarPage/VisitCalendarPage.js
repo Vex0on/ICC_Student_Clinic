@@ -17,7 +17,7 @@ const VisitCalendarPage = () => {
     const { id: doctorId } = useParams();
 
     const times = ["09:00", "09:40", "10:20", "11:00", "11:40", "12:20", "13:00", "13:40", "14:20", "15:00", "15:40", "16:20"]
-
+    const [doctor, setDoctor] = useState(null);
     const [currentDate, setCurrentDate] = useState(new Date())
     const [appointments, setAppointments] = useState([])
 
@@ -36,6 +36,17 @@ const VisitCalendarPage = () => {
                 console.error('Error fetching visits', err);
             });
     }, []);
+
+    useEffect(() => {
+        axios.get(`http://127.0.0.1:8000/api/doctors/`)
+            .then(response => {
+                const foundDoctor = response.data.find(doc => doc.id === parseInt(doctorId));
+                setDoctor(foundDoctor);
+            })
+            .catch(err => {
+                console.error('Error fetching doctor', err);
+            });
+    }, [doctorId]);
 
     const confirmAppointment = () => {
         const appointmentData = {
@@ -78,7 +89,11 @@ const VisitCalendarPage = () => {
 
     const handleCellClick = (date, time) => {
         const isBooked = appointments.some(app => app.date === date && app.time === time);
-        if (!isBooked) {
+    
+        const now = new Date();
+        const selectedDate = new Date(date + 'T' + time + ':00');
+    
+        if (!isBooked && selectedDate > now) {
             setSelectedAppointment({ date, time });
             setShowModal(true);
         }
@@ -89,7 +104,8 @@ const VisitCalendarPage = () => {
             <ArrowNavigate linkTo={"/panel-pacjenta"} />
             <Header1 text={"Umów wizytę"} />
 
-            <p className={styles.header1}>Umawiasz się do: <strong> dr Janina Hask</strong></p>
+            {doctor && <p className={styles.header1}>Umawiasz się do: <strong> dr {doctor.first_name} {doctor.last_name}</strong></p>}
+
 
             <p className={styles.header2}><AiOutlineCalendar className={styles.icon} /> <span>Wybierz dzień i godzinę wizytę</span></p>
 
@@ -109,8 +125,13 @@ const VisitCalendarPage = () => {
                         <tr key={time}>
                             {days.map(day => {
                                 const isBooked = appointments.some(app => app.date === day && app.time === time);
+                                const isPast = new Date(day + 'T' + time + ':00') < new Date();
                                 return (
-                                    <td key={day+time} className={`${isBooked ? styles.booked : styles.available} ${styles.td}`} onClick={() => handleCellClick(day, time)}>
+                                    <td 
+                                        key={day+time} 
+                                        className={`${(isBooked || isPast) ? styles.booked : styles.available} ${styles.td}`} 
+                                        onClick={() => !isPast && handleCellClick(day, time)}
+                                    >
                                         {time}
                                     </td>
                                 )

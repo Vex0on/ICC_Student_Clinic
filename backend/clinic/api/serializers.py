@@ -286,6 +286,8 @@ class MedicationUpdateSerializer(serializers.ModelSerializer):
 class VisitSerializer(serializers.ModelSerializer):
     medication = serializers.CharField(allow_blank=True, allow_null=True, required=False)
     description = serializers.CharField(allow_blank=True, allow_null=True, required=False)
+    date = serializers.DateField()
+    time = serializers.TimeField()
     doctor = DoctorSerializer()
     student = StudentSerializer()
 
@@ -331,7 +333,7 @@ class ReceptionCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Reception
-        exclude = ("user",)
+        fields = "__all__"
 
     def create(self, validated_data):
         user_data = validated_data.pop("user")
