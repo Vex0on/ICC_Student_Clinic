@@ -4,6 +4,7 @@ import Header1 from "../../components/Headers/Header1/Header1"
 import { useParams } from "react-router-dom";
 
 import ProfileImage from "../../utills/images/Avatar.jpg"
+import ArrowNavigate from "../../components/ArrowNavigate/ArrowNavigate";
 
 import axios from "axios";
 
@@ -34,6 +35,7 @@ const SpecialistDetailsPage = () => {
 
     return(
         <div className={styles.container}>
+            <ArrowNavigate linkTo={"/po-wyborze-specjalisty"} />
             <Header1 text={specialistData.specialization} />
 
             <div className={styles.container__main}>

@@ -4,10 +4,13 @@ import Header1 from "../../components/Headers/Header1/Header1"
 
 import { BiPlusMedical } from "react-icons/bi"
 
+import ArrowNavigate from "../../components/ArrowNavigate/ArrowNavigate"
+
 const MedicalRecordsPage = () => {
 
     return(
         <div className={styles.container}>
+            <ArrowNavigate linkTo={"/panel-pacjenta"} />
             <div className={styles.container__header}>
                 <BiPlusMedical className={styles.header__icon} />
                 <h1 className={styles.header__text}>Dokumentacja Medyczna</h1>

@@ -10,11 +10,13 @@ import ProfileImage from "../../utills/images/profileimage.jpeg"
 import { AiOutlineHeart, AiOutlineCalendar } from "react-icons/ai"
 import { LuMapPin } from "react-icons/lu"
 import { BsTelephone } from "react-icons/bs"
+import ArrowNavigate from "../../components/ArrowNavigate/ArrowNavigate"
 
 const PatientProfilePage = () => {
 
     return(
         <div className={styles.container}>
+            <ArrowNavigate linkTo={"/panel-pacjenta"} />
             <Header1 text={"Profil pacjenta"} />
 
             <div className={styles.container__data}>

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { addDays, format } from 'date-fns'
 
 import Header1 from '../../components/Headers/Header1/Header1'
+import ArrowNavigate from '../../components/ArrowNavigate/ArrowNavigate'
 
 import styles from "./VisitCalendarPage.module.scss"
 import { AiOutlineCalendar, AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai"
@@ -50,6 +51,7 @@ const VisitCalendarPage = () => {
 
     return (
         <div className={styles.container}>
+            <ArrowNavigate linkTo={"/panel-pacjenta"} />
             <Header1 text={"Umów wizytę"} />
 
             <p className={styles.header1}>Umawiasz się do: <strong> dr Janina Hask</strong></p>

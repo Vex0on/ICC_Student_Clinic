@@ -6,6 +6,7 @@ import Header1 from "../../components/Headers/Header1/Header1"
 
 import ProfileImage from "../../utills/images/Avatar.jpg"
 import AvatarRow from "../../components/AvatarRow/AvatarRow"
+import ArrowNavigate from "../../components/ArrowNavigate/ArrowNavigate"
 
 
 const ListPatientPage = () => {
@@ -24,6 +25,7 @@ const ListPatientPage = () => {
 
   return (
     <div className={styles.container}>
+      <ArrowNavigate linkTo={"/panel-admina"} />
       <Header1 text={"Lista pacjentow"} />
       <div className={styles.container__data}>
         {patients.map(patient => (

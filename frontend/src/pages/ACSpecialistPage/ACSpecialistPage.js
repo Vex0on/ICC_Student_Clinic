@@ -5,6 +5,7 @@ import Header1 from "../../components/Headers/Header1/Header1"
 import HorizontalSpecialistButton from "../../components/Buttons/HorizontalSpecialistButton/HorizontalSpecialistButton"
 
 import ProfileImage from "../../utills/images/Avatar.jpg"
+import ArrowNavigate from "../../components/ArrowNavigate/ArrowNavigate"
 
 import axios from "axios"
 import { Link, useLocation, useNavigate } from "react-router-dom"
@@ -37,6 +38,7 @@ const ACSpecialistPage = () => {
 
     return(
         <div className={styles.container}>
+            <ArrowNavigate linkTo={"/lekarze"} />
             <Header1 text={buttonText} />
 
             <div className={styles.container__data}>

@@ -20,9 +20,9 @@ const UserPanelPage = () => {
             </div>
 
             <div className={styles.container__tiles}>
-                <HorizontalImageButton text={"Zarejestruj wizytę"} icon={<AiOutlineCalendar />} imageSrc={Handshake} OnClick={null}/>
-                <HorizontalImageButton text={"Dokumentacja medyczna"} icon={<AiOutlineCopy />} imageSrc={Consultation} OnClick={null}/>
-                <HorizontalImageButton text={"Profil pacjenta"} icon={<AiOutlineUser />} imageSrc={Pressure} OnClick={null}/>
+                <HorizontalImageButton text={"Zarejestruj wizytę"} icon={<AiOutlineCalendar />} linkTo={"/kalendarz-wizyt"} imageSrc={Handshake} OnClick={null}/>
+                <HorizontalImageButton text={"Dokumentacja medyczna"} icon={<AiOutlineCopy />} linkTo={"/dokumentacja-medyczna"} imageSrc={Consultation} OnClick={null}/>
+                <HorizontalImageButton text={"Profil pacjenta"} icon={<AiOutlineUser />} linkTo={"/profil-pacjenta"} imageSrc={Pressure} OnClick={null}/>
             </div>
 
             <div className={styles.container__button}>

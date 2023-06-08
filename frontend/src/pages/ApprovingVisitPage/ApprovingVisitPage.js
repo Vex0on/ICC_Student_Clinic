@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import styles from "./ApprovingVisitPage.module.scss"
 
 import Header1 from "../../components/Headers/Header1/Header1"
+import ArrowNavigate from "../../components/ArrowNavigate/ArrowNavigate"
 
 const ApprovingVisitPage = () => {
     const [visits, setVisits] = useState([
@@ -52,6 +53,7 @@ const ApprovingVisitPage = () => {
 
     return(
         <div className={styles.container}>
+            <ArrowNavigate linkTo={"/panel-admina"} />
             <Header1 text={"Zatwierdzanie wizyt"} />
             <table className={styles.table}>
                 <thead>
