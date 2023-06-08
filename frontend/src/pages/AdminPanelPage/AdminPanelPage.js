@@ -6,11 +6,10 @@ import { AiOutlineTeam , AiOutlineCalendar, AiOutlineCopy, AiOutlineCheck } from
 import styles from "./AdminPanelPage.module.scss";
 import checkToken from "../../utills/JWT/checkToken";
 
-import { AiOutlineTeam, AiOutlineCalendar, AiOutlineCopy } from "react-icons/ai";
-
 import HorizontalIconButton from "../../components/Buttons/HorizontalIconButton copy/HorizontalIconButton";
 import Header1 from "../../components/Headers/Header1/Header1";
 import TertiaryButton from "../../components/Buttons/TertiaryButton/TertiaryButton";
+
 
 const AdminPanelPage = () => {
   const [userData, setUserData] = useState(null);
