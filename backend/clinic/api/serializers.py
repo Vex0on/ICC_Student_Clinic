@@ -157,6 +157,10 @@ class UserUpdateSerializer(serializers.ModelSerializer):
 
 class StudentSerializer(serializers.ModelSerializer):
     user = UserProfilePictureSerializer()
+    phone_number = serializers.SerializerMethodField()
+
+    def get_phone_number(self, obj):
+        return f"{obj.phone_number[:3]}-{obj.phone_number[3:6]}-{obj.phone_number[6:]}"
     class Meta:
         model = Student
         fields = "__all__"
@@ -213,6 +217,10 @@ class DoctorCreateSerializer(serializers.ModelSerializer):
 
 class DoctorSerializer(serializers.ModelSerializer):
     user = UserProfilePictureSerializer()
+    phone_number = serializers.SerializerMethodField()
+
+    def get_phone_number(self, obj):
+        return f"{obj.phone_number[:3]}-{obj.phone_number[3:6]}-{obj.phone_number[6:]}"
 
     class Meta:
         model = Doctor
@@ -276,6 +284,11 @@ class VisitUpdateSerializer(serializers.ModelSerializer):
         model = Visit
 
 class ReceptionSerializer(serializers.ModelSerializer):
+    phone_number = serializers.SerializerMethodField()
+
+    def get_phone_number(self, obj):
+        return f"{obj.phone_number[:3]}-{obj.phone_number[3:6]}-{obj.phone_number[6:]}"
+    
     class Meta:
         model = Reception
         fields = "__all__"
