@@ -26,12 +26,15 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
 
-        if hasattr(user, 'doctor'):
-            token['role'] = 'doctor'
-        elif hasattr(user, 'reception'):
-            token['role'] = 'reception'
+        if hasattr(user, "doctor"):
+            token["role"] = "doctor"
+            token["id"] = user.doctor.id
+        elif hasattr(user, "reception"):
+            token["role"] = "reception"
+            token["id"] = user.reception.id
         else:
-            token['role'] = 'student'
+            token["role"] = "student"
+            token["id"] = user.student.id
 
         return token
 
@@ -93,6 +96,12 @@ class StudentCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = "__all__"
+
+    first_name = serializers.CharField(validators=[validate_first_name],
+                                       required=False)
+
+    last_name = serializers.CharField(validators=[validate_last_name],
+                                      required=False)
 
     phone_number = serializers.CharField(validators=[validate_phone_number],
                                          required=False,)
@@ -188,6 +197,11 @@ class StudentUpdateSerializer(serializers.ModelSerializer):
     pesel = serializers.CharField(validators=[validate_pesel],
                                   required=False,)
 
+class StudentNameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Student
+        fields = ["first_name", "last_name"]
+
 
 class DoctorCreateSerializer(serializers.ModelSerializer):
     user = UserSerializer()
@@ -266,7 +280,10 @@ class MedicationUpdateSerializer(serializers.ModelSerializer):
 
 
 class VisitSerializer(serializers.ModelSerializer):
-    medication = MedicationSerializer(many=True)
+    medication = serializers.CharField(allow_blank=True, allow_null=True, required=False)
+    description = serializers.CharField(allow_blank=True, allow_null=True, required=False)
+    doctor = DoctorSerializer()
+    student = StudentSerializer()
 
     class Meta:
         model = Visit
@@ -274,14 +291,16 @@ class VisitSerializer(serializers.ModelSerializer):
 
 
 class VisitUpdateSerializer(serializers.ModelSerializer):
-    date_of_visit = serializers.DateTimeField(required=False)
+    date = serializers.DateField(required=False)
+    time = serializers.TimeField(required=False)
     doctor = serializers.PrimaryKeyRelatedField(read_only=True)
     student = serializers.PrimaryKeyRelatedField(read_only=True)
     description = serializers.CharField(required=False)
-    medications = serializers.PrimaryKeyRelatedField(many=True, queryset=Medication.objects.all())
+    medication = serializers.CharField(allow_blank=True, allow_null=True)
 
     class Meta:
         model = Visit
+
 
 class ReceptionSerializer(serializers.ModelSerializer):
     phone_number = serializers.SerializerMethodField()
@@ -325,4 +344,24 @@ class ReceptionUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Reception
+        fields = "__all__"
+
+
+class DocumentationSerializer(serializers.ModelSerializer):
+    current_health = serializers.CharField(required=False)
+    sickness_history = serializers.CharField(required=False)
+    treatment_plan = serializers.CharField(required=False)
+    medication_list = serializers.CharField(required=False)
+    medical_examination = serializers.CharField(required=False)
+
+    class Meta:
+        model = Documentation
+        fields = "__all__"
+
+
+class DocumentationGetSerializer(serializers.ModelSerializer):
+    student = StudentNameSerializer()
+
+    class Meta:
+        model = Documentation
         fields = "__all__"

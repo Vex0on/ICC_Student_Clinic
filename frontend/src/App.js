@@ -31,9 +31,9 @@ function App() {
             <Route path='/rejestracja' element={<RegisterPage />}/>
             <Route path='/regulamin' element={<TermsPage />}/>
             <Route path='/reset-hasla' element={<RemindPasswordPage />}/>
-            <Route path='/panel-pacjenta' element={<UserPanelPage />}/>
-            <Route path='/panel-admina' element={<AdminPanelPage />}/>
-            <Route path='/profil-pacjenta' element={<PatientProfilePage />}/>
+            <Route path='/panel-pacjenta/:id' element={<UserPanelPage />}/>
+            <Route path='/panel-admina/:id' element={<AdminPanelPage />}/>
+            <Route path='/profil-pacjenta/:id' element={<PatientProfilePage />}/>
             <Route path='/lista-pacjentow' element={<ListPatientPage />}/>
             <Route path='/lista-lekarzy' element={<ListDoctorPage />}/>
             <Route path='/karta-pacjenta' element={<PatientCardPage />}/>

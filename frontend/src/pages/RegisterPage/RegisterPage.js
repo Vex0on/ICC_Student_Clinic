@@ -128,6 +128,7 @@ const RegisterPage = () => {
           value={phoneNumber}
           setValue={setPhoneNumber}
           error={formErrors.phone_number?.[0]}
+          maxLength={9}
         />
         <PrimaryField
           placeholder={"Miasto"}

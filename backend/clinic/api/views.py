@@ -1,6 +1,7 @@
 from django.db.models import Q
 from django.shortcuts import render
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
 from rest_framework.views import APIView, status
@@ -25,6 +26,7 @@ class StudentRegister(APIView):
 
 
 class Login(APIView):
+    @csrf_exempt
     def post(self, request):
         email = request.data.get("email")
         password = request.data.get("password")
@@ -582,3 +584,64 @@ class VisitListDoctor(APIView):
 
         except Visit.DoesNotExist:
             return Response({}, status=status.HTTP_404_NOT_FOUND)
+
+
+class DocumentationList(APIView):
+    def get(self, request):
+        documentations = Documentation.objects.all()
+        serializer = DocumentationGetSerializer(documentations, many=True)
+
+        return Response(
+            serializer.data,
+            status=status.HTTP_200_OK,
+        )
+
+    def post(self, request):
+        serializer = DocumentationSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                {"message": "HTTP_200_OK"},
+                status=status.HTTP_200_OK
+            )
+        return Response(
+            serializer.errors,
+            status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        )
+
+
+class DocumentationDetail(APIView):
+    def get(self, request, pk):
+        try:
+            documentation = Documentation.objects.get(id=pk)
+            serializer = DocumentationGetSerializer(documentation, many=False)
+            return Response(
+                serializer.data,
+                status=status.HTTP_200_OK,
+            )
+        except Documentation.DoesNotExist:
+            return Response(
+                {"message": "HTTP_404_NOT_FOUND"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+    def put(self, request, pk):
+        try:
+            documentation = Documentation.objects.get(id=pk)
+            serializer = DocumentationSerializer(instance=documentation, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(
+                    serializer.data,
+                    status=status.HTTP_200_OK,
+                )
+            else:
+                return Response(
+                    serializer.errors,
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                )
+        except Visit.DoesNotExist:
+            return Response(
+                {"message": "HTTP_404_NOT_FOUND"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
