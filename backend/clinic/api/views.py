@@ -1,4 +1,7 @@
+import csv
+
 from django.db.models import Q
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
@@ -586,6 +589,21 @@ class VisitListDoctor(APIView):
 
         except Visit.DoesNotExist:
             return Response({}, status=status.HTTP_404_NOT_FOUND)
+
+    @staticmethod
+    def export_csv(request, doctor_id):
+        visits = Visit.objects.filter(doctor=doctor_id)
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="visits.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['Data', 'Godzina', 'Osoba'])
+
+        for visit in visits:
+            writer.writerow(
+                [visit.date, visit.time.strftime('%H:%M'), f'{visit.student.first_name} {visit.student.last_name}'])
+
+        return response
 
 
 class DocumentationList(APIView):
