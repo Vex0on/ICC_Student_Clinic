@@ -19,6 +19,7 @@ import SpecialistDetailsPage from "./pages/SpecialistDetailsPage/SpecialistDetai
 import DoctorCalendar from './pages/DoctorCalendar/DoctorCalendar'
 import VisitCalendarPage from "./pages/VisitCalendarPage/VisitCalendarPage"
 import ApprovingVisitPage from "./pages/ApprovingVisitPage/ApprovingVisitPage"
+import DoctorCalendarList from "./pages/DoctorCalendarList/DoctorCalendarList"
 
 
 function App() {
@@ -41,7 +42,8 @@ function App() {
             <Route path='/karta-doktora' element={<DoctorCardPage />}/>
             <Route path='/dokumentacja-medyczna/:id' element={<MedicalRecordsPage />}/>
             <Route path='/po-wyborze-specjalisty' element={<ACSpecialistPage />}/>
-            <Route path='/kalendarz-lekarza' element={<DoctorCalendar />}/>
+            <Route path='/kalendarz-lekarza/:id' element={<DoctorCalendar />}/>
+            <Route path='/kalendarz-lekarza-wybor' element={<DoctorCalendarList />}/>
             <Route path='/specjalista-szczegoly/:id' element={<SpecialistDetailsPage />}/>
             <Route path='/kalendarz-wizyt/:id' element={<VisitCalendarPage />}/>
             <Route path='/zatwierdzanie-wizyt' element={<ApprovingVisitPage />}/>
