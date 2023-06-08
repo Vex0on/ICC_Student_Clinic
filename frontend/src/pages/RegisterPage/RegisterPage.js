@@ -16,7 +16,6 @@ const RegisterPage = () => {
   const [indexNumber, setIndexNumber] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
   const [pesel, setPesel] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [city, setCity] = useState("");
@@ -29,7 +28,6 @@ const RegisterPage = () => {
     const data = {
       first_name: firstName,
       last_name: lastName,
-      date_of_birth: dateOfBirth,
       pesel: pesel,
       phone_number: phoneNumber,
       address: city,
