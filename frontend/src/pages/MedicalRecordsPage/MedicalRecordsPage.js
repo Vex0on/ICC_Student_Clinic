@@ -1,65 +1,123 @@
-import React from "react"
-import styles from "./MedicalRecords.module.scss"
-import Header1 from "../../components/Headers/Header1/Header1"
-
-import { BiPlusMedical } from "react-icons/bi"
-
-import ArrowNavigate from "../../components/ArrowNavigate/ArrowNavigate"
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import styles from "./MedicalRecords.module.scss";
+import Header1 from "../../components/Headers/Header1/Header1";
+import { BiPlusMedical } from "react-icons/bi";
+import ArrowNavigate from "../../components/ArrowNavigate/ArrowNavigate";
+import ProfileImage from "../../utills/images/Avatar.jpg";
+import Avatar from "../../components/Avatar/Avatar";
 
 const MedicalRecordsPage = () => {
+  const { id } = useParams();
+  const [medicalData, setMedicalData] = useState({
+    currentHealth: "",
+    sicknessHistory: "",
+    treatmentPlan: "",
+    medicationList: "",
+    medicalExamination: "",
+    firstName: "",
+    lastName: "",
+    profilePicture: null
+  });
 
-    return(
-        <div className={styles.container}>
-            <ArrowNavigate linkTo={"/panel-pacjenta"} />
-            <div className={styles.container__header}>
-                <BiPlusMedical className={styles.header__icon} />
-                <h1 className={styles.header__text}>Dokumentacja Medyczna</h1>
-            </div>
+  useEffect(() => {
+    const fetchMedicalData = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/api/documentations/${id}/`);
+        const data = await response.json();
+        setMedicalData({
+          currentHealth: data.current_health,
+          sicknessHistory: data.sickness_history,
+          treatmentPlan: data.treatment_plan,
+          medicationList: data.medication_list,
+          medicalExamination: data.medical_examination,
+          firstName: data.student.first_name,
+          lastName: data.student.last_name,
+          profilePicture: data.student.user?.profile_picture
+        });
+      } catch (error) {
+        console.error("Error fetching medical data:", error);
+      }
+    };
 
-            <div className={styles.container__data__health}>
-                <div>
-                    <h2>Aktualny stan zdrowia</h2>
-                    <textarea className={styles.input__textarea} type="textarea" />
-                </div>
+    fetchMedicalData();
+  }, [id]);
 
-                <div className={styles.container__name}> 
-                    <p className={styles.name}>
-                        Krzysztof <br /> Nowak
-                    </p>
-                </div>
-            </div>
+  return (
+    <div className={styles.container}>
+      <ArrowNavigate linkTo={`/panel-pacjenta/${id}`} />
+      <div className={styles.container__header}>
+        <BiPlusMedical className={styles.header__icon} />
+        <h1 className={styles.header__text}>Dokumentacja Medyczna</h1>
+      </div>
 
-            <div className={styles.container__textarea}>
-                <h2>Historia choroby</h2>
-                <textarea className={styles.input__textarea}/>
-            </div>
-
-            <div className={styles.container__textarea}>
-                <h2>Plan leczenia</h2>
-                <textarea className={styles.input__textarea} type="textarea" />
-            </div>
-
-            <div className={styles.container__footer}>
-                <div className={styles.container__data}>
-                    <h2>Lista badań diagnostycznych</h2>
-                    <div className={styles.container__list}>
-                        <p className={styles.data}>Ekg - 2022r.</p>
-                        <p className={styles.data}>Morfologia - 2015r.</p>
-                        <p className={styles.data}>USG jamy brzusznej - 2013r.</p>
-                    </div>
-                </div>
-
-                <div className={styles.container__data}>
-                    <h2>Lista lekarst</h2>
-                    <div className={`${styles.container__list} ${styles.container__list__second}`}>
-                        <p className={styles.data}>Iburapid 5 mg tabl.</p>
-                        <p className={styles.data}>Trehanol 500 mg tabl.</p>
-                        <p className={styles.data}>Acodin N 100 µg tabl.</p>
-                    </div>
-                </div>
-            </div>
+      <div className={styles.container__data__health}>
+        <div>
+          <h2>Aktualny stan zdrowia</h2>
+          <textarea
+            className={styles.input__textarea}
+            type="textarea"
+            value={medicalData.currentHealth}
+            readOnly
+          />
         </div>
-    )
-}
 
-export default MedicalRecordsPage
+        <div>
+          <Avatar
+            text={`${medicalData.firstName} ${medicalData.lastName}`}
+            imageSrc={
+              medicalData.profilePicture
+                ? `http://localhost:8000/api/${medicalData.profilePicture}`
+                : ProfileImage
+            }
+          />
+        </div>
+      </div>
+
+      <div className={styles.container__textarea}>
+        <h2>Historia choroby</h2>
+        <textarea
+          className={styles.input__textarea}
+          value={medicalData.sicknessHistory}
+          readOnly
+        />
+      </div>
+
+      <div className={styles.container__textarea}>
+        <h2>Plan leczenia</h2>
+        <textarea
+          className={styles.input__textarea}
+          type="textarea"
+          value={medicalData.treatmentPlan}
+          readOnly
+        />
+      </div>
+
+      <div className={styles.container__footer}>
+        <div className={styles.container__data}>
+          <h2>Lista badań diagnostycznych</h2>
+          <div className={styles.container__data}>
+            <textarea
+              className={styles.input__textarea}
+              value={medicalData.medicalExamination}
+              readOnly
+            />
+          </div>
+        </div>
+
+        <div className={styles.container__data}>
+          <h2>Lista lekarstw</h2>
+          <div className={styles.container__data}>
+            <textarea
+              className={styles.input__textarea}
+              value={medicalData.medicationList}
+              readOnly
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default MedicalRecordsPage;

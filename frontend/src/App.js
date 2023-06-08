@@ -39,7 +39,7 @@ function App() {
             <Route path='/lista-lekarzy' element={<ListDoctorPage />}/>
             <Route path='/karta-pacjenta' element={<PatientCardPage />}/>
             <Route path='/karta-doktora' element={<DoctorCardPage />}/>
-            <Route path='/dokumentacja-medyczna' element={<MedicalRecordsPage />}/>
+            <Route path='/dokumentacja-medyczna/:id' element={<MedicalRecordsPage />}/>
             <Route path='/po-wyborze-specjalisty' element={<ACSpecialistPage />}/>
             <Route path='/kalendarz-lekarza' element={<DoctorCalendar />}/>
             <Route path='/specjalista-szczegoly/:id' element={<SpecialistDetailsPage />}/>
