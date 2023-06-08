@@ -94,6 +94,12 @@ class StudentCreateSerializer(serializers.ModelSerializer):
         model = Student
         fields = "__all__"
 
+    first_name = serializers.CharField(validators=[validate_first_name],
+                                       required=False)
+
+    last_name = serializers.CharField(validators=[validate_last_name],
+                                      required=False)
+
     phone_number = serializers.CharField(validators=[validate_phone_number],
                                          required=False,)
 
@@ -187,6 +193,11 @@ class StudentUpdateSerializer(serializers.ModelSerializer):
 
     pesel = serializers.CharField(validators=[validate_pesel],
                                   required=False,)
+
+class StudentNameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Student
+        fields = ["first_name", "last_name"]
 
 
 class DoctorCreateSerializer(serializers.ModelSerializer):
@@ -334,6 +345,20 @@ class ReceptionUpdateSerializer(serializers.ModelSerializer):
 
 
 class DocumentationSerializer(serializers.ModelSerializer):
+    current_health = serializers.CharField(required=False)
+    sickness_history = serializers.CharField(required=False)
+    treatment_plan = serializers.CharField(required=False)
+    medication_list = serializers.CharField(required=False)
+    medical_examination = serializers.CharField(required=False)
+
+    class Meta:
+        model = Documentation
+        fields = "__all__"
+
+
+class DocumentationGetSerializer(serializers.ModelSerializer):
+    student = StudentNameSerializer()
+
     class Meta:
         model = Documentation
         fields = "__all__"

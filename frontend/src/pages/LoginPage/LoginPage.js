@@ -6,13 +6,12 @@ import PrimaryButton from "../../components/Buttons/PrimaryButton/PrimaryButton"
 import SecondaryButton from "../../components/Buttons/SecondaryButton/SecondaryButton"
 import Header1 from "../../components/Headers/Header1/Header1"
 import PrimaryField from "../../components/Fields/PrimaryField/PrimaryField"
+import checkRoleAndRedirectPanel from "../../utills/JWT/checkRoleAndRedirectPanel";
 
 const LoginPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [informationLogin, setInformationLogin] = useState('')
-
-  const navigate = useNavigate()
 
   const setAuthToken = (token) => {
       if (token) {
@@ -33,7 +32,7 @@ const LoginPage = () => {
               
                   setAuthToken(token)
 
-                  navigate('/')
+                  checkRoleAndRedirectPanel()
               })
               .catch(err => {
                   setInformationLogin('Nieprawidłowe dane logowania')
