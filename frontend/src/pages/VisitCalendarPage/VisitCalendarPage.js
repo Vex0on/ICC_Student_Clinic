@@ -1,4 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import jwt_decode from 'jwt-decode'
+import { useParams } from 'react-router-dom'
 import { addDays, format } from 'date-fns'
 
 import Header1 from '../../components/Headers/Header1/Header1'
@@ -8,19 +11,51 @@ import styles from "./VisitCalendarPage.module.scss"
 import { AiOutlineCalendar, AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai"
 
 const VisitCalendarPage = () => {
-    const times = ["9:00", "9:40", "10:20", "11:00", "11:40", "12:20", "13:00", "13:40", "14:20", "15:00", "15:40", "16:20"]
+    const token = localStorage.getItem('token');
+    const decoded = jwt_decode(token);
+    const userId = decoded.id;
+    const { id: doctorId } = useParams();
+
+    const times = ["09:00", "09:40", "10:20", "11:00", "11:40", "12:20", "13:00", "13:40", "14:20", "15:00", "15:40", "16:20"]
 
     const [currentDate, setCurrentDate] = useState(new Date())
-    const [appointments, setAppointments] = useState([
-        {
-            "date": "2023-06-08",
-            "time": "9:00"
-        },
-        {
-            "date": "2023-06-07",
-            "time": "10:20"
-        },
-    ])
+    const [appointments, setAppointments] = useState([])
+
+    useEffect(() => {
+        axios.get('http://127.0.0.1:8000/api/visits/')
+            .then(response => {
+                const doctorAppointments = response.data.filter(visit => visit.doctor.id == doctorId).map(visit => ({
+                    date: visit.date,
+                    time: visit.time.split(":")[0] + ":" + visit.time.split(":")[1], 
+                }));
+
+                setAppointments(doctorAppointments);
+                console.log(doctorAppointments);
+            })
+            .catch(err => {
+                console.error('Error fetching visits', err);
+            });
+    }, []);
+
+    const confirmAppointment = () => {
+        const appointmentData = {
+            student: userId,
+            doctor: doctorId,
+            date: selectedAppointment?.date,
+            time: selectedAppointment?.time,
+        };
+    
+        axios.post('http://127.0.0.1:8000/api/book-visit/', appointmentData)
+            .then(response => {
+                console.log(`Wizyta potwierdzona na ${selectedAppointment?.date} o godzinie ${selectedAppointment?.time}`);
+                setAppointments(prevAppointments => [...prevAppointments, selectedAppointment]); // dodaj nową wizytę do stanu
+                setShowModal(false);
+            })
+            .catch(err => {
+                console.error('Error booking visit', err);
+            });
+    }
+    
 
     const handlePrevClick = () => {
         if (format(currentDate, 'yyyy-MM-dd') !== format(new Date(), 'yyyy-MM-dd')) {
@@ -92,10 +127,7 @@ const VisitCalendarPage = () => {
                         <p>Czy na pewno chcesz umówić wizytę na <strong>{selectedAppointment?.date}</strong> o godzinie <strong>{selectedAppointment?.time}</strong>?</p>
                         <div className={styles.buttonsContainer}>
                             <button onClick={() => setShowModal(false)}>Nie</button>
-                            <button onClick={() => {
-                                console.log(`Wizyta potwierdzona na ${selectedAppointment?.date} o godzinie ${selectedAppointment?.time}`);
-                                setShowModal(false);
-                            }}>Tak</button>
+                            <button onClick={confirmAppointment}>Tak</button>
                         </div>
                     </div>
                 </div>
