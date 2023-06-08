@@ -1,0 +1,40 @@
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    min-height: 650px;
+    min-width: 600px;
+    margin-top: 1rem;
+
+    padding: 0.5rem 3rem;
+    padding-bottom: 2rem;
+
+    position: relative;
+
+    background-color: #fff;
+
+    gap: 1rem;
+
+    h2 {
+        font-size: 1.5rem; 
+    }
+}
+
+.container__data {
+    display: flex;
+    overflow-y: scroll;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    width: 100%;
+    max-width: 800px;
+    max-height: 500px;
+    margin-top: 1.5rem;
+}
+
+.container__data > * {
+    flex-basis: calc(50% - 1rem);
+
+    margin-bottom: 1rem;
+}

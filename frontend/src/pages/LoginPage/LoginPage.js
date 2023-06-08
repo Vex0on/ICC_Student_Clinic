@@ -30,12 +30,12 @@ const LoginPage = () => {
       if(email !== "" || password !== ""){
           axios.post('http://127.0.0.1:8000/api/login/', { email, password }, { withCredentials: true })
               .then(response => {
+                  setInformationLogin("")
                   const token  =  response.data.access
                   console.log(response)
                   localStorage.setItem("token", token)
               
                   setAuthToken(token)
-
                   checkRoleAndRedirectPanel()
               })
               .catch(err => {
@@ -50,7 +50,7 @@ const LoginPage = () => {
   return (
     <div className={styles.container}>
       <Header1 text={"Logowanie"} />
-
+      {informationLogin && <p>{informationLogin}</p>}
       <div className={styles.container__primary__fields}>
         <PrimaryField placeholder={"Email"} value={email} setValue={setEmail}/>
         <PrimaryField placeholder={"Hasło"} value={password} type="password" setValue={setPassword}/>
@@ -59,9 +59,6 @@ const LoginPage = () => {
       <PrimaryButton text="Zaloguj" onClick={submitLogin}/>
 
       <div className={styles.container__secondary__buttons}>
-        <Link to="/reset-hasla">
-          <SecondaryButton text={"Przypomnij hasło"}/>
-        </Link>
         <Link to="/rejestracja">
           <SecondaryButton text={"Zarejestruj się"}/>
         </Link>

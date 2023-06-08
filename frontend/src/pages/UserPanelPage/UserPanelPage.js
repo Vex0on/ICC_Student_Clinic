@@ -46,13 +46,13 @@ const UserPanelPage = () => {
       </div>
 
         <div className={styles.container__tiles}>
-            <HorizontalImageButton text={"Zarejestruj wizytę"} icon={<AiOutlineCalendar />} linkTo={"/kalendarz-wizyt"} imageSrc={Handshake} OnClick={null}/>
-            <HorizontalImageButton text={"Dokumentacja medyczna"} icon={<AiOutlineCopy />} linkTo={"/dokumentacja-medyczna"} imageSrc={Consultation} OnClick={null}/>
+            <HorizontalImageButton text={"Zarejestruj wizytę"} icon={<AiOutlineCalendar />} linkTo={`/lekarze/`} imageSrc={Handshake} OnClick={null}/>
+            <HorizontalImageButton text={"Dokumentacja medyczna"} icon={<AiOutlineCopy />} linkTo={`/dokumentacja-medyczna/${id}`} imageSrc={Consultation} OnClick={null}/>
             <HorizontalImageButton text={"Profil pacjenta"} icon={<AiOutlineUser />} linkTo={`/profil-pacjenta/${id}`} imageSrc={Pressure} OnClick={null}/>
         </div>
 
       <div className={styles.container__button}>
-        <TertiaryButton text="Wyloguj się" onClick={null} />
+        <TertiaryButton text="Wyloguj się" onClick={() => {localStorage.removeItem("token"); navigate("/")}} />
       </div>
     </div>
   );

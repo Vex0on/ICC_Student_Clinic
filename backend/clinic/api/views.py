@@ -18,7 +18,8 @@ class StudentRegister(APIView):
     def post(self, request):
         student_serializer = StudentCreateSerializer(data=request.data)
         if student_serializer.is_valid():
-            student_serializer.save()
+            student = student_serializer.save()
+            documentation = Documentation.objects.create(student=student)
             return Response({"message": "HTTP_200_OK"}, status=status.HTTP_200_OK)
         else:
             return Response(
@@ -612,9 +613,9 @@ class DocumentationList(APIView):
 
 
 class DocumentationDetail(APIView):
-    def get(self, request, pk):
+    def get(self, request, student_id):
         try:
-            documentation = Documentation.objects.get(id=pk)
+            documentation = Documentation.objects.get(student=student_id)
             serializer = DocumentationGetSerializer(documentation, many=False)
             return Response(
                 serializer.data,
@@ -626,9 +627,9 @@ class DocumentationDetail(APIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
 
-    def put(self, request, pk):
+    def put(self, request, student_id):
         try:
-            documentation = Documentation.objects.get(id=pk)
+            documentation = Documentation.objects.get(student=student_id)
             serializer = DocumentationSerializer(instance=documentation, data=request.data)
             if serializer.is_valid():
                 serializer.save()
@@ -653,14 +654,23 @@ class BookVisitAPIView(APIView):
         data = request.data
         student = data.get('student')
         doctor = data.get('doctor')
-        date = data.get('date')
-        time = data.get('time')
+        date_str = data.get('date')
+        time_str = data.get('time')
+
+        date = timezone.datetime.strptime(date_str, '%Y-%m-%d').date()
+        time = timezone.datetime.strptime(time_str, '%H:%M').time()
+
+        current_datetime = timezone.now()
+        selected_datetime = timezone.make_aware(timezone.datetime.combine(date, time))
+        if selected_datetime <= current_datetime:
+            return Response(
+                {"message": "Nie można zarejestrować się na wizytę z przeszłości"},
+                status=status.HTTP_400_BAD_REQUEST)
 
         visit_exists = Visit.objects.filter(date=date, time=time).exists()
         if visit_exists:
             return Response(
-                {"message": "Ten termin jest już zajęty"}
-            )
+                {"message": "Ten termin jest już zajęty"})
 
         visit_data = {
             'student': student,
@@ -671,8 +681,53 @@ class BookVisitAPIView(APIView):
 
         serializer = BookedVisitSerializer(data=visit_data)
         if serializer.is_valid():
-            serializer.save()
+            visit = serializer.save()
+            visit.is_active = False
+            visit.save()
             return Response(
                 {"message": "Wizyta zarejestrowana"}, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ApproveVisitAPIView(APIView):
+    def post(self, request, pk):
+        try:
+            visit = Visit.objects.get(id=pk)
+            visit.is_active = True
+            visit.save()
+            return Response(
+                {"message": "Wizyta zatwierdzona"}, status=status.HTTP_200_OK)
+        except Visit.DoesNotExist:
+            return Response(
+                {"message": "HTTP_404_NOT_FOUND"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+
+class RejectVisitApiView(APIView):
+    def delete(self, request, pk):
+        try:
+            visit = Visit.objects.get(id=pk)
+
+            if visit.is_active:
+                return Response(
+                    {"message": "Nie można usunąć aktywnej wizyty"}, status=status.HTTP_400_BAD_REQUEST)
+
+            current_time = timezone.now()
+            print(current_time)
+            time_diff = visit.date - current_time.date()
+
+            if time_diff.days <= 1 and visit.time.hour - current_time.hour <= 24:
+                return Response(
+                    {"message": "Nie można usunąć wizyty na 24h przed umówionym czasem"}, status=status.HTTP_400_BAD_REQUEST)
+
+            visit.delete()
+            return Response(
+                {"message": "Wizyta odrzucona"}, status=status.HTTP_204_NO_CONTENT)
+
+        except Visit.DoesNotExist:
+            return Response(
+                {"message": "HTTP_404_NOT_FOUND"},
+                status=status.HTTP_404_NOT_FOUND,
+            )

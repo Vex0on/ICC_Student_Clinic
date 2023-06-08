@@ -29,6 +29,8 @@ class Student(models.Model):
     address = models.CharField(max_length=95, null=False)
     index_number = models.CharField(max_length=6, null=False, unique=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    allergies = models.CharField(max_length=100, null=True, blank=True)
+    medications_taken = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return f"{self.id} {self.first_name} {self.last_name} {self.index_number}"
@@ -85,7 +87,6 @@ class Visit(models.Model):
 
 class Documentation(models.Model):
     student = models.OneToOneField(Student, on_delete=models.SET_NULL, null=True)
-    doctor = models.ForeignKey(Doctor, on_delete=models.SET_NULL, null=True)
     current_health = models.TextField()
     sickness_history = models.TextField()
     treatment_plan = models.TextField()
@@ -93,5 +94,5 @@ class Documentation(models.Model):
     medical_examination = models.TextField()
 
     def __str__(self):
-        return f"{self.id} {self.student} {self.doctor}"
+        return f"{self.id} {self.student}"
 
