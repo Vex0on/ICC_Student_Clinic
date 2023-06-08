@@ -24,8 +24,8 @@ const PatientProfilePage = () => {
   const [newAllergies, setNewAllergies] = useState("");
   const [originalAllergies, setOriginalAllergies] = useState("");
   const [editingMedications, setEditingMedications] = useState(false);
-const [newMedications, setNewMedications] = useState("");
-const [originalMedications, setOriginalMedications] = useState("");
+  const [newMedications, setNewMedications] = useState("");
+  const [originalMedications, setOriginalMedications] = useState("");
 
   useEffect(() => {
     fetchPatientData();
