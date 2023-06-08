@@ -682,7 +682,7 @@ class BookVisitAPIView(APIView):
 
 
 class ApproveVisitAPIView(APIView):
-    def post(self,  pk):
+    def post(self, request, pk):
         try:
             visit = Visit.objects.get(id=pk)
             visit.is_active = True
