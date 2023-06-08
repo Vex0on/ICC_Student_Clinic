@@ -59,9 +59,6 @@ const LoginPage = () => {
       <PrimaryButton text="Zaloguj" onClick={submitLogin}/>
 
       <div className={styles.container__secondary__buttons}>
-        <Link to="/reset-hasla">
-          <SecondaryButton text={"Przypomnij hasło"}/>
-        </Link>
         <Link to="/rejestracja">
           <SecondaryButton text={"Zarejestruj się"}/>
         </Link>

@@ -107,7 +107,7 @@ const MedicalRecordsPage = () => {
           />
         </div>
 
-        <div>
+        <div className={styles.test}>
           <Avatar
             text={`${medicalData.firstName} ${medicalData.lastName}`}
             imageSrc={
