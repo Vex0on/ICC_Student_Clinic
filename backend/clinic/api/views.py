@@ -651,8 +651,8 @@ class DocumentationDetail(APIView):
 class BookVisitAPIView(APIView):
     def post(self, request):
         data = request.data
-        student_id = data.get('student_id')
-        doctor_id = data.get('doctor_id')
+        student = data.get('student')
+        doctor = data.get('doctor')
         date = data.get('date')
         time = data.get('time')
 
@@ -663,13 +663,13 @@ class BookVisitAPIView(APIView):
             )
 
         visit_data = {
-            'student': student_id,
-            'doctor': doctor_id,
+            'student': student,
+            'doctor': doctor,
             'date': date,
             'time': time,
         }
 
-        serializer = VisitSerializer(data=visit_data)
+        serializer = BookedVisitSerializer(data=visit_data)
         if serializer.is_valid():
             serializer.save()
             return Response(

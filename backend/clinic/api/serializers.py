@@ -104,13 +104,13 @@ class StudentCreateSerializer(serializers.ModelSerializer):
                                       required=False)
 
     phone_number = serializers.CharField(validators=[validate_phone_number],
-                                         required=False,)
+                                         required=False, )
 
     index_number = serializers.CharField(validators=[validate_index_number],
-                                         required=False,)
+                                         required=False, )
 
     pesel = serializers.CharField(validators=[validate_pesel],
-                                  required=False,)
+                                  required=False, )
 
     def create(self, validated_data):
         user_data = validated_data.pop("user")
@@ -170,6 +170,7 @@ class StudentSerializer(serializers.ModelSerializer):
 
     def get_phone_number(self, obj):
         return f"{obj.phone_number[:3]}-{obj.phone_number[3:6]}-{obj.phone_number[6:]}"
+
     class Meta:
         model = Student
         fields = "__all__"
@@ -189,13 +190,14 @@ class StudentUpdateSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     phone_number = serializers.CharField(validators=[validate_phone_number],
-                                         required=False,)
+                                         required=False, )
 
     index_number = serializers.CharField(validators=[validate_index_number],
-                                         required=False,)
+                                         required=False, )
 
     pesel = serializers.CharField(validators=[validate_pesel],
-                                  required=False,)
+                                  required=False, )
+
 
 class StudentNameSerializer(serializers.ModelSerializer):
     class Meta:
@@ -206,6 +208,7 @@ class StudentNameSerializer(serializers.ModelSerializer):
 class DoctorCreateSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     other_specializations = serializers.CharField(allow_blank=True)
+
     class Meta:
         model = Doctor
         fields = "__all__"
@@ -223,10 +226,10 @@ class DoctorCreateSerializer(serializers.ModelSerializer):
         return doctor
 
     phone_number = serializers.CharField(validators=[validate_phone_number],
-                                         required=False,)
+                                         required=False, )
 
     pesel = serializers.CharField(validators=[validate_pesel],
-                                  required=False,)
+                                  required=False, )
 
 
 class DoctorSerializer(serializers.ModelSerializer):
@@ -257,12 +260,11 @@ class DoctorUpdateSerializer(serializers.ModelSerializer):
         model = Doctor
         fields = "__all__"
 
-
     phone_number = serializers.CharField(validators=[validate_phone_number],
-                                         required=False,)
+                                         required=False, )
 
     pesel = serializers.CharField(validators=[validate_pesel],
-                                  required=False,)
+                                  required=False, )
 
 
 class MedicationSerializer(serializers.ModelSerializer):
@@ -302,12 +304,21 @@ class VisitUpdateSerializer(serializers.ModelSerializer):
         model = Visit
 
 
+class BookedVisitSerializer(serializers.ModelSerializer):
+    medication = serializers.CharField(allow_blank=True, allow_null=True, required=False)
+    description = serializers.CharField(allow_blank=True, allow_null=True, required=False)
+
+    class Meta:
+        model = Visit
+        fields = "__all__"
+
+
 class ReceptionSerializer(serializers.ModelSerializer):
     phone_number = serializers.SerializerMethodField()
 
     def get_phone_number(self, obj):
         return f"{obj.phone_number[:3]}-{obj.phone_number[3:6]}-{obj.phone_number[6:]}"
-    
+
     class Meta:
         model = Reception
         fields = "__all__"
