@@ -331,7 +331,7 @@ class ReceptionCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Reception
-        exclude = ("user",)
+        fields = "__all__"
 
     def create(self, validated_data):
         user_data = validated_data.pop("user")
