@@ -1,7 +1,9 @@
+import csv
+
 from django.db.models import Q
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
-from datetime import datetime
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
@@ -593,6 +595,21 @@ class VisitListDoctor(APIView):
         except Visit.DoesNotExist:
             return Response({}, status=status.HTTP_404_NOT_FOUND)
 
+    @staticmethod
+    def export_csv(request, doctor_id):
+        visits = Visit.objects.filter(doctor=doctor_id)
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="visits.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['Data', 'Godzina', 'Osoba'])
+
+        for visit in visits:
+            writer.writerow(
+                [visit.date, visit.time.strftime('%H:%M'), f'{visit.student.first_name} {visit.student.last_name}'])
+
+        return response
+
 
 class DocumentationList(APIView):
     def get(self, request):
@@ -660,14 +677,23 @@ class BookVisitAPIView(APIView):
         data = request.data
         student = data.get('student')
         doctor = data.get('doctor')
-        date = data.get('date')
-        time = data.get('time')
+        date_str = data.get('date')
+        time_str = data.get('time')
+
+        date = timezone.datetime.strptime(date_str, '%Y-%m-%d').date()
+        time = timezone.datetime.strptime(time_str, '%H:%M').time()
+
+        current_datetime = timezone.now()
+        selected_datetime = timezone.make_aware(timezone.datetime.combine(date, time))
+        if selected_datetime <= current_datetime:
+            return Response(
+                {"message": "Nie można zarejestrować się na wizytę z przeszłości"},
+                status=status.HTTP_400_BAD_REQUEST)
 
         visit_exists = Visit.objects.filter(date=date, time=time).exists()
         if visit_exists:
             return Response(
-                {"message": "Ten termin jest już zajęty"}
-            )
+                {"message": "Ten termin jest już zajęty"})
 
         visit_data = {
             'student': student,

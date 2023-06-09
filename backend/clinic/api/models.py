@@ -29,6 +29,8 @@ class Student(models.Model):
     address = models.CharField(max_length=95, null=False)
     index_number = models.CharField(max_length=6, null=False, unique=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    allergies = models.CharField(max_length=100, null=True, blank=True)
+    medications_taken = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return f"{self.id} {self.first_name} {self.last_name} {self.index_number}"

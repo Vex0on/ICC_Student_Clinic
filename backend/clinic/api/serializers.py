@@ -310,6 +310,8 @@ class MedicationUpdateSerializer(serializers.ModelSerializer):
 class VisitSerializer(serializers.ModelSerializer):
     medication = serializers.CharField(allow_blank=True, allow_null=True, required=False)
     description = serializers.CharField(allow_blank=True, allow_null=True, required=False)
+    date = serializers.DateField()
+    time = serializers.TimeField()
     doctor = DoctorSerializer()
     student = StudentSerializer()
 
