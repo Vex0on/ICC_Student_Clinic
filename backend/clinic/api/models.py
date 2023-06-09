@@ -94,3 +94,8 @@ class Documentation(models.Model):
     def __str__(self):
         return f"{self.id} {self.student}"
 
+
+class VisitInfo(models.Model):
+    student = models.OneToOneField(Student, on_delete=models.CASCADE)
+    medications = models.TextField()
+    recommendations = models.TextField()

@@ -21,6 +21,11 @@ class StudentRegister(APIView):
         if student_serializer.is_valid():
             student = student_serializer.save()
             documentation = Documentation.objects.create(student=student)
+            visit_info = VisitInfo.objects.create(
+                student=student,
+                medications="",
+                recommendations=""
+            )
             return Response({"message": "HTTP_200_OK"}, status=status.HTTP_200_OK)
         else:
             return Response(
@@ -721,5 +726,77 @@ class RejectVisitApiView(APIView):
         except Visit.DoesNotExist:
             return Response(
                 {"message": "HTTP_404_NOT_FOUND"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+
+# PATIENT CARD
+
+class PatientCardAPIView(APIView):
+    def get(self, request, pk):
+        student = Student.objects.get(id=pk)
+        visits = Visit.objects.filter(Q(student=student) & Q(is_active=True)) 
+        visit_info = VisitInfo.objects.filter(student=student).first()
+
+        student_serializer = StudentPoorSerializer(student, many=False)
+        visits_serializer = VisitPoorSerializer(visits, many=True)
+        visit_info_serializer = VisitInfoSerializer(visit_info)
+
+        data = {
+            'student': student_serializer.data,
+            'visits': visits_serializer.data,
+            'visit_info': visit_info_serializer.data
+        }
+
+        combined_data = student_serializer.data
+        combined_data['visits'] = visits_serializer.data
+        combined_data['visit_info'] = visit_info_serializer.data
+
+        return Response(
+            combined_data
+        )
+    
+
+class VisitInfoAPIView(APIView):
+    def get(self, request):
+        visits = VisitInfo.objects.all()
+        serializer = VisitInfoSerializer(visits, many=True)
+        return Response(
+            serializer.data,
+            status=status.HTTP_200_OK
+        )
+    
+    def post(self, request):
+        serializer = VisitInfoSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED,
+            )
+        return Response(
+            serializer.errors,
+            status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        )
+
+
+class VisitInfoDetailAPIView(APIView):
+    def put(self, request, pk):
+        try:
+            visit_info = VisitInfo.objects.get(id=pk)
+            serializer = VisitInfoUpdateSerializer(instance=visit_info, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(
+                    serializer.data,
+                    status=status.HTTP_200_OK,
+                )
+            return Response(
+                serializer.errors,
+                status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            )
+        except VisitInfo.DoesNotExist:
+            return Response(
+                {"message": "visit info not found"},
                 status=status.HTTP_404_NOT_FOUND,
             )

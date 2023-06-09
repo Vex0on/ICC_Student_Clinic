@@ -45,6 +45,12 @@ class UserProfilePictureSerializer(serializers.ModelSerializer):
         fields = ["profile_picture"]
 
 
+class UserPoorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["profile_picture", "email"]
+
+
 class UserSerializer(serializers.ModelSerializer):
     username = serializers.CharField(required=False)
 
@@ -176,6 +182,18 @@ class StudentSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class StudentPoorSerializer(serializers.ModelSerializer):
+    user = UserPoorSerializer()
+    phone_number = serializers.SerializerMethodField()
+
+    def get_phone_number(self, obj):
+        return f"{obj.phone_number[:3]}-{obj.phone_number[3:6]}-{obj.phone_number[6:]}"
+    
+    class Meta:
+        model = Student
+        fields = ["first_name", "last_name", "phone_number", "user"]
+
+
 class StudentUpdateSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(required=False)
     last_name = serializers.CharField(required=False)
@@ -246,6 +264,12 @@ class DoctorSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class DoctorPoorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Doctor
+        fields = ["first_name", "last_name"]
+
+
 class DoctorUpdateSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(required=False)
     last_name = serializers.CharField(required=False)
@@ -294,6 +318,13 @@ class VisitSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class VisitPoorSerializer(serializers.ModelSerializer):
+    doctor = DoctorPoorSerializer()
+    class Meta:
+        model = Visit
+        fields = ["date", "time", "doctor"]
+
+
 class VisitUpdateSerializer(serializers.ModelSerializer):
     date = serializers.DateField(required=False)
     time = serializers.TimeField(required=False)
@@ -304,6 +335,21 @@ class VisitUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Visit
+        fields = "__all__"
+
+
+class VisitInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VisitInfo
+        fields = ["id", "medications", "recommendations"]
+
+
+class VisitInfoUpdateSerializer(serializers.ModelSerializer):
+    medications = serializers.CharField(required=False)
+    recommendations = serializers.CharField(required=False)
+    class Meta:
+        model = VisitInfo
+        fields = ["id", "medications", "recommendations"]
 
 
 class BookedVisitSerializer(serializers.ModelSerializer):
