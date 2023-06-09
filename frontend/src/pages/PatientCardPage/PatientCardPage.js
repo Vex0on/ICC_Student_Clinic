@@ -5,10 +5,11 @@ import Avatar from "../../components/Avatar/Avatar";
 import ProfileImage from "../../utills/images/Avatar.jpg";
 import ArrowNavigate from "../../components/ArrowNavigate/ArrowNavigate";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const PatientCardPage = () => {
-  const id = 1; 
-//   chwilowe statyczne id :)
+  const { id } = useParams();
+
 
   const [patientCardData, setPatientCardData] = useState({
     first_name: "",
