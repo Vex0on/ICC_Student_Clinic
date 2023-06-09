@@ -5,13 +5,16 @@ import Header1 from "../../components/Headers/Header1/Header1";
 import Avatar from "../../components/Avatar/Avatar";
 import InformationsIcon from "../../components/Informations/InformationsIcon/InformationsIcon";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import ProfileImage from "../../utills/images/Avatar.jpg";
 import checkToken from "../../utills/JWT/checkToken";
 import { AiOutlineHeart, AiOutlineCalendar } from "react-icons/ai";
 import { LuMapPin } from "react-icons/lu";
 import { BsTelephone } from "react-icons/bs";
 import ArrowNavigate from "../../components/ArrowNavigate/ArrowNavigate"
+import SecondaryButton from "../../components/Buttons/SecondaryButton/SecondaryButton";
+import PrimaryButton from "../../components/Buttons/PrimaryButton/PrimaryButton";
+import TertiaryButton from "../../components/Buttons/TertiaryButton/TertiaryButton";
 
 
 const PatientProfilePage = () => {
@@ -24,8 +27,10 @@ const PatientProfilePage = () => {
   const [newAllergies, setNewAllergies] = useState("");
   const [originalAllergies, setOriginalAllergies] = useState("");
   const [editingMedications, setEditingMedications] = useState(false);
-const [newMedications, setNewMedications] = useState("");
-const [originalMedications, setOriginalMedications] = useState("");
+  const [newMedications, setNewMedications] = useState("");
+  const [originalMedications, setOriginalMedications] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchPatientData();
@@ -216,6 +221,9 @@ const [originalMedications, setOriginalMedications] = useState("");
               <button onClick={handleMedicationsEdit}>Edytuj leki</button>
             </div>
           )}
+          <div>
+              <TertiaryButton text="Karta Pacjenta" onClick={() => navigate(`/karta-pacjenta/${id}`)} />
+            </div>
         </div>
       </div>
     </div>

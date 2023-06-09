@@ -45,6 +45,18 @@ class UserProfilePictureSerializer(serializers.ModelSerializer):
         fields = ["profile_picture"]
 
 
+class UserProfilePictureEmailAddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["profile_picture", "email"]
+
+
+class UserPoorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["profile_picture", "email"]
+
+
 class UserSerializer(serializers.ModelSerializer):
     username = serializers.CharField(required=False)
 
@@ -176,6 +188,18 @@ class StudentSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class StudentPoorSerializer(serializers.ModelSerializer):
+    user = UserPoorSerializer()
+    phone_number = serializers.SerializerMethodField()
+
+    def get_phone_number(self, obj):
+        return f"{obj.phone_number[:3]}-{obj.phone_number[3:6]}-{obj.phone_number[6:]}"
+    
+    class Meta:
+        model = Student
+        fields = ["first_name", "last_name", "phone_number", "user"]
+
+
 class StudentUpdateSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(required=False)
     last_name = serializers.CharField(required=False)
@@ -246,6 +270,13 @@ class DoctorSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class DoctorPoorSerializer(serializers.ModelSerializer):
+    user = UserProfilePictureEmailAddressSerializer()
+    class Meta:
+        model = Doctor
+        fields = ["first_name", "last_name", "phone_number", "user"]
+
+
 class DoctorUpdateSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(required=False)
     last_name = serializers.CharField(required=False)
@@ -296,6 +327,13 @@ class VisitSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class VisitPoorSerializer(serializers.ModelSerializer):
+    doctor = DoctorPoorSerializer()
+    class Meta:
+        model = Visit
+        fields = ["date", "time", "doctor"]
+
+
 class VisitUpdateSerializer(serializers.ModelSerializer):
     date = serializers.DateField(required=False)
     time = serializers.TimeField(required=False)
@@ -306,6 +344,21 @@ class VisitUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Visit
+        fields = "__all__"
+
+
+class VisitInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VisitInfo
+        fields = ["id", "medications", "recommendations"]
+
+
+class VisitInfoUpdateSerializer(serializers.ModelSerializer):
+    medications = serializers.CharField(required=False, allow_blank=True)
+    recommendations = serializers.CharField(required=False, allow_blank=True)
+    class Meta:
+        model = VisitInfo
+        fields = ["id", "medications", "recommendations"]
 
 
 class BookedVisitSerializer(serializers.ModelSerializer):
@@ -363,11 +416,11 @@ class ReceptionUpdateSerializer(serializers.ModelSerializer):
 
 
 class DocumentationSerializer(serializers.ModelSerializer):
-    current_health = serializers.CharField(required=False)
-    sickness_history = serializers.CharField(required=False)
-    treatment_plan = serializers.CharField(required=False)
-    medication_list = serializers.CharField(required=False)
-    medical_examination = serializers.CharField(required=False)
+    current_health = serializers.CharField(required=False, allow_blank=True)
+    sickness_history = serializers.CharField(required=False, allow_blank=True)
+    treatment_plan = serializers.CharField(required=False, allow_blank=True)
+    medication_list = serializers.CharField(required=False, allow_blank=True)
+    medical_examination = serializers.CharField(required=False, allow_blank=True)
 
     class Meta:
         model = Documentation

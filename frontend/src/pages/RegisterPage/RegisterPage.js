@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./RegisterPage.module.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
 import axios from "axios";
 import Header1 from "../../components/Headers/Header1/Header1";
@@ -22,8 +22,11 @@ const RegisterPage = () => {
   const [registrationStatus, setRegistrationStatus] = useState("");
   const [formErrors, setFormErrors] = useState({});
 
+  const navigate = useNavigate();
+
   const handleClick = async () => {
     setFormErrors({});
+
 
     const data = {
       first_name: firstName,
@@ -49,8 +52,11 @@ const RegisterPage = () => {
         }
       );
 
-      if (response.status === 201) {
+      if (response.status === 200) {
         setRegistrationStatus("Rejestracja pomyślna");
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
       } else {
         setRegistrationStatus("Wystąpił błąd podczas rejestracji");
       }
@@ -129,7 +135,7 @@ const RegisterPage = () => {
           maxLength={9}
         />
         <PrimaryField
-          placeholder={"Miasto"}
+          placeholder={"Adres"}
           value={city}
           setValue={setCity}
           error={formErrors.address?.[0]}

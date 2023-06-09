@@ -25,6 +25,23 @@ const DoctorCardPage = () => {
       });
   }, [id]);
 
+  const handlePrint = () => {
+    if (doctorData) {
+      axios.get(`http://127.0.0.1:8000/api/visits/doctor/${id}/export-csv/`, { responseType: 'blob' })
+        .then(response => {
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'visits.csv');
+          document.body.appendChild(link);
+          link.click();
+        })
+        .catch(err => {
+          console.error('Error fetching CSV data', err);
+        });
+      }
+    };
+
   function processResponseData(data) {
     const visitsByDate = data.reduce((acc, visit) => {
       const time = visit.time.slice(0, 5);
@@ -63,7 +80,7 @@ const DoctorCardPage = () => {
       
       {doctorData && <Calendar data={doctorData.visits} />}
 
-      <AiOutlinePrinter className={styles.icon} />
+      <AiOutlinePrinter className={styles.icon} onClick={handlePrint} />
     </div>
   );
 }
