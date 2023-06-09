@@ -129,7 +129,7 @@ const RegisterPage = () => {
           maxLength={9}
         />
         <PrimaryField
-          placeholder={"Miasto"}
+          placeholder={"Adres"}
           value={city}
           setValue={setCity}
           error={formErrors.address?.[0]}
