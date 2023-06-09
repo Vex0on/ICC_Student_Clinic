@@ -1,5 +1,6 @@
 import csv
 
+from django.core.mail import send_mail
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -719,8 +720,22 @@ class ApproveVisitAPIView(APIView):
             visit = Visit.objects.get(id=pk)
             visit.is_active = True
             visit.save()
+            user = visit.student.user
+            user_email = user.email
+            doctor = visit.doctor.first_name + " " + visit.doctor.last_name
+
+            send_mail(
+                'Zatwierdzenie wizyty',
+                f'Twoja wizyta na {visit.date} o godzinie {visit.time} u dr. {doctor} została zatwierdzona.',
+                f'Curatio@gmail.com',
+                [f'{user_email}'],
+                fail_silently=False,
+            )
+
             return Response(
-                {"message": "Wizyta zatwierdzona"}, status=status.HTTP_200_OK)
+                {"message": "Wizyta zatwierdzona"},
+                status=status.HTTP_200_OK
+            )
         except Visit.DoesNotExist:
             return Response(
                 {"message": "HTTP_404_NOT_FOUND"},
@@ -746,6 +761,17 @@ class RejectVisitApiView(APIView):
                     {"message": "Nie można usunąć wizyty na 24h przed umówionym czasem"}, status=status.HTTP_400_BAD_REQUEST)
 
             visit.delete()
+            user = visit.student.user
+            user_email = user.email
+            doctor = visit.doctor.first_name + " " + visit.doctor.last_name
+
+            send_mail(
+                'Odrzucenie wizyty',
+                f'Twoja wizyta na {visit.date} o godzinie {visit.time} u dr. {doctor} została odrzucona.',
+                f'Curatio@gmail.com',
+                [f'{user_email}'],
+                fail_silently=False,
+            )
             return Response(
                 {"message": "Wizyta odrzucona"}, status=status.HTTP_204_NO_CONTENT)
 
