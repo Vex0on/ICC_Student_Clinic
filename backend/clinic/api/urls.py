@@ -27,6 +27,7 @@ urlpatterns = [
     path("approve-visit/<int:pk>/", ApproveVisitAPIView.as_view(), name="approve-visit"),
     path("reject-visit/<int:pk>/", RejectVisitApiView.as_view(), name="reject-visit"),
     path("patient-card/<int:pk>/", PatientCardAPIView.as_view(), name="patient-card"),
+    path("doctor-card/<int:pk>/", DoctorCardAPIView.as_view(), name="doctor-card"),
     path("visit-info/", VisitInfoAPIView.as_view(), name="visit-info"),
     path("visit-info/<int:pk>/", VisitInfoDetailAPIView.as_view(), name="visit-info-detail"),
     path('visits/doctor/<int:doctor_id>/export-csv/', VisitListDoctor.export_csv, name='export-csv')

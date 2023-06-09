@@ -5,11 +5,13 @@ import Avatar from "../../components/Avatar/Avatar";
 import ProfileImage from "../../utills/images/Avatar.jpg";
 import ArrowNavigate from "../../components/ArrowNavigate/ArrowNavigate";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import TertiaryButton from "../../components/Buttons/TertiaryButton/TertiaryButton";
 
 const PatientCardPage = () => {
   const { id } = useParams();
 
+  const navigate = useNavigate();
 
   const [patientCardData, setPatientCardData] = useState({
     first_name: "",
@@ -209,6 +211,9 @@ const PatientCardPage = () => {
           </div>
         </div>
       </div>
+      <div>
+              <TertiaryButton text="Dokumentacja medyczna" onClick={() => navigate(`/dokumentacja-medyczna/${id}`)} />
+            </div>
     </div>
   );
 };

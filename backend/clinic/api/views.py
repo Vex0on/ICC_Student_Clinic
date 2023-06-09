@@ -807,7 +807,33 @@ class PatientCardAPIView(APIView):
         return Response(
             combined_data
         )
-    
+
+
+class DoctorCardAPIView(APIView):
+    def get(self, request, pk):
+        doctor = Doctor.objects.get(id=pk)
+        visits = Visit.objects.filter(Q(doctor=doctor) & Q(is_active=True))
+
+        doctor_serializer = DoctorPoorSerializer(doctor, many=False)
+        visits_serializer = VisitPoorSerializer(visits, many=True)
+
+        data = {
+            'doctor': doctor_serializer.data,
+            'visits': []
+        }
+
+        for visit in visits:
+            student_serializer = StudentPoorSerializer(visit.student)
+            visit_data = {
+                'id': visit.id,
+                'date': visit.date,
+                'time': visit.time,
+                'student': student_serializer.data,
+            }
+            data['visits'].append(visit_data)
+
+        return Response(data)
+
 
 class VisitInfoAPIView(APIView):
     def get(self, request):

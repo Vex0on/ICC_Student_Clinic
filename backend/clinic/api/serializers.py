@@ -45,6 +45,12 @@ class UserProfilePictureSerializer(serializers.ModelSerializer):
         fields = ["profile_picture"]
 
 
+class UserProfilePictureEmailAddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["profile_picture", "email"]
+
+
 class UserPoorSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -265,9 +271,10 @@ class DoctorSerializer(serializers.ModelSerializer):
 
 
 class DoctorPoorSerializer(serializers.ModelSerializer):
+    user = UserProfilePictureEmailAddressSerializer()
     class Meta:
         model = Doctor
-        fields = ["first_name", "last_name"]
+        fields = ["first_name", "last_name", "phone_number", "user"]
 
 
 class DoctorUpdateSerializer(serializers.ModelSerializer):
