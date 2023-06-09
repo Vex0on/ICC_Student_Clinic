@@ -7,7 +7,7 @@ import ArrowNavigate from "../../components/ArrowNavigate/ArrowNavigate";
 import axios from "axios";
 
 const PatientCardPage = () => {
-  const id = 6; 
+  const id = 1; 
 //   chwilowe statyczne id :)
 
   const [patientCardData, setPatientCardData] = useState({
@@ -35,6 +35,7 @@ const PatientCardPage = () => {
       const response = await axios.get(
         `http://localhost:8000/api/patient-card/${id}/`
       );
+      console.log(response.data)
       setPatientCardData(response.data);
       setOriginalMedications(response.data.visit_info.medications);
       setOriginalRecommendations(response.data.visit_info.recommendations);

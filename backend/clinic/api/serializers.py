@@ -347,8 +347,8 @@ class VisitInfoSerializer(serializers.ModelSerializer):
 
 
 class VisitInfoUpdateSerializer(serializers.ModelSerializer):
-    medications = serializers.CharField(required=False)
-    recommendations = serializers.CharField(required=False)
+    medications = serializers.CharField(required=False, allow_blank=True)
+    recommendations = serializers.CharField(required=False, allow_blank=True)
     class Meta:
         model = VisitInfo
         fields = ["id", "medications", "recommendations"]
