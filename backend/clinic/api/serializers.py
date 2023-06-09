@@ -416,11 +416,11 @@ class ReceptionUpdateSerializer(serializers.ModelSerializer):
 
 
 class DocumentationSerializer(serializers.ModelSerializer):
-    current_health = serializers.CharField(required=False)
-    sickness_history = serializers.CharField(required=False)
-    treatment_plan = serializers.CharField(required=False)
-    medication_list = serializers.CharField(required=False)
-    medical_examination = serializers.CharField(required=False)
+    current_health = serializers.CharField(required=False, allow_blank=True)
+    sickness_history = serializers.CharField(required=False, allow_blank=True)
+    treatment_plan = serializers.CharField(required=False, allow_blank=True)
+    medication_list = serializers.CharField(required=False, allow_blank=True)
+    medical_examination = serializers.CharField(required=False, allow_blank=True)
 
     class Meta:
         model = Documentation

@@ -419,7 +419,7 @@ class SpecializationFilter(APIView):
         try:
             doctors = Doctor.objects.filter(
                 Q(specialization__icontains=specialization)
-                | Q(other_specializations__icontains=specialization)
+                # | Q(other_specializations__icontains=specialization)
             )
             serializer = DoctorSerializer(doctors, many=True)
 
