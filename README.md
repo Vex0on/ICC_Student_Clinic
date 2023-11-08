@@ -8,7 +8,7 @@ I Can't Code
 2. Kacper Wadecki [(kacperwadecki)](https://github.com/kacperwadecki)
 3. Szymon Wielgosz [(SzWielgosz)](https://github.com/SzWielgosz)
 4. Adrian Sidor [(MadPapa)](https://github.com/MadPapa)
-5. Martyna Sip
+5. Martyna Sip [(sipmartynaa)](https://github.com/sipmartyna)
 
 ## Technologie:
 - Python
